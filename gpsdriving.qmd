@@ -1,0 +1,185 @@
+---
+title: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
+format: html
+bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, library_id=rbbt::bbt_library_id('Graphics Research'), translator='bibtex')`"
+---
+
+```{r}
+#| echo = F
+library(rbbt)
+```
+
+@bayatGPSDrivingDigital2021
+
+# Introduction
+
+* Evidence that cognitive changes associated with Alzheimer's disease (AD) impact behaviors like driving
+
+* "Drivers with symptomatic AD are are more likely to drive shorter distances, visit fewer unique destinations, and have a smaller driving space compared to cognitively intact drivers."
+
+* "Pre-clinical AD can be identified by evaluating driving behaviors"
+
+* "Future research aimed at using everyday driving as a behavioral marker of AD should explore additional statistical modelling techniques to determine optimal combinations of variables"
+
+# Methods
+
+## Participants
+
+Criteria for participation in the study:
+
+1. Age 65 or older
+
+2. Had normal cognition at a clinical assessment
+
+3. Underwent cerebrospinal fluid (CSF) collection
+
+4. Valid driver's license
+
+5. Drove at least once a week, on average
+
+## CSF biomarkers and APOE genotyping
+
+* Several biomarkers used to identify participants with pre-clinical AD
+
+* Genetic association with developing AD
+
+## GPS data collection
+
+* Location: St. Louis, MO, metropolitan area
+
+* GPS data logger installed on each participant's vehicle
+
+* System called Driving Real-World In-Vehicle Evaluation System (DRIVES)
+
+* Every 30 sec, DRIVES recorded
+
+  - Date
+  
+  - Time
+  
+  - Latitude and longitude
+  
+  - Speed
+  
+* Study was one year; data available from January 1, 2019, to December 31, 2019
+
+## GPS-based driving behavior measures
+
+* Driving space indicators 
+
+  - Average trip distance (TripDist): "The average distance traveled in each trip. TripDist is computed by taking the average of all the trips that a participant has made during the study period."
+  
+  - Total traveled distance (TotalDist): "The total distance traveled during the study period."
+  
+  - Number of trips (nTrips): "The total number of trips made during the study period. The trips are also placed into five subgroups: (1) trips with a distance smaller than 1 mi, (2) trips with a distance between 1 and 5 mi, (3) trips with a distance between 5 and 10 mi, (4) trips with a distance between 10 and 20 mi, and (4) trips with a distance of more than 20 mi."
+  
+  - Radius of gyration (Rg): Computed using $r_g = \sqrt{\frac{1}{N}\sum_{i \in L} n_i(r_i-r_{cm})^2}$ where
+    
+    + $L$ is the set of destination visited by the participant
+    
+    + $r_i$ is the latitude and longitude coordinates of location $i$
+    
+    + $n_i$ is "the visitation frequency of location $i$"
+    
+    + $N= \sum n_i$ is "the total number of visits of the individual"
+    
+    + $r_{cm}$ is "the center of mass of the visited destinations"
+
+  - Entropy ($S$): "The degree to which a participant’s trip destinations are random (i.e. unpredictable) in space and time" (assessed over the whole study period)
+  
+  - Number of night trips (nNightTrip): mean number of trips made after sunset
+  
+  - Number of unique destinations (nUniqDest): "the total number of distinct destinations that an individual visited during the entire study period"
+  
+* Driving performance indicators
+
+  - Number of hard brakes per mile (nHardBrake): "the average number of events with a deceleration rate of above 8 miles per hour in 1 s per mile"
+  
+  - Number of sudden accelerations per mile (nSuddenAccel): "the average number of events with an acceleration rate of above 8 miles per hour in 1 s per mile"
+  
+  - Overspeed (OverV): "the average number of trips with a speed of 6 miles per hour above the posted speed limit"
+  
+  - Underspeed (UnderV): "the average number of trips with a speed of 6 miles per hour below the posted speed limit"
+  
+  - Average speed (avgV): average speed of trips
+  
+  - Average acceleration (avgA): average acceleration of trips 
+  
+  - Average jerk (avgJ): "The average jerk of trips. Jerk is the rate of change of acceleration; that is, more abrupt brake actions or accelerations lead to higher jerk values."
+  
+## Machine learning and statistical analyses
+
+* Binary classifier:
+
+  - Class 0: no pre-clinical AD
+  
+  - Class 1: pre-clinical AD
+  
+* 4 random forest models:
+
+  1. Age and APOE $\epsilon 4$ status (carrier or non-carrier)
+  
+  2. Driving features
+  
+  3. Driving features and age
+  
+  4. Driving features, age, and APOE $\epsilon 4$ status
+  
+* Predictors ranked according to RF Gini index
+
+* Train/test split: 70%/30%
+
+* Each month record for each participant was considered an independent data point.
+
+* Incremental hyperparameter tuning (i.e., fit models, choose best-performing models, and tune them more)
+
+* Compared model performances with F1 score
+
+* Created ROC curve and computed AUC
+
+# Results
+
+## Sample characteristics
+
+* No significant differences regarding sex, race, or education level
+
+## RF models
+
+* Best model included age, APOE $\epsilon 4$, and driving indicators
+
+## Driving indicator performance
+
+* Most important features:
+  
+  - APOE $\epsilon 4$ status
+  
+  - Age
+  
+  - Average jerk
+  
+  - Number of night trips
+  
+  - Radius of gyration
+  
+# Discussion/conclusion
+
+* "[D]riving may serve as an effective and accurate digital biomarker for identifying preclinical AD among older adults."
+
+* APOE $\epsilon 4$ testing is invasive.
+
+* "Overall, although the model with driving behavior, age, and APOE $\epsilon 4$ status achieved the highest performance, the model with driving indicators and age alone is the highest performing non-invasive and accessible choice."
+
+* Jerk was most important driving feature.
+
+* Need to consider both driving performance and driving space features in the model
+
+# Limitations
+
+* Spouses, friends, and family members may have driven some trips instead of the study participants.
+
+* All participants came from the St. Louis metropolitan area.
+
+* Limited investigation into sociodemographic attributes (e.g., sex, race, income, education level, etc.)
+
+* Repeated measures were treated as independent measures $\Rightarrow$ new research should incorporate methods that handle the correlated features from participants over time (e.g., repeated measures random forest)
+
