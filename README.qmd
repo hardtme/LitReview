@@ -1,0 +1,16 @@
+---
+title: "Brief Article Summaries"
+format: html
+bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, library_id=rbbt::bbt_library_id('Graphics Research'), translator='bibtex')`"
+---
+
+```{r}
+#| echo = F
+library(rbbt)
+```
+
+* @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
+
+  - Using a random forest model, the authors showed that driving features like the number of jerks are associated with preclinical Alzheimer's disease. 
+  
+  
