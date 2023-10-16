@@ -11,6 +11,6 @@ library(rbbt)
 
 * @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
 
-  - Using a random forest model, the authors showed that driving features like the number of jerks are associated with preclinical Alzheimer's disease. 
+  - When included as features in a random forest model, driving behaviors such as the average number of jerks and the number of trips made at night can be used to predict preclinical Alzheimer's disease in 139 adults from the St. Louis, Missouri, metropolitan area who were age 65 or older and had normal cognition at the time of study enrollment.
   
   
