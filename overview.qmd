@@ -16,3 +16,8 @@ library(rbbt)
 * @bayatDrivingAssessmentPreclinical2022: "Driving assessment in preclinical Alzheimer's disease: progress to date and the path forward"
 
   - Preclinical AD: people have evidence of AD pathology but no clinical symptoms
+  
+* @davisEvaluationNaturalisticDriving2020: "Evaluation of naturalistic driving behavior using in-vehicle monitoring technology in preclinical and early Alzheimer's disease"
+
+  - For a convenience sample of older drivers with symptomatic AD, older drivers with preclinical AD, and cognitively normal older drivers whose driving was monitored with GPS data logging (all participants) and video recording (participants with symptomatic AD) for 3 months, Spearman correlations ($\rho$) showed a strong association between speeding and collisions/near collisions in the symptomatic AD participants. In a Poisson regression model, performance on a psychomotor task (Trails A) was a significant predictor of the number of adverse driving events (hard braking, sudden acceleration, and speeding).
+  
