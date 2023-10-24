@@ -21,3 +21,11 @@ library(rbbt)
 
   - For a convenience sample of older drivers with symptomatic AD, older drivers with preclinical AD, and cognitively normal older drivers whose driving was monitored with GPS data logging (all participants) and video recording (participants with symptomatic AD) for 3 months, Spearman correlations ($\rho$) showed a strong association between speeding and collisions/near collisions in the symptomatic AD participants. In a Poisson regression model, performance on a psychomotor task (Trails A) was a significant predictor of the number of adverse driving events (hard braking, sudden acceleration, and speeding).
   
+* Articles that mention self-regulatory driving behavior for older drivers with preclinical AD:
+
+  - @bayatDrivingAssessmentPreclinical2022
+  
+  - @davisEvaluationNaturalisticDriving2020
+  
+  - @babulalNaturalisticStudyDriving2019
+  
