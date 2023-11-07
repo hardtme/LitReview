@@ -25,27 +25,35 @@ library(rbbt)
 
   - @bayatDrivingAssessmentPreclinical2022: "Driving assessment in preclinical Alzheimer’s disease: progress to date and the path forward"
   
-    + *Study participants: this article is a review of previous studies, so there were no direct study participants*
+    + Study participants: this article is a review of previous studies, so there were no direct study participants
   
-    + *Older adults with preclinical AD are less likely to drive and tend to be less aggressive drivers (fewer incidences of hard braking, speeding, and sudden acceleration).*
+    + Older adults with preclinical AD are less likely to drive and tend to be less aggressive drivers (fewer incidences of hard braking, speeding, and sudden acceleration).
   
   - @davisEvaluationNaturalisticDriving2020: "Evaluation of Naturalistic Driving Behavior Using In-Vehicle Monitoring Technology in Preclinical and Early Alzheimer’s Disease
   
-    + *Study participants: convenience sample including 11 drivers aged 60 or older with symptomatic AD and 22 cognitively normal drivers aged 65 or older (11 amyloid-negative participants and 11 participants with evidence of amyloid; beta-amyloid is the "primary driver and earliest marker of AD pathogenesis and cascade")*
+    + Study participants: convenience sample including 11 drivers aged 60 or older with symptomatic AD and 22 cognitively normal drivers aged 65 or older (11 amyloid-negative participants and 11 participants with evidence of amyloid; beta-amyloid is the "primary driver and earliest marker of AD pathogenesis and cascade")
   
-    + *During the early stages of AD (when cognitive function is stil unaffected), people might experience a period of self-regulatory behavior to prevent aggressive driving behavior.*
+    + During the early stages of AD (when cognitive function is stil unaffected), people might experience a period of self-regulatory behavior to prevent aggressive driving behavior.
     
-    + *As cognitive function declines as AD progresses, self-regulatory driving behavior decreases.*
+    + As cognitive function declines as AD progresses, self-regulatory driving behavior decreases.
   
   - @babulalNaturalisticStudyDriving2019: "A Naturalistic Study of Driving Behavior in Older Adults and Preclinical Alzheimer Disease: A Pilot Study"
   
-    + *Study participants: 20 cognitively normal adults aged 65 or older (10 participants with preclinical AD and 10 participants without preclinical AD)*
+    + Study participants: 20 cognitively normal adults aged 65 or older (10 participants with preclinical AD and 10 participants without preclinical AD)
   
-    + *Participants with preclinical AD drove fewer trips than participants without preclinical AD, but participants with preclinical AD drove more miles per trip.*
+    + Participants with preclinical AD drove fewer trips than participants without preclinical AD, but participants with preclinical AD drove more miles per trip.
     
-    + *Could study participants with preclinical AD drive more miles per trip because they have trouble with navigation and get lost?*
+    + Could study participants with preclinical AD drive more miles per trip because they have trouble with navigation and get lost?
     
-    + *Study participants with preclinical AD drove less at night and had fewer trips with aggressive driving behaviors.*
+    + Study participants with preclinical AD drove less at night and had fewer trips with aggressive driving behaviors.
     
-    
+* @camilleriDrivingAssessmentPersons2023L "Driving Assessment for Persons with Dementia: How and when?"
+
+  - *Driving cessation in older adults is associated with a decrease in their quality of life.*
+  
+  - *"Dementia is a cause of cognitive impairment but not all cases of cognitive impairment are due to dementia."*
+  
+  - *This article is a review of previous studies, so it might be useful for me to look at some of the previous studies as well.*
+  
+  - *Do advanced driver-assistance systems act as strategies to help drivers compensate for cognitive impairment?*
   
