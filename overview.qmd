@@ -47,7 +47,7 @@ library(rbbt)
     
     + Study participants with preclinical AD drove less at night and had fewer trips with aggressive driving behaviors.
     
-* @camilleriDrivingAssessmentPersons2023L "Driving Assessment for Persons with Dementia: How and when?"
+* @camilleriDrivingAssessmentPersons2023 "Driving Assessment for Persons with Dementia: How and when?"
 
   - *Driving cessation in older adults is associated with a decrease in their quality of life.*
   
