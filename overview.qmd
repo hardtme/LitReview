@@ -49,11 +49,22 @@ library(rbbt)
     
 * @camilleriDrivingAssessmentPersons2023 "Driving Assessment for Persons with Dementia: How and when?"
 
-  - *Driving cessation in older adults is associated with a decrease in their quality of life.*
+  - Driving cessation in older adults is associated with a decrease in their quality of life.
   
-  - *"Dementia is a cause of cognitive impairment but not all cases of cognitive impairment are due to dementia."*
+  - "Dementia is a cause of cognitive impairment but not all cases of cognitive impairment are due to dementia."
   
-  - *This article is a review of previous studies, so it might be useful for me to look at some of the previous studies as well.*
+  - This article is a review of previous studies, so it might be useful for me to look at some of the previous studies as well.
   
-  - *Do advanced driver-assistance systems act as strategies to help drivers compensate for cognitive impairment?*
+  - Do advanced driver-assistance systems act as strategies to help drivers compensate for cognitive impairment?
+  
+* @aschenbrennerNeuropsychologicalCorrelatesChanges2022 "Neuropsychological Correlates of Changes in Driving Behavior Among Clinically Healthy Older Adults"
+
+  - *Study participants: 161 participants in longitudinal studies of memory and aging at the Knight Alzheimer Disease Research Center (ADRC) at Washington University in St. Louis who were cognitively normal, at least 65 years old, and had 1 year of driving data available*
+  
+  - *Similar driving features to @bayatGPSDrivingDigital2021 (this paper and @bayatGPSDrivingDigital2021 share some authors)*
+  
+  - *Statistical analyses in `lme4`*
+  
+  - *Differences in individuals' attention control predict driving behavior modifications over time*
+  
   
