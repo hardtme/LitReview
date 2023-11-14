@@ -9,6 +9,8 @@ bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, librar
 library(rbbt)
 ```
 
+# Goal: Find Signs of Potential Mild Cognitive Impairment Based on Analysis of Older Adults' Driving Behaviors
+
 * @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
 
   - When included as features in a random forest model, driving behaviors such as the average number of jerks and the number of trips made at night can be used to predict preclinical Alzheimer's disease in 139 adults from the St. Louis, Missouri, metropolitan area who were age 65 or older and had normal cognition at the time of study enrollment.
@@ -59,12 +61,38 @@ library(rbbt)
   
 * @aschenbrennerNeuropsychologicalCorrelatesChanges2022 "Neuropsychological Correlates of Changes in Driving Behavior Among Clinically Healthy Older Adults"
 
-  - *Study participants: 161 participants in longitudinal studies of memory and aging at the Knight Alzheimer Disease Research Center (ADRC) at Washington University in St. Louis who were cognitively normal, at least 65 years old, and had 1 year of driving data available*
+  - Study participants: 161 participants in longitudinal studies of memory and aging at the Knight Alzheimer Disease Research Center (ADRC) at Washington University in St. Louis who were cognitively normal, at least 65 years old, and had 1 year of driving data available
   
-  - *Similar driving features to @bayatGPSDrivingDigital2021 (this paper and @bayatGPSDrivingDigital2021 share some authors)*
+  - Similar driving features to @bayatGPSDrivingDigital2021 (this paper and @bayatGPSDrivingDigital2021 share some authors)
   
-  - *Statistical analyses in `lme4`*
+  - *Driving space composite includes:*
+    
+    + *Total number of trips*
+    
+    + *Radius of gyration (typical distance a person travels)*
+    
+    + *Distance traveled*
+    
+    + *Number of night trips*
+    
+    + *Number of days traveled*
+    
+    + *Number of unique locations*
+    
+  - *Driving performance composite includes:*
   
-  - *Differences in individuals' attention control predict driving behavior modifications over time*
+    + *Overspeeding proportion*
+    
+    + *Hard braking proportion*
+    
+    + *Sudden acceleration proportion*
+  
+  - *Trip: ignition start to ignition off*
+  
+  - *Only analyzed data from before March 2020*
+  
+  - Statistical analyses in `lme4`
+  
+  - "Attentional control is a key moderator of change over time in driving space but not driving performance in older adults."  *(attentional control is "the ability to focus on the relevant aspects of the environment and ignore distracting or competing information")*
   
   
