@@ -9,7 +9,7 @@ bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, librar
 library(rbbt)
 ```
 
-# Goal: Find Signs of Potential Mild Cognitive Impairment Based on Analysis of Older Adults' Driving Behaviors
+**Goal: Find Signs of Potential Mild Cognitive Impairment Based on Analysis of Older Adults' Driving Behaviors**
 
 * @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
 
