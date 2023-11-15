@@ -11,6 +11,8 @@ library(rbbt)
 
 # Goal: Find Associations Between Mild Cognitive Impairment and Driving Behavior in Older Adults
 
+General note: a lot of these articles come from a group at the Washington University Knight Alzheimer’s Disease Research Center
+
 * @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
 
   - When included as features in a random forest model, driving behaviors such as the average number of jerks and the number of trips made at night can be used to predict preclinical Alzheimer's disease in 139 adults from the St. Louis, Missouri, metropolitan area who were age 65 or older and had normal cognition at the time of study enrollment.
@@ -97,20 +99,48 @@ library(rbbt)
   
 * @roe5YearLongitudinalAssessment2019: "A 2.5-Year Longitudinal Assessment of Naturalistic Driving in Preclinical Alzheimer’s Disease"
   
-  - *Study participants: 20 cognitively normal individuals (10 of whom had preclinical AD and 10 of whom did not) age 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center*
+  - Study participants: 20 cognitively normal individuals (10 of whom had preclinical AD and 10 of whom did not) age 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center
   
-  - *DRIVES data loggers installed in participants' vehicles*
+  - DRIVES data loggers installed in participants' vehicles
   
-  - *Data collection period: July 1, 2015, to January 30, 2018 (one participant passed away around a year after data collection began)*
+  - Data collection period: July 1, 2015, to January 30, 2018 (one participant passed away around a year after data collection began)
   
-  - *Data from the data logger were aggregated by month; all participants followed for 2.5 years have 30 data points for all variables collected by the data logger*
+  - Data from the data logger were aggregated by month; all participants followed for 2.5 years have 30 data points for all variables collected by the data logger
   
-  - *Statistical analyses: linear mixed models in SAS*
+  - Statistical analyses: linear mixed models in SAS
   
-  - *Presence of baseline differences between participants was determined based on y-intercepts for linear mixed models*
+  - Presence of baseline differences between participants was determined based on y-intercepts for linear mixed models
   
-  - *In general, the linear mixed models showed little difference in changes in logitudinal driving behavior between the study participants with and without preclinical AD*
+  - In general, the linear mixed models showed little difference in changes in logitudinal driving behavior between the study participants with and without preclinical AD.
   
-  - *Research shows that changes in sensory and motor function happen in the preclinical stage of AD before cognitive decline is noticeable.*
+  - Research shows that changes in sensory and motor function happen in the preclinical stage of AD before cognitive decline is noticeable.
+  
+* @murphyCognitiveBrainReserve2022: "Cognitive and brain reserve predict decline in adverse driving behaviors among cognitively normal older adults" 
+
+  - *Study participants: 186 cognitively normal adults aged 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center who had MRI data, neuropsychological testing data, and at least one year of driving activity measured by the DRIVES system prior to March 2020*
+  
+  - *Cognitive reserve (CR): "the brain's adaptability or functional robustness despite damage;" breadth of memory or thinking abilities*
+  
+  - *Brain reserve (BR): "physical and neuroanatomical structures of the brain"*
+  
+  - *Conceptualization: CR is the brain's software while BR is the brain's hardware.*
+  
+  - *Study investigated*
+  
+    + *The relationship between CR (measured using a reading fluency task) and longitudinal driving behaviors (measured using a DRIVES data logger)*
+    
+    + *The relationship between daily driving and BR (measured using MRI)*
+    
+  - *Used a linear mixed model to predict the mean rate of change in driving outcomes after accounting for age, education, and gender*
+  
+    + *Separate regression line (y-intercept and slope) for each participant*
+    
+    + *y-intercepts for regressions with driving variables represent baseline*
+    
+  - *Analyses performed in SAS*
+  
+  - *"Those with lower BR and CR are more likely to restrict their driving behavior and adapt their daily behaviors such as trips made during the day, speeding, and hard braking as time progresses."*
+  
+  
   
   
