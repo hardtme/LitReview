@@ -91,11 +91,11 @@ library(rbbt)
   
   - Only analyzed data from before March 2020
   
-  - Statistical analyses in `lme4`
+  - Statistical analyses in `lme4` R package
   
   - "Attentional control is a key moderator of change over time in driving space but not driving performance in older adults."  (attentional control is "the ability to focus on the relevant aspects of the environment and ignore distracting or competing information")
   
-  * @roe5YearLongitudinalAssessment2019: "A 2.5-Year Longitudinal Assessment of Naturalistic Driving in Preclinical Alzheimer’s Disease"
+* @roe5YearLongitudinalAssessment2019: "A 2.5-Year Longitudinal Assessment of Naturalistic Driving in Preclinical Alzheimer’s Disease"
   
   - *Study participants: 20 cognitively normal individuals (10 of whom had preclinical AD and 10 of whom did not) age 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center*
   
