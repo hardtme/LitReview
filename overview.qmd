@@ -9,7 +9,7 @@ bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, librar
 library(rbbt)
 ```
 
-**Goal: Find Signs of Potential Mild Cognitive Impairment Based on Analysis of Older Adults' Driving Behaviors**
+# Goal: Find Associations Between Mild Cognitive Impairment and Driving Behavior in Older Adults
 
 * @bayatGPSDrivingDigital2021: "GPS driving: a digital biomarker for preclinical Alzheimer disease"
 
@@ -65,34 +65,52 @@ library(rbbt)
   
   - Similar driving features to @bayatGPSDrivingDigital2021 (this paper and @bayatGPSDrivingDigital2021 share some authors)
   
-  - *Driving space composite includes:*
+  - Driving space composite includes:
     
-    + *Total number of trips*
+    + Total number of trips
     
-    + *Radius of gyration (typical distance a person travels)*
+    + Radius of gyration (typical distance a person travels)
     
-    + *Distance traveled*
+    + Distance traveled
     
-    + *Number of night trips*
+    + Number of night trips
     
-    + *Number of days traveled*
+    + Number of days traveled
     
-    + *Number of unique locations*
+    + Number of unique locations
     
-  - *Driving performance composite includes:*
+  - Driving performance composite includes:
   
-    + *Overspeeding proportion*
+    + Overspeeding proportion
     
-    + *Hard braking proportion*
+    + Hard braking proportion
     
-    + *Sudden acceleration proportion*
+    + Sudden acceleration proportion
   
-  - *Trip: ignition start to ignition off*
+  - Trip: ignition start to ignition off
   
-  - *Only analyzed data from before March 2020*
+  - Only analyzed data from before March 2020
   
   - Statistical analyses in `lme4`
   
-  - "Attentional control is a key moderator of change over time in driving space but not driving performance in older adults."  *(attentional control is "the ability to focus on the relevant aspects of the environment and ignore distracting or competing information")*
+  - "Attentional control is a key moderator of change over time in driving space but not driving performance in older adults."  (attentional control is "the ability to focus on the relevant aspects of the environment and ignore distracting or competing information")
+  
+  * @roe5YearLongitudinalAssessment2019: "A 2.5-Year Longitudinal Assessment of Naturalistic Driving in Preclinical Alzheimer’s Disease"
+  
+  - *Study participants: 20 cognitively normal individuals (10 of whom had preclinical AD and 10 of whom did not) age 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center*
+  
+  - *DRIVES data loggers installed in participants' vehicles*
+  
+  - *Data collection period: July 1, 2015, to January 30, 2018 (one participant passed away around a year after data collection began)*
+  
+  - *Data from the data logger were aggregated by month; all participants followed for 2.5 years have 30 data points for all variables collected by the data logger*
+  
+  - *Statistical analyses: linear mixed models in SAS*
+  
+  - *Presence of baseline differences between participants was determined based on y-intercepts for linear mixed models*
+  
+  - *In general, the linear mixed models showed little difference in changes in logitudinal driving behavior between the study participants with and without preclinical AD*
+  
+  - *Research shows that changes in sensory and motor function happen in the preclinical stage of AD before cognitive decline is noticeable.*
   
   
