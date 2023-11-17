@@ -143,30 +143,73 @@ General note: a lot of these articles come from a group at the Washington Univer
   
 * @herrmannPredictorsDrivingCessation2006: "Predictors of driving cessation in mild-to-moderate dementia"
 
-  - *Canadian Outcomes Study in Dementia (COSID)*
+  - Canadian Outcomes Study in Dementia (COSID)
 
-  - *Study participants: 883 patients with mild-to-moderate dementia from 32 centers across Canada (British Columbia, the Prairie provinces, Ontario, Quebec, and the Atlantic provinces) who were age 60 or older and living in the community*
+  - Study participants: 883 patients with mild-to-moderate dementia from 32 centers across Canada (British Columbia, the Prairie provinces, Ontario, Quebec, and the Atlantic provinces) who were age 60 or older and living in the community
   
-  - *Information and assessments conducted from the start of the study (baseline) and every 6 months for 3 years or until death*
+  - Information and assessments conducted from the start of the study (baseline) and every 6 months for 3 years or until death
   
-  - *Assessment types:*
+  - Assessment types:
 
-    + *Cognition by way of the Modified Mini-Mental State Examination (3MS)*  
+    + Cognition by way of the Modified Mini-Mental State Examination (3MS)  
     
-    + *Global staging/severity (GDS)*
+    + Global staging/severity (GDS)
     
-    + *Function by way of the Functional Autonomy Measurement System (SMAF)*
+    + Function by way of the Functional Autonomy Measurement System (SMAF)
     
-    + *Behavior by way of the Neuropsychiatric Inventory (NPI)*
+    + Behavior by way of the Neuropsychiatric Inventory (NPI)
     
-  - *Statistical analyses:*
+  - Statistical analyses:
     
-    + *Exploratory Cox survival analysis (event of interest was driving cessation)*
+    + Exploratory Cox survival analysis (event of interest was driving cessation)
     
-    + *Cox regression analysis*
+    + Cox regression analysis
     
-  - *Cognitive impairment and behavioral disturbances were strong predictors of driving cessation.*
+  - Cognitive impairment and behavioral disturbances were strong predictors of driving cessation.
 
-  - *No naturalistic driving component to this study*
+  - No naturalistic driving component to this study
+  
+* @ucDriverLandmarkTraffic2005: "Driver landmark and traffic sign identification in early Alzheimer’s disease"
+
+  - *Study participants: 33 older adults with mild Alzheimer's disease and 137 congitively normal older adults*
+  
+  - *Study used Cogstat as a way to measure cognition in the study participants, and our data mentions Cogstat, too. Are these two measures the same?*
+  
+  - *Participants drove in an experimental vehicle equipped with instrumentation that collected data on steering wheel position, normalized accelerator and brake pedal positions, lateral and longitudinal acceleration, and speed.*
+  
+  - *The participants were videotaped (30 frames/sec) to capture lane tracking and visual scanning of the environment.*
+  
+  - *An experimenter rode in the passenger seat to score driving performance and to operate the dual controls (like a driver's ed car?) in case of emergency.*
+  
+  - *The participants were asked to look for and verbally report traffic signs and restaurants during 1-mile stretch of 4-lane divided road through a commercial area.*
+  
+  - *Types of stimuli (landmarks):*
+  
+    + *High saliency, e.g., a speed limit sign, a restaurant located directly on the route*
+    
+    + *Low saliency, e.g., a mile marker, a restaurant visible from the route but not located directly on the route*
+    
+  - *Response variables: percentage of correctly identified landmarks and traffic signs and the number of at-fault safety errors in driving*
+  
+  - *Statistical analyeses:*
+  
+    + *Wilcoxon rank-sum test to compare the Alzheimer's group and the cognitively normal group with respect to demographic, visual, cognitive, and landmark and traffic sign identification task (LTIT) outcome measures*
+    
+    + *Regression models to adjust results of the LTIT for age, sex, visual acuity, and previous familiarity with the route*
+    
+    + *Fisher's exact test to compare the proportions of participants in each group who made at-fault safety errors*
+    
+    + *Spearman correlation coefficients for the LTIT results and the cognitive and visual tests*
+    
+    + *Stepwise linear regression to find predictors for total percentages of landmarks and traffic signs identified*
+    
+    + *Ordinal logistic regression to find predictors for at-fault safety errors*
+    
+  - *"Drivers with Alzheimer’s disease identified a significantly smaller percentage of restaurants and traffic signs, and committed more at-fault safety errors during LTIT, than the neurologically normal controls."*
+  
+  - *"Inability to recognize traffic signs23 and landmarks may be an early complication in patients with Alzheimer’s disease."*
+  
+  - *"A subset of drivers with Alzheimer’s disease did not make any safety errors, suggesting that some individuals with mild dementia remain fit drivers and may be allowed to continue to drive."*
+    
   
   
