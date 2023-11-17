@@ -117,30 +117,56 @@ General note: a lot of these articles come from a group at the Washington Univer
   
 * @murphyCognitiveBrainReserve2022: "Cognitive and brain reserve predict decline in adverse driving behaviors among cognitively normal older adults" 
 
-  - *Study participants: 186 cognitively normal adults aged 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center who had MRI data, neuropsychological testing data, and at least one year of driving activity measured by the DRIVES system prior to March 2020*
+  - Study participants: 186 cognitively normal adults aged 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center who had MRI data, neuropsychological testing data, and at least one year of driving activity measured by the DRIVES system prior to March 2020
   
-  - *Cognitive reserve (CR): "the brain's adaptability or functional robustness despite damage;" breadth of memory or thinking abilities*
+  -*Cognitive reserve (CR): "the brain's adaptability or functional robustness despite damage;" breadth of memory or thinking abilities
   
-  - *Brain reserve (BR): "physical and neuroanatomical structures of the brain"*
+  - Brain reserve (BR): "physical and neuroanatomical structures of the brain"
   
-  - *Conceptualization: CR is the brain's software while BR is the brain's hardware.*
+  - Conceptualization: CR is the brain's software while BR is the brain's hardware.
   
-  - *Study investigated*
+  - Study investigated
   
-    + *The relationship between CR (measured using a reading fluency task) and longitudinal driving behaviors (measured using a DRIVES data logger)*
+    + The relationship between CR (measured using a reading fluency task) and longitudinal driving behaviors (measured using a DRIVES data logger)
     
-    + *The relationship between daily driving and BR (measured using MRI)*
+    + The relationship between daily driving and BR (measured using MRI)
     
-  - *Used a linear mixed model to predict the mean rate of change in driving outcomes after accounting for age, education, and gender*
+  - Used a linear mixed model to predict the mean rate of change in driving outcomes after accounting for age, education, and gender
   
-    + *Separate regression line (y-intercept and slope) for each participant*
+    + Have the separate regression line (y-intercept and slope) for each participant
     
-    + *y-intercepts for regressions with driving variables represent baseline*
+    + y-intercepts for regressions with driving variables represent baseline
     
-  - *Analyses performed in SAS*
+  - Analyses performed in SAS
   
-  - *"Those with lower BR and CR are more likely to restrict their driving behavior and adapt their daily behaviors such as trips made during the day, speeding, and hard braking as time progresses."*
+  - "Those with lower BR and CR are more likely to restrict their driving behavior and adapt their daily behaviors such as trips made during the day, speeding, and hard braking as time progresses."
   
+* @herrmannPredictorsDrivingCessation2006: "Predictors of driving cessation in mild-to-moderate dementia"
+
+  - *Canadian Outcomes Study in Dementia (COSID)*
+
+  - *Study participants: 883 patients with mild-to-moderate dementia from 32 centers across Canada (British Columbia, the Prairie provinces, Ontario, Quebec, and the Atlantic provinces) who were age 60 or older and living in the community*
   
+  - *Information and assessments conducted from the start of the study (baseline) and every 6 months for 3 years or until death*
+  
+  - *Assessment types:*
+
+    + *Cognition by way of the Modified Mini-Mental State Examination (3MS)*  
+    
+    + *Global staging/severity (GDS)*
+    
+    + *Function by way of the Functional Autonomy Measurement System (SMAF)*
+    
+    + *Behavior by way of the Neuropsychiatric Inventory (NPI)*
+    
+  - *Statistical analyses:*
+    
+    + *Exploratory Cox survival analysis (event of interest was driving cessation)*
+    
+    + *Cox regression analysis*
+    
+  - *Cognitive impairment and behavioral disturbances were strong predictors of driving cessation.*
+
+  - *No naturalistic driving component to this study*
   
   
