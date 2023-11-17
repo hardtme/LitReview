@@ -191,7 +191,7 @@ General note: a lot of these articles come from a group at the Washington Univer
     
   - *Response variables: percentage of correctly identified landmarks and traffic signs and the number of at-fault safety errors in driving*
   
-  - *Statistical analyeses:*
+  - *Statistical analyses:*
   
     + *Wilcoxon rank-sum test to compare the Alzheimer's group and the cognitively normal group with respect to demographic, visual, cognitive, and landmark and traffic sign identification task (LTIT) outcome measures*
     
