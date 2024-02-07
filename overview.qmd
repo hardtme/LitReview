@@ -211,5 +211,28 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - "A subset of drivers with Alzheimer’s disease did not make any safety errors, suggesting that some individuals with mild dementia remain fit drivers and may be allowed to continue to drive."
     
+* @apolinarioCognitiveImpairmentDriving2009: "Cognitive impairment and driving: a review of the literature"
+
+  - "The most frequent safety errors committed by drivers with dementia were related to difficulties in maintaining lane control, driving too slowly, and taking excessive time to turn left at intersections."
+  
+  - The above claim is based on @man-son-hingSystematicReviewDriving2007. Note that the original claim was based on driving simulator performance.
+  
+* @coxEvaluatingDrivingPerformance1998: "Evaluating Driving Performance of Outpatients with Alzheimer Disease"
+
+  - Driving simulator task
+  
+  - Mini-Mental State Exam (MMSE) used to evaluate participants' cognitive status
+  
+  - 29 participants with AD and 21 cognitively normal control participants (spouses or caregivers of participants with AD)
+  
+  - Examples of bad graphics (3D barcharts)
+  
+  - Logistic regression used to classify participants as AD patients or not
+  
+  - Evidence of compensatory responses for AD patients? AD patients drove more slowly on the open road and took more time to turn left.
+  
+  - Can compensatory strategies put drivers at more risk of being involved in a crash?
+  
+  - MMSE scores were highly correlated with driving simulator performance.
   
   
