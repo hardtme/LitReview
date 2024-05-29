@@ -5,7 +5,7 @@ bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, librar
 ---
 
 ```{r}
-#| echo = F
+#| echo: false
 library(rbbt)
 ```
 
