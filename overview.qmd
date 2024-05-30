@@ -1,7 +1,7 @@
 ---
 title: "Brief Article Summaries"
 format: html
-bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, library_id=rbbt::bbt_library_id('Graphics Research'), translator='bibtex')`"
+bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, library_id='Graphics Research', translator='bibtex')`"
 ---
 
 ```{r}
@@ -236,3 +236,4 @@ General note: a lot of these articles come from a group at the Washington Univer
   - MMSE scores were highly correlated with driving simulator performance.
   
   
+
