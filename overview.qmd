@@ -235,5 +235,7 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - MMSE scores were highly correlated with driving simulator performance.
   
-  
+# Goal: Use Map Matching to Snap Noisy GPS Coordinates to the Road System
+
+* @newsonHiddenMarkovMap2009: "Hidden Markov Map Matching Through Noise and Sparseness"
 
