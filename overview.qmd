@@ -281,4 +281,14 @@ General note: a lot of these articles come from a group at the Washington Univer
     
     - Matching uncertainty: Map density (i.e., the amount of roads in a region) is a major factor here. Map-matching is more challenging in a region filled with many roads than in a more empty region with fewer roads.
     
+* @ishiguroLeveragingTrajectorySimplification2024: "Leveraging Trajectory Simplification for Efficient Map-Matching on Road Network"    
+
+  - Trajectory: sequence of points with latitude/longitude coordinates
+  
+  - Goal: balance the tradeoff between trajectory simplification and map-matching accuracy 
+  
+    + Raw trajectories have many points, so a large number of points is involved and map-matching algorithms can take a long time.
+    
+    + Simplified trajectories can decrease the accuracy of map-matching algorithms.
+    
     
