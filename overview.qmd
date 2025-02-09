@@ -17,30 +17,32 @@ General note: a lot of these articles come from a group at the Washington Univer
 
   - When included as features in a random forest model, driving behaviors such as the average number of jerks and the number of trips made at night can be used to predict preclinical Alzheimer's disease in 139 adults from the St. Louis, Missouri, metropolitan area who were age 65 or older and had normal cognition at the time of study enrollment.
   
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
+  
 * @bayatDrivingAssessmentPreclinical2022: "Driving assessment in preclinical Alzheimer's disease: progress to date and the path forward"
 
   - Preclinical AD: people have evidence of AD pathology but no clinical symptoms
+  
+  - Study participants: this article is a review of previous studies, so there were no direct study participants
+  
+  - Older adults with preclinical AD are less likely to drive and tend to be less aggressive drivers (fewer incidences of hard braking, speeding, and sudden acceleration).
+    
+  - No mention of the number of left and right turns or the right/left turn ratio
   
 * @davisEvaluationNaturalisticDriving2020: "Evaluation of naturalistic driving behavior using in-vehicle monitoring technology in preclinical and early Alzheimer's disease"
 
   - For a convenience sample of older drivers with symptomatic AD, older drivers with preclinical AD, and cognitively normal older drivers whose driving was monitored with GPS data logging (all participants) and video recording (participants with symptomatic AD) for 3 months, Spearman correlations ($\rho$) showed a strong association between speeding and collisions/near collisions in the symptomatic AD participants. In a Poisson regression model, performance on a psychomotor task (Trails A) was a significant predictor of the number of adverse driving events (hard braking, sudden acceleration, and speeding).
   
+  - Study participants: convenience sample including 11 drivers aged 60 or older with symptomatic AD and 22 cognitively normal drivers aged 65 or older (11 amyloid-negative participants and 11 participants with evidence of amyloid; beta-amyloid is the "primary driver and earliest marker of AD pathogenesis and cascade")
+  
+  - During the early stages of AD (when cognitive function is still unaffected), people might experience a period of self-regulatory behavior to prevent aggressive driving behavior.
+    
+  - As cognitive function declines as AD progresses, self-regulatory driving behavior decreases.
+  
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
+  
 * Articles that mention self-regulatory driving behavior for older drivers with preclinical AD:
 
-  - @bayatDrivingAssessmentPreclinical2022: "Driving assessment in preclinical Alzheimer’s disease: progress to date and the path forward"
-  
-    + Study participants: this article is a review of previous studies, so there were no direct study participants
-  
-    + Older adults with preclinical AD are less likely to drive and tend to be less aggressive drivers (fewer incidences of hard braking, speeding, and sudden acceleration).
-  
-  - @davisEvaluationNaturalisticDriving2020: "Evaluation of Naturalistic Driving Behavior Using In-Vehicle Monitoring Technology in Preclinical and Early Alzheimer’s Disease
-  
-    + Study participants: convenience sample including 11 drivers aged 60 or older with symptomatic AD and 22 cognitively normal drivers aged 65 or older (11 amyloid-negative participants and 11 participants with evidence of amyloid; beta-amyloid is the "primary driver and earliest marker of AD pathogenesis and cascade")
-  
-    + During the early stages of AD (when cognitive function is still unaffected), people might experience a period of self-regulatory behavior to prevent aggressive driving behavior.
-    
-    + As cognitive function declines as AD progresses, self-regulatory driving behavior decreases.
-  
   - @babulalNaturalisticStudyDriving2019: "A Naturalistic Study of Driving Behavior in Older Adults and Preclinical Alzheimer Disease: A Pilot Study"
   
     + Study participants: 20 cognitively normal adults aged 65 or older (10 participants with preclinical AD and 10 participants without preclinical AD)
@@ -51,15 +53,19 @@ General note: a lot of these articles come from a group at the Washington Univer
     
     + Study participants with preclinical AD drove less at night and had fewer trips with aggressive driving behaviors.
     
+    + No mention of the number of left and right turns or the right/left turn ratio
+    
 * @camilleriDrivingAssessmentPersons2023 "Driving Assessment for Persons with Dementia: How and when?"
 
   - Driving cessation in older adults is associated with a decrease in their quality of life.
   
   - "Dementia is a cause of cognitive impairment but not all cases of cognitive impairment are due to dementia."
   
-  - This article is a review of previous studies, so it might be useful for me to look at some of the previous studies as well.
+  - This article is a review of previous studies, so it might be useful to look at some of the previous studies as well.
   
   - Do advanced driver-assistance systems act as strategies to help drivers compensate for cognitive impairment?
+  
+  - Some of the studies reviewed examined errors at intersections, but likely not the number of turns or the left/right turn ratio.
   
 * @aschenbrennerNeuropsychologicalCorrelatesChanges2022 "Neuropsychological Correlates of Changes in Driving Behavior Among Clinically Healthy Older Adults"
 
@@ -97,6 +103,8 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - "Attentional control is a key moderator of change over time in driving space but not driving performance in older adults."  (attentional control is "the ability to focus on the relevant aspects of the environment and ignore distracting or competing information")
   
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
+  
 * @roe5YearLongitudinalAssessment2019: "A 2.5-Year Longitudinal Assessment of Naturalistic Driving in Preclinical Alzheimer’s Disease"
   
   - Study participants: 20 cognitively normal individuals (10 of whom had preclinical AD and 10 of whom did not) age 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center
@@ -115,11 +123,13 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - Research shows that changes in sensory and motor function happen in the preclinical stage of AD before cognitive decline is noticeable.
   
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
+  
 * @murphyCognitiveBrainReserve2022: "Cognitive and brain reserve predict decline in adverse driving behaviors among cognitively normal older adults" 
 
   - Study participants: 186 cognitively normal adults aged 65 or older recruited from longitudinal studies at the Washington University Knight Alzheimer’s Disease Research Center who had MRI data, neuropsychological testing data, and at least one year of driving activity measured by the DRIVES system prior to March 2020
   
-  -*Cognitive reserve (CR): "the brain's adaptability or functional robustness despite damage;" breadth of memory or thinking abilities
+  - Cognitive reserve (CR): "the brain's adaptability or functional robustness despite damage;" breadth of memory or thinking abilities
   
   - Brain reserve (BR): "physical and neuroanatomical structures of the brain"
   
@@ -140,6 +150,8 @@ General note: a lot of these articles come from a group at the Washington Univer
   - Analyses performed in SAS
   
   - "Those with lower BR and CR are more likely to restrict their driving behavior and adapt their daily behaviors such as trips made during the day, speeding, and hard braking as time progresses."
+  
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
   
 * @herrmannPredictorsDrivingCessation2006: "Predictors of driving cessation in mild-to-moderate dementia"
 
@@ -168,6 +180,8 @@ General note: a lot of these articles come from a group at the Washington Univer
   - Cognitive impairment and behavioral disturbances were strong predictors of driving cessation.
 
   - No naturalistic driving component to this study
+  
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
   
 * @ucDriverLandmarkTraffic2005: "Driver landmark and traffic sign identification in early Alzheimer’s disease"
 
@@ -210,12 +224,16 @@ General note: a lot of these articles come from a group at the Washington Univer
   - "Inability to recognize traffic signs and landmarks may be an early complication in patients with Alzheimer’s disease."
   
   - "A subset of drivers with Alzheimer’s disease did not make any safety errors, suggesting that some individuals with mild dementia remain fit drivers and may be allowed to continue to drive."
+  
+  - Did not use the number of left and right turns or the right/left turn ratio in their models
     
 * @apolinarioCognitiveImpairmentDriving2009: "Cognitive impairment and driving: a review of the literature"
 
   - "The most frequent safety errors committed by drivers with dementia were related to difficulties in maintaining lane control, driving too slowly, and taking excessive time to turn left at intersections."
   
   - The above claim is based on @man-son-hingSystematicReviewDriving2007. Note that the original claim was based on driving simulator performance.
+  
+  - Did not consider the number of turns or the right/left turn ratio
   
 * @coxEvaluatingDrivingPerformance1998: "Evaluating Driving Performance of Outpatients with Alzheimer Disease"
 
@@ -235,7 +253,17 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - MMSE scores were highly correlated with driving simulator performance.
   
-# Goal: Use Map Matching to Snap Noisy GPS Coordinates to the Road System
+  - The study used a simulator course and thus did not consider the number of turns or the right/left turn ratio.
+  
+* @diDetectingMildCognitive2023: "Detecting Mild Cognitive Impairment and Dementia in Older Adults Using Naturalistic Driving Data and Interaction-Based Classification From Influence Score"
+
+  - Found that the ratio of right to left turns made in a month was one of the most important variables in predicting MCI and dementia
+  
+* @liLongitudinalResearchAging2017: "Longitudinal Research on Aging Drivers (LongROAD): study design and methods"
+
+
+  
+# Use Map Matching to Snap Noisy GPS Coordinates to the Road System?
 
 * @newsonHiddenMarkovMap2009: "Hidden Markov Map Matching Through Noise and Sparseness"
 
@@ -291,4 +319,4 @@ General note: a lot of these articles come from a group at the Washington Univer
     
     + Simplified trajectories can decrease the accuracy of map-matching algorithms.
     
-    
+
