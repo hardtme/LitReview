@@ -257,10 +257,80 @@ General note: a lot of these articles come from a group at the Washington Univer
   
 * @diDetectingMildCognitive2023: "Detecting Mild Cognitive Impairment and Dementia in Older Adults Using Naturalistic Driving Data and Interaction-Based Classification From Influence Score"
 
+  - In-vehicle data recording device and driving variables described in @liLongitudinalResearchAging2017
+  
+  - Detailed statistics for the variables are given in @diUsingNaturalisticDriving2021
+
   - Found that the ratio of right to left turns made in a month was one of the most important variables in predicting MCI and dementia
   
 * @liLongitudinalResearchAging2017: "Longitudinal Research on Aging Drivers (LongROAD): study design and methods"
 
+  - Driving variables were chosen based on @molnarDrivingAvoidanceOlder2013
+  
+  - Found the number of right turns made in a month, the number of left turns made in a month, and the right to left turn ratio for each month
+  
+* @diUsingNaturalisticDriving2021: "Using Naturalistic Driving Data to Predict Mild Cognitive Impairment and Dementia: Preliminary Findings from the Longitudinal Research on Aging Drivers (LongROAD) Study"
+
+  - Found the number of right turns made in a month, the number of left turns made in a month, and the right to left turn ratio for each month
+  
+  - Classifier: healthy = 0, MCI/dementia = 1
+  
+  - 5 random forests
+    
+    + Age only
+    
+    + Demographic characteristics (i.e., age, sex, race/ethnicity, and education) only
+    
+    + Driving variables only
+    
+    + Age and driving variables
+    
+    + Demographic characteristics and driving variables (best model)
+    
+  - Randomly selected training and testing data
+  
+  - Rebalanced training data using the synthetic minority oversampling technique (SMOTE): "We oversampled the dementia data points and generated synthetic MCI/dementia samples using existing MCI/dementia data while undersampling the healthy points to make the healthy–MCI/dementia class ratio close to 0.95:1."\
+  
+  - Random forest parameters were tuned using 10-fold cross-validation
+  
+  - Most important features:
+  
+    + Age
+    
+    + Percent of driving distance less than 15 miles from home
+    
+    + Race/ethnicity
+    
+    + Minutes per trip chain
+    
+    + Minutes per trip
+    
+    + Number of hard braking events with deceleration rates >= 0.35 g
+    
+  - Right to left turn ratio ranks 9th in feature importance
+  
+  - Left turn count ranks 21st in feature importance
+  
+  - Right turn count ranks 26th in feature importance
+  
+  - "As a result, we included driving behavior features across all the study participants in the classification algorithms without specifying which records belong to whom, or considering time-series sequences of those driving features."
+  
+ * @molnarDrivingAvoidanceOlder2013: "Driving avoidance by older adults: Is it always self-regulation?"
+ 
+  - Study data from Australia
+  
+  - 246 study participants answered a survey about their driving habits
+  
+  - Example questions: Do you try to avoid...?
+  
+    + driving at night
+    
+    + making unprotected right turns (note that Australians drive on the left side of the road)
+    
+    + driving in rush hour traffic
+    
+    + driving on the freeway
+    
 
   
 # Use Map Matching to Snap Noisy GPS Coordinates to the Road System?
