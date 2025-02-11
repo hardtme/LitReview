@@ -261,7 +261,7 @@ General note: a lot of these articles come from a group at the Washington Univer
   
   - Detailed statistics for the variables are given in @diUsingNaturalisticDriving2021
 
-  - Found that the ratio of right to left turns made in a month was one of the most important variables in predicting MCI and dementia
+  - Found that the ratio of right to left turns made in a month was one of the most important variables in predicting MCI and dementia (another important variable was the number of hard braking events in a month)
   
 * @liLongitudinalResearchAging2017: "Longitudinal Research on Aging Drivers (LongROAD): study design and methods"
 
@@ -289,7 +289,7 @@ General note: a lot of these articles come from a group at the Washington Univer
     
   - Randomly selected training and testing data
   
-  - Rebalanced training data using the synthetic minority oversampling technique (SMOTE): "We oversampled the dementia data points and generated synthetic MCI/dementia samples using existing MCI/dementia data while undersampling the healthy points to make the healthy–MCI/dementia class ratio close to 0.95:1."\
+  - Rebalanced training data using the synthetic minority oversampling technique (SMOTE): "We oversampled the dementia data points and generated synthetic MCI/dementia samples using existing MCI/dementia data while undersampling the healthy points to make the healthy–MCI/dementia class ratio close to 0.95:1."
   
   - Random forest parameters were tuned using 10-fold cross-validation
   
@@ -333,60 +333,60 @@ General note: a lot of these articles come from a group at the Washington Univer
     
 
   
-# Use Map Matching to Snap Noisy GPS Coordinates to the Road System?
+<!-- # Use Map Matching to Snap Noisy GPS Coordinates to the Road System? -->
 
-* @newsonHiddenMarkovMap2009: "Hidden Markov Map Matching Through Noise and Sparseness"
+<!-- * @newsonHiddenMarkovMap2009: "Hidden Markov Map Matching Through Noise and Sparseness" -->
 
-  - Seminal work on map matching with hidden Markov models
-  
-  - The map matching algorithm uses a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network.
-  
-  - This map matching algorithm runs as a batch process after all data are collected (i.e., the algorithm is not real time).
-  
-* @sakiPracticalGuideOpenSource2022: "A Practical Guide to an Open-Source Map-Matching Approach for Big GPS Data"
+<!--   - Seminal work on map matching with hidden Markov models -->
 
-  - Open-source map-matching tool: Valhalla
-  
-  - Development of map-matching approaches:
-  
-    + Fit a curve through a sequence of GPS points and find the road segment which best matches the curve (doesn't work well in practice)
-    
-    + Match the points to the nearest road segment (pros: it's fast and a baseline for more sophisticated algorithms; cons: it's sensitive to outliers and doesn't utilize information from previous points)
-    
-    + Improvement to matching points to the nearest road: utilize GPS heading information and discard roads if the road heading does not match the GPS heading
-    
-    + Another improvement to matching points to the nearest road: use a Kalman filter to drop unreasonable GPS points
-    
-    + Hidden Markov models [@newsonHiddenMarkovMap2009]: basis for many later approaches
-    
-  - Evaluating the accuracy of map-matching algorithms can be challenging because the true routes are unknown.
-  
-* @chaoSurveyMapMatchingAlgorithms2020a: "A Survey on Map-Matching Algorithms"
+<!--   - The map matching algorithm uses a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. -->
 
-  + State-transition models
-  
-    - Hidden Markov models
+<!--   - This map matching algorithm runs as a batch process after all data are collected (i.e., the algorithm is not real time). -->
 
-    - Conditional random field (CRF) models account for interactions among observations while HMMs only consider the relationship between an observation and the most recent previous point.
-  
-    - Weighted graph techniques infer the path from a weighted graph where the vertices are candidate points on the road system and edges are formed between two consective sample points. Process: (1) Initialize the graph (2) Use a scoring function to weight the edges in the graph (3) Infer the path based on the weighted graph
-  
-  + Data quality challenges
-  
-    - Unnecessary detour: This issue often happens when the sampling rate is high. Consecutive points may be too close to each other so that the later point is mapped in the upstream of the previous point.
-    
-    - Matching break: This issue is often caused by outlier GPS points in state-transition models. The outlier falls out of the candidate range for the true state, and so the map-matching route is disconnected.
-    
-    - Matching uncertainty: Map density (i.e., the amount of roads in a region) is a major factor here. Map-matching is more challenging in a region filled with many roads than in a more empty region with fewer roads.
-    
-* @ishiguroLeveragingTrajectorySimplification2024: "Leveraging Trajectory Simplification for Efficient Map-Matching on Road Network"    
+<!-- * @sakiPracticalGuideOpenSource2022: "A Practical Guide to an Open-Source Map-Matching Approach for Big GPS Data" -->
 
-  - Trajectory: sequence of points with latitude/longitude coordinates
-  
-  - Goal: balance the tradeoff between trajectory simplification and map-matching accuracy 
-  
-    + Raw trajectories have many points, so a large number of points is involved and map-matching algorithms can take a long time.
-    
-    + Simplified trajectories can decrease the accuracy of map-matching algorithms.
+<!--   - Open-source map-matching tool: Valhalla -->
+
+<!--   - Development of map-matching approaches: -->
+
+<!--     + Fit a curve through a sequence of GPS points and find the road segment which best matches the curve (doesn't work well in practice) -->
+
+<!--     + Match the points to the nearest road segment (pros: it's fast and a baseline for more sophisticated algorithms; cons: it's sensitive to outliers and doesn't utilize information from previous points) -->
+
+<!--     + Improvement to matching points to the nearest road: utilize GPS heading information and discard roads if the road heading does not match the GPS heading -->
+
+<!--     + Another improvement to matching points to the nearest road: use a Kalman filter to drop unreasonable GPS points -->
+
+<!--     + Hidden Markov models [@newsonHiddenMarkovMap2009]: basis for many later approaches -->
+
+<!--   - Evaluating the accuracy of map-matching algorithms can be challenging because the true routes are unknown. -->
+
+<!-- * @chaoSurveyMapMatchingAlgorithms2020a: "A Survey on Map-Matching Algorithms" -->
+
+<!--   + State-transition models -->
+
+<!--     - Hidden Markov models -->
+
+<!--     - Conditional random field (CRF) models account for interactions among observations while HMMs only consider the relationship between an observation and the most recent previous point. -->
+
+<!--     - Weighted graph techniques infer the path from a weighted graph where the vertices are candidate points on the road system and edges are formed between two consective sample points. Process: (1) Initialize the graph (2) Use a scoring function to weight the edges in the graph (3) Infer the path based on the weighted graph -->
+
+<!--   + Data quality challenges -->
+
+<!--     - Unnecessary detour: This issue often happens when the sampling rate is high. Consecutive points may be too close to each other so that the later point is mapped in the upstream of the previous point. -->
+
+<!--     - Matching break: This issue is often caused by outlier GPS points in state-transition models. The outlier falls out of the candidate range for the true state, and so the map-matching route is disconnected. -->
+
+<!--     - Matching uncertainty: Map density (i.e., the amount of roads in a region) is a major factor here. Map-matching is more challenging in a region filled with many roads than in a more empty region with fewer roads. -->
+
+<!-- * @ishiguroLeveragingTrajectorySimplification2024: "Leveraging Trajectory Simplification for Efficient Map-Matching on Road Network"     -->
+
+<!--   - Trajectory: sequence of points with latitude/longitude coordinates -->
+
+<!--   - Goal: balance the tradeoff between trajectory simplification and map-matching accuracy  -->
+
+<!--     + Raw trajectories have many points, so a large number of points is involved and map-matching algorithms can take a long time. -->
+
+<!--     + Simplified trajectories can decrease the accuracy of map-matching algorithms. -->
     
 
