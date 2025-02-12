@@ -257,11 +257,29 @@ General note: a lot of these articles come from a group at the Washington Univer
   
 * @diDetectingMildCognitive2023: "Detecting Mild Cognitive Impairment and Dementia in Older Adults Using Naturalistic Driving Data and Interaction-Based Classification From Influence Score"
 
+  - LongROAD study
+
   - In-vehicle data recording device and driving variables described in @liLongitudinalResearchAging2017
   
-  - Detailed statistics for the variables are given in @diUsingNaturalisticDriving2021
+  - Detailed statistics for the driving variables are given in @diUsingNaturalisticDriving2021
 
   - Found that the ratio of right to left turns made in a month was one of the most important variables in predicting MCI and dementia (another important variable was the number of hard braking events in a month)
+  
+  - Binary response: 0 if healthy, 1 if dementia, Alzheimer's, or MCI
+  
+  - Did not use raw values for the driving variables
+  
+    + Each driving variable consists of a sequence of points, where each point is the value of the driving variable for the month.
+  
+    + For each time-dependent driving variable, 48 time-series features (e.g., time series mean, auto-correlation coefficient, seasonable periods, etc.) were extracted.
+    
+    + Resulting data matrix: 1 row for each participant and (nvar x 48) columns
+    
+  - Influence score (I-score) and backward-dropping algorithm (BDA) were used to identify influential variables.
+  
+    + Continuous variables had to be discretized before computing the I-score. The original variables (not the partitions) were used after variable selection.
+    
+    + BDA identified the most influential subsets of variables.
   
 * @liLongitudinalResearchAging2017: "Longitudinal Research on Aging Drivers (LongROAD): study design and methods"
 
