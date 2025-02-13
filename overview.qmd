@@ -349,7 +349,43 @@ General note: a lot of these articles come from a group at the Washington Univer
     
     + driving on the freeway
     
+* @molnarUsingNaturalisticDriving2018: "Using naturalistic driving data to better understand the driving exposure and patterns of older drivers"
 
+  - Data from a naturalistic driving study conducted at the University of Michigan Transportation Research Institute as part of the Integrated Vehicle-Based Safety System (IVBSS) program
+    
+  - 3 age groups
+  
+    + Age 20-30 (younger)
+    
+    + Age 40-50 (middle-aged)
+    
+    + Age 60-70 (older)
+    
+  - Some driving variables were normalized by the number of trips taken by the driver.
+  
+  - Describes how they detected turns
+  
+    + Find the yaw rate (the time derivative of yaw) from GPS heading data
+    
+    + Apply a binomial filter with a 5-sec period
+    
+    + Define turning periods when |yaw rate| > 5.16 degrees/sec
+    
+    + Divide yaw rate by speed to get the instantaneous turn radius
+    
+    + Define turning events as having a heading change between 70 and 110 degrees, with the sign of the heading indicating the type of turn
+    
+  - No age or sex differences were found for the ratio of right to left turns 
+
+* @beckExaminingPatternsDriving2022: "Examining Patterns of Driving Avoidance Behaviors Among Older People Using Latent Class Analysis
+
+  - Analyzed a survey about driving avoidance behaviors
+  
+  - Respondents were asked about how often (never, sometimes, always) they avoided 9 different driving situations, including making left turns across oncoming traffic
+  
+  - 66.8% of respondents reported that they never avoided making left turns. 
+  
+  
   
 <!-- # Use Map Matching to Snap Noisy GPS Coordinates to the Road System? -->
 
