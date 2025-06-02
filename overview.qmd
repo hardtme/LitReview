@@ -1,6 +1,6 @@
 ---
 title: "Brief Article Summaries"
-format: html
+format: docx
 bibliography: "`r rbbt::bbt_write_bib('references.bib', overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
 ---
 
