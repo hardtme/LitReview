@@ -8,7 +8,14 @@ bibliography: "`r rbbt::bbt_write_bib('overviewreferences.bib', keys=rbbt::bbt_d
 
 ```{r}
 #| echo: false
+#| warning: false
+#| message: false
 library(rbbt)
+library(tidyverse)
+library(leaflet)
+library(sf)
+library(glue)
+library(DrivePlotR)
 ```
 
 # Overview of Data Sources
@@ -213,7 +220,34 @@ Connected vehicles collect a variety of data throughout their journeys, includin
 
 # Overview of the Problem
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. These errors make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system. 
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual downward shift of the latitude of the blue points by -0.000065 degrees. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system. 
+
+```{r}
+#| echo: false
+#| label: fig-gps-drift
+#| fig-caption: |
+#|   Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red)  
+
+data("nds_data")
+
+nds_data_sf  <- nds_data |>
+  st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+
+farnam <- nds_data_sf |>
+  filter(drive == 23, time_utc <= ymd_hms("2019-05-28 21:17:23")) 
+
+# The longitude values seem reasonable. 
+# We need to shift the latitude values down.
+offset <- st_as_sfc("POINT(0 -0.000065)", crs = "WGS84")
+
+shifted_points <- farnam |>
+  mutate(geometry = geometry + offset)
+
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = farnam, label = ~glue("{time_utc}"), color = "blue") |>
+  addCircleMarkers(data = shifted_points, color = "red")
+```
 
 There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to snap the GPS points to the nearest road. This method is fast, but it is sensitive to outliers and does not incorporate information from previous points. Another option is to fit a curve through a sequence of GPS points and find the road segments that best match the curve, although this method does not work well in practice. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches. Matches should be discarded if the vehicle heading and the road heading do not match. Kalman filters can be used to drop unreasonable GPS points and clean up the data [@sakiPracticalGuideOpenSource2022]. 
 
