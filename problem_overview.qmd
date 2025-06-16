@@ -240,7 +240,7 @@ As described in the InTrans internal documentation, the CV data continuously str
 
 # Overview of the Problem {#sec-problemoverview}
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual downward shift of the latitude of the blue points by -0.000065 degrees. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual downward shift of the latitude of the blue points by -0.000065 degrees and a manual rightward shift of the longitude of the blue points by 0.000065 degrees. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
 
 ```{r}
 #| echo: false
@@ -254,11 +254,12 @@ nds_data_sf  <- nds_data |>
   st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 
 farnam <- nds_data_sf |>
-  filter(drive == 23, time_utc <= ymd_hms("2019-05-28 21:17:23")) 
+  #filter(drive == 23, time_utc <= ymd_hms("2019-05-28 21:17:23")) 
+  filter(drive == 23)
 
 # The longitude values seem reasonable. 
 # We need to shift the latitude values down.
-offset <- st_as_sfc("POINT(0 -0.000065)", crs = "WGS84")
+offset <- st_as_sfc("POINT(0.000065 -0.000065)", crs = "WGS84")
 
 shifted_points <- farnam |>
   mutate(geometry = geometry + offset)
