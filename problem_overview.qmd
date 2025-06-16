@@ -21,9 +21,52 @@ library(DrivePlotR)
 
 # Introduction
 
-For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the global positioning system (GPS). We first discuss some essential background regarding GPS data in @sec-background. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
+For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-background. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
 
 # Background {#sec-background}
+
+The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and timing data for a wide variety of applications under open sky conditions [@isikIntegrityAnalysisGPSBased2020]. For example, vehicle locations from naturalistic driving studies and connected vehicles are tracked using GPS. However, such location data are not error-free, and errors may arise from a variety of sources, including satellite errors, transmission errors, environmental errors, and receiver errors [@isikIntegrityAnalysisGPSBased2020].
+
+Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are seven different types of DOP coefficients, each accounting for a different location aspect: Geometric DOP (GDOP), Time PDOP (TDOP), Position DOP (PDOP), Horizontal DOP (HDOP), Vertical DOP (VDOP), East DOP (EDOP), and North DOP (NDOP) [@isikIntegrityAnalysisGPSBased2020].
+
+@isikIntegrityAnalysisGPSBased2020 presented the following relationships among the seven DOP coefficients:
+
+$$
+\begin{aligned}
+\text{GDOP} &= \sqrt{\text{PDOP}^2 + \text{TDOP}^2}\\
+\text{PDOP} &= \sqrt{\text{HDOP}^2 + \text{VDOP}^2}\\
+\text{HDOP} &= \sqrt{\text{EDOP}^2 + \text{NDOP}^2}
+\end{aligned}
+$$
+
+@isikIntegrityAnalysisGPSBased2020 also showed how to calculate the DOP coefficients. Let $\theta_1$, $\theta_2$, $\theta_3$, and $\theta_4$ denote the elevations of the four best satellites for calculating DOP coefficients. Also let $\varphi_1$, $\varphi_2$, $\varphi_3$, and $\varphi_4$ denote the azimuths of the four best satellites. Then we have
+
+$$
+\begin{aligned}
+G &= \begin{bmatrix}
+-\cos(\theta_1)\sin(\varphi_1) & -\cos(\theta_1)\cos(\varphi_1) & -\sin(\theta_1) & 1\\
+-\cos(\theta_2)\sin(\varphi_2) & -\cos(\theta_2)\cos(\varphi_2) & -\sin(\theta_2) & 1\\
+-\cos(\theta_3)\sin(\varphi_3) & -\cos(\theta_3)\cos(\varphi_3) & -\sin(\theta_3) & 1\\
+-\cos(\theta_4)\sin(\varphi_4) & -\cos(\theta_4)\cos(\varphi_4) & -\sin(\theta_4) & 1\\
+\end{bmatrix}\\
+H &= \left(G^T \cdot G\right)^{-1}\\
+\text{GDOP} &= \sqrt{H_{11} H_{22} H_{33} H_{44}}\\
+\text{PDOP} &= \sqrt{H_{11} H_{22} H_{33}}\\
+\text{HDOP} &= \sqrt{H_{11} H_{22}}\\
+\text{VDOP} &= \sqrt{H_{33}}\\
+\text{TDOP} &= \sqrt{H_{44}}
+\end{aligned}
+$$
+
+Higher DOP coefficients indicate worse positional accuracy, and two main factors increase DOP coefficients: sub-optimal geometry of the satellite constellation and obscured satellites [@isikIntegrityAnalysisGPSBased2020]. Even under ideal conditions, the geometry of the satellite constellation visible to the receiver constantly changes due to the movement of the satellites and the receiver. For DOP calculations, four satellites that are further apart in the sky (as visible from the receiver) are more optimal than four satellites that are close together in the sky [@isikIntegrityAnalysisGPSBased2020]. Satellite obscuration prevents some satellites from being visible to the receiver. Tall buildings in urban areas commonly obscure satellites, which is a problem because the receiver cannot see more optimal satellites and must instead rely on a suboptimal satellite constellation to determine location [@isikIntegrityAnalysisGPSBased2020].
+
+@isikIntegrityAnalysisGPSBased2020 noted that there is no agreed-upon standard for relating DOP coefficient values to the quality of navigation data. However, @isikIntegrityAnalysisGPSBased2020 presented the scale for DOP coefficient values shown in @tbl-dop based on the literature and the results of their own work.
+
+| DOP Value             | \<1   | 1-2       | 2-5  | 5-10     | 10-20 | \>20 |
+|-----------------------|-------|-----------|------|----------|-------|------|
+| Location Data Quality | Ideal | Excellent | Good | Moderate | Fair  | Poor |
+
+: Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020] {#tbl-dop}
 
 # Driving Data Sources {#sec-drivingdatasources}
 
