@@ -78,6 +78,8 @@ However, latitude and longitude coordinates are ambiguous without information ab
 
 Since the geolocation data for this project come from GPS, the primary CRS used in this project is the World Geodetic System of 1984, abbreviated WGS 84. WGS 84 is the CRS for GPS locations. @iliffeCoordinatesReferenceSystems2008 note that the starting points for WGS 84 are the orbital positions transmitted by the GPS satellites and determined by a network of monitoring stations maintained by the United States military. The WGS 84 datum is realized by the coordinates of these monitoring stations [@iliffeCoordinatesReferenceSystems2008].
 
+Map projections must be used to visualize locations from the three-dimensional surface of the Earth on a two-dimensional map [@iliffeMapProjections2008]. However, spheres and ellipsoids cannot be projected onto a flat surface like a map without distorting or cutting them. Such distortion should not be considered an error, however, because the method of projection is known and the true coordinates in the original, unprojected CRS may be obtained if the projection parameters are known [@iliffeMapProjections2008]. For example, interactive maps created with the R package `leaflet` [@chengLeafletCreateInteractive2024] expect that the input coordinates use the WGS 84 CRS and the WGS 84 Web Mercator projection is used to project the coordinates onto a two-dimensional map.
+
 # Driving Data Sources {#sec-drivingdatasources}
 
 ## Naturalistic Driving Study Data {#sec-nds}
