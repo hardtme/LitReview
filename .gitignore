@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Markdown derivatives
+*.markdown
+*_files/
+
+# Latex derivative files
+*.tex
+*.log
+*.aux
