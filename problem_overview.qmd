@@ -1,10 +1,25 @@
 ---
 title: "Problem Overview"
 author: "Marie Hardt"
-format: html
 bibliography: "`r rbbt::bbt_write_bib('overviewreferences.bib', keys=rbbt::bbt_detect_citations(here::here('problem_overview.qmd')),
    ignore = stringr::str_subset(rbbt::bbt_detect_citations(here::here('problem_overview.qmd')), '(^fig-|^tbl-|^eq-|^sec-|^lst-|^thm-|^lem-|^cor-|^prp-|^cnj-|^def-|^exm-|^exr-)'), overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
 number-sections: true
+header-includes:
+   - \usepackage{hyperref}
+   - \usepackage[dvipsnames]{xcolor} % colors
+   - \newcommand{\mh}[1]{{\textcolor{blue}{#1}}}
+   - \newcommand{\gb}[1]{{\textcolor{RedOrange}{#1}}}
+   - \newcommand{\hh}[1]{{\textcolor{Green}{#1}}}
+
+format:
+  pdf:
+    keep-tex: true
+    fontsize: 11pt
+    toc: true
+
+filters:
+   - latex-environment
+commands: [rr,svp,hh]    
 ---
 
 ```{r}
@@ -18,12 +33,21 @@ library(sf)
 library(glue)
 library(DrivePlotR)
 ```
+# To Dos
+
+\hh{please include the to do items from the email from two weeks ago}
+
+\hh{There is a huge difference between how the document renders in html and in pdf. For the thesis it is better to aim for a pdf document, because ISU accepts latex but not html. }
 
 # Introduction
 
 For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-background. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
 
 # Background {#sec-background}
+
+## Global Positioning System
+
+\hh{XXX You need to first introduce more details on the global positioning system before going into its quality assessment}
 
 ## Dilution of Precision
 
