@@ -89,13 +89,21 @@ Higher DOP coefficients indicate worse positional accuracy, and two main factors
 
 @isikIntegrityAnalysisGPSBased2020 noted that there is no agreed-upon standard for relating DOP coefficient values to the quality of navigation data. Recall that lower DOP coefficient values indicate higher quality navigation data. @isikIntegrityAnalysisGPSBased2020 presented the scale for DOP coefficient values shown in @tbl-dop based on the literature and the results of their own work.
 
-+-----------------------+--------+-----------+--------+----------+--------+--------+
-| DOP Value             | \<1    | 1-2       | 2-5    | 5-10     | 10-20  | \>20   |
-+=======================+========+===========+========+==========+========+========+
-| Location Data Quality | Ideal  | Excellent | Good   | Moderate | Fair   | Poor   |
-+-----------------------+--------+-----------+--------+----------+--------+--------+
+:::{#tbl-dop}
 
-: Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020] {#tbl-dop}
+```{=latex}
+\begin{table}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+DOP Value             & $<1$  & $1-2$     & $2-5$ & $5-10$   & $10-20$ & $>20$ \\ \hline
+Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \\ \hline
+\end{tabular}
+\end{table}
+```
+
+Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020]
+:::
+
 
 ## Coordinate Reference Systems
 
