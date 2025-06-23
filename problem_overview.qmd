@@ -39,6 +39,8 @@ library(leaflet)
 library(sf)
 library(glue)
 library(DrivePlotR)
+library(tmap)
+tmap_mode("plot")
 ```
 
 # To Dos
@@ -338,11 +340,12 @@ Road network metadata
 
 # Overview of the Problem {#sec-problemoverview}
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual downward shift of the latitude of the blue points by -0.000065 degrees and a manual rightward shift of the longitude of the blue points by 0.000065 degrees. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
 
 ```{r}
 #| echo: false
-#| label: fig-gps-drift
+#| eval: false
+#| label: fig-gps-drift-leaflet
 #| fig-caption: |
 #|   Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red)  
 
@@ -352,21 +355,74 @@ nds_data_sf  <- nds_data |>
   st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 
 farnam <- nds_data_sf |>
-  #filter(drive == 23, time_utc <= ymd_hms("2019-05-28 21:17:23")) 
   filter(drive == 23)
 
-# The longitude values seem reasonable. 
-# We need to shift the latitude values down.
-offset <- st_as_sfc("POINT(0.000065 -0.000065)", crs = "WGS84")
+# We need to shift the longitude and latitude values.
+#offset <- st_as_sfc("POINT(0.000065 -0.000065)", crs = "WGS84")
+offset <- st_as_sfc("POINT(0.000075 -0.000073)", crs = "WGS84")
 
 shifted_points <- farnam |>
   mutate(geometry = geometry + offset)
 
+farnam_plot <- farnam |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
+shifted_points_plot <- shifted_points |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
 leaflet() |>
-  addTiles() |>
-  addCircleMarkers(data = farnam, label = ~glue("{time_utc}"), color = "blue") |>
-  addCircleMarkers(data = shifted_points, color = "red")
+  addProviderTiles(provider = "CartoDB.PositronNoLabels",
+                   options = providerTileOptions(minZoom = 20, maxZoom = 20)) |>
+  addCircleMarkers(data = farnam_plot, color = "blue") |>
+  addCircleMarkers(data = shifted_points_plot, color = "red")
 ```
+
+:::{#fig-gps-drift}
+
+```{r}
+#| echo: false
+ 
+data("nds_data")
+
+nds_data_sf  <- nds_data |>
+  st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+
+farnam <- nds_data_sf |>
+  filter(drive == 23)
+
+# We need to shift the longitude and latitude values.
+#offset <- st_as_sfc("POINT(0.000065 -0.000065)", crs = "WGS84")
+offset <- st_as_sfc("POINT(0.000075 -0.000073)", crs = "WGS84")
+
+shifted_points <- farnam |>
+  mutate(geometry = geometry + offset) |>
+  st_set_crs("WGS84")
+
+farnam_plot <- farnam |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
+shifted_points_plot <- shifted_points |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
+farnam_bbox <- st_bbox(farnam_plot)
+
+farnam_bbox_adj <- farnam_bbox
+
+farnam_bbox_adj[1] <- farnam_bbox_adj[1] - 0.0001
+farnam_bbox_adj[2] <- farnam_bbox_adj[2] - 0.0001
+farnam_bbox_adj[3] <- farnam_bbox_adj[3] + 0.0001
+farnam_bbox_adj[4] <- farnam_bbox_adj[4] + 0.0001
+
+gps_drift_tmap <- tm_basemap(server = "CartoDB.PositronNoLabels")+
+  tm_shape(farnam_plot, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
+  tm_shape(shifted_points_plot, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none")
+
+gps_drift_tmap
+```
+Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
+:::
 
 There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers and does not incorporate information from previous points. Another option used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
 
