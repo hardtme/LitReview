@@ -8,7 +8,7 @@ header-includes:
    - \usepackage{hyperref}
    - \usepackage[dvipsnames]{xcolor} % colors
    - \usepackage{longtable}
-   - \newcommand{\mh}[1]{{\textcolor{blue}{#1}}}
+   - \newcommand{\mh}[1]{{\textcolor{teal}{#1}}}
    - \newcommand{\gb}[1]{{\textcolor{RedOrange}{#1}}}
    - \newcommand{\hh}[1]{{\textcolor{Green}{#1}}}
 
@@ -128,9 +128,12 @@ Map projections must be used to visualize locations from the three-dimensional s
 
 ## Naturalistic Driving Study Data {#sec-nds}
 
-The NDS data come from a naturalistic driving study conducted by the University of Nebraska Medical Center (UNMC). Data for the study were collected at two 3-month intervals conducted over two years (2 data collection periods). At the start of each 3-month NDS data collection period, custom-built "Black Boxes" were installed in each study participant’s personal vehicle. The "Black Box" system continuously and passively recorded driver behavior from when the vehicle ignition was turned on to when it was turned off. Video of the forward roadway and the vehicle cabin were recorded by cameras mounted on the vehicle’s front windshield, next to the rearview mirror. Multiple sensors (GPS, speed, accelerometer, gyroscope, and throttle) collected data during each drive. The raw data were post-processed to a sampling rate of 1 Hz to ensure data quality (Internal study documentation, 2023).
+\mh{Naturalistic driving studies are a source of multivariate high resolution spatiotemporal driving data. Participants in a naturalistic driving study (NDS) consent to have a data acquisition system (DAS) installed in their vehicles during the study period so their driving behaviors can be monitored and recorded. A notable example of an NDS is the one administered by the Transportation
+Research Board of the National Academies as part of the
+Second Highway Research Program (SHRP 2), which aimed to understand how driver performance and behavior impact traffic safety. For the SHRP 2 NDS, study participants from
+six different US states consented to have their driving monitored by an in-vehicle DAS equipped with various data collection channels, including video cameras, a global positioning system (GPS) unit, and accelerometers, among others [@campbellSHRP2Naturalistic2012]. The Longitudinal Research on Aging Drivers (LongROAD) study was a more recent NDS that focused on collecting data from participants aged 65 to 79 to better understand how medical, behavioral, environmental, and technological factors influence road safety as drivers age [@liLongitudinalResearchAging2017].}
 
-The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad.
+\mh{This project utilized data from an NDS conducted by the University of Nebraska Medical Center (UNMC). This NDS aimed to use driving data from older drivers to develop biomarkers for early detection and monitoring of cognitive decline.} The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad.
 
 <!-- From the file BlackBox_FormatQAPass_DataDictionary.docx -->
 
@@ -192,7 +195,7 @@ gyro\_z & Degrees/second & Angular rotation rate about the up-to-down axis\\
 \end{longtable}
 ```
 
-Metadata for naturalistic driving study
+Metadata for UNMC naturalistic driving study
 :::
 
 ## Connected Vehicle Data {#sec-cv}
