@@ -57,13 +57,17 @@ For this project, we use two primary data sources: naturalistic driving study (N
 
 ## Global Positioning System
 
-\hh{XXX You need to first introduce more details on the global positioning system before going into its quality assessment}
+\mh{The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and navigation information. For any GNSS (including GPS), the space segment is a constellation of satellites orbiting the Earth in a specified pattern. Typically, 6 to 10 of the satellites in the constellation are above the horizon at any time, but not all of the satellites may be available for use due to obstructions like tall buildings. The GPS control segment is made up of a network of monitoring and control stations that continually determine the orbital paths of the satellites in the space segment. The stations make short-term predictions of satellite orbital locations and transmit them back to the satellites so they can relay their positions to users, enabling real-time position information [@iliffeDatumsMapProjections2008].}
+
+\mh{GPS satellites send information to receivers by modulating the information onto a set of underlying carrier waves of specified frequencies. In addition to satellite location information and general system information, each satellite also transmits a pre-determined sequence of binary codes at particular times. These codes can be thought of as time information if the user can receive them. To aid the process in the case of weak signals, the GPS receiver already stores a copy of the code to give it an idea of what to expect. The GPS receiver generates the code itself and then finds the time offset between its own code and the code it receives from the satellite, thus finding the signal's travel time [@iliffeDatumsMapProjections2008].}
+
+\mh{The distance from the GPS receiver to the satellite can be calculated by multiplying the signal's travel time by the signal's transmission speed (i.e., the speed of light). Theoretically, it should be possible to determine the GPS receiver's location based on observations from three satellites and solving a simultaneous system of three equations in three unknowns (say X, Y, Z). However, there is a problem with this method because the satellite clock and the receiver clock are not synchronized with each other. GPS satellites use very precise atomic clocks that are continuously monitored by ground stations, but receivers must make do with much cheaper, less accurate clocks. Since light travels approximately 300,000 km/s, an offset of 1 second between the satellite clock and the receiver clock will lead to a 300,000 km error in the distance calculation. To solve the problem, a fourth satellite is needed. Then the offset between the satellite times and the receiver time can be included in a simultaneous system of four equations in four unknowns (say X, Y, Z, $\Delta t$) [@iliffeDatumsMapProjections2008].}
 
 ## Dilution of Precision
 
-The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and timing data for a wide variety of applications under open sky conditions [@isikIntegrityAnalysisGPSBased2020]. For example, vehicle locations from naturalistic driving studies and connected vehicles are tracked using GPS. However, such location data are not error-free, and errors may arise from a variety of sources, including satellite errors, transmission errors, environmental errors, and receiver errors [@isikIntegrityAnalysisGPSBased2020].
+Even when four or more satellites are visible to the GPS receiver, GPS location measurements are not immune to errors. Errors may arise from a variety of sources, including satellite errors, transmission errors, environmental errors, and receiver errors [@isikIntegrityAnalysisGPSBased2020].
 
-Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are seven different types of DOP coefficients, each accounting for a different location aspect: Geometric DOP (GDOP), Time PDOP (TDOP), Position DOP (PDOP), Horizontal DOP (HDOP), Vertical DOP (VDOP), East DOP (EDOP), and North DOP (NDOP) [@isikIntegrityAnalysisGPSBased2020].
+Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are multiple different types of DOP coefficients, each accounting for a different location aspect: Geometric DOP (GDOP), Time PDOP (TDOP), Position DOP (PDOP), Horizontal DOP (HDOP), Vertical DOP (VDOP), East DOP (EDOP), and North DOP (NDOP) [@isikIntegrityAnalysisGPSBased2020].
 
 @isikIntegrityAnalysisGPSBased2020 presented the following relationships among the seven DOP coefficients:
 
@@ -112,7 +116,6 @@ Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \
 
 Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020]
 :::
-
 
 ## Coordinate Reference Systems
 
