@@ -128,37 +128,66 @@ Map projections must be used to visualize locations from the three-dimensional s
 
 The NDS data come from a naturalistic driving study conducted by the University of Nebraska Medical Center (UNMC). Data for the study were collected at two 3-month intervals conducted over two years (2 data collection periods). At the start of each 3-month NDS data collection period, custom-built "Black Boxes" were installed in each study participant’s personal vehicle. The "Black Box" system continuously and passively recorded driver behavior from when the vehicle ignition was turned on to when it was turned off. Video of the forward roadway and the vehicle cabin were recorded by cameras mounted on the vehicle’s front windshield, next to the rearview mirror. Multiple sensors (GPS, speed, accelerometer, gyroscope, and throttle) collected data during each drive. The raw data were post-processed to a sampling rate of 1 Hz to ensure data quality (Internal study documentation, 2023).
 
-The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad below.
+The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad.
 
 <!-- From the file BlackBox_FormatQAPass_DataDictionary.docx -->
 
 :::{#tbl-rwrad}
 
 ```{=latex}
-\begin{center}
-\begin{table}
-\begin{tabular}{|p{0.15\linewidth}|p{0.6\linewidth}|p{0.25\linewidth}|}
+\begin{longtable}[c]{|p{0.25\textwidth}|p{0.33\textwidth}|p{0.33\textwidth}|}
 \hline
-Variable       & Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                & Unit/Values                                                                                                                                                         \\ \hline
-device         & Device ID of Black Box                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     & Character string                                                                                                                                                    \\ \hline
-drive          & Numeric value sequentially ordered across time indicating what drive number the data corresponds to                                                                                                                                                                                                                                                                                                                                                                                                                        & Numeric                                                                                                                                                             \\ \hline
-time\_utc      & Date time-stamp in UTC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     & \begin{tabular}[p]{@{}l@{}}UTC\\ Y-M-D H:M:S\end{tabular}                                                                                                           \\ \hline
-gps\_long      & Longitude returned from GPS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                & Decimal degrees                                                                                                                                                     \\ \hline
-gps\_lat       & Latitude returned from GPS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 & Decimal degrees                                                                                                                                                     \\ \hline
-gps\_elevation & Elevation returned from GPS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                & Meters                                                                                                                                                              \\ \hline
-gps\_heading   & The direction over the ground the vehicle is currently moving                                                                                                                                                                                                                                                                                                                                                                                                                                                              & Degrees                                                                                                                                                             \\ \hline
-gps\_fix       & Value representing the quality of the connection (or ``fix") between the GPS receiver and the GPS satellite constellation. A fix type of 2 gives good GPS location data, but applications that need more precise location estimates (e.g., applications relying on GPS speed) should use a fix type of 3. Theoretically, a fix type of 1 is the worst quality fix type that gives GPS time information, but data inspection suggests that for this study, the worst fix type giving GPS time information may actually be 2. & \begin{tabular}[p]{@{}l@{}}0 = no fix\\ 1 = time only\\ 2 = 2D fix \\ (latitude and longitude)\\ 3 = 3D fix \\ (latitude, longitude, \\ and elevation)\end{tabular} \\ \hline
-gps\_sats      & Number of satellites the GPS unit can ``see"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                & Count                                                                                                                                                               \\ \hline
-gps\_pdop      & Dilution of Precision measure for 3D position                                                                                                                                                                                                                                                                                                                                                                                                                                                                              & \begin{tabular}[p]{@{}l@{}}\textless{}1 = Ideal\\ 1-2 = Excellent\\ 2-5 = Good\\ 5-10 = Moderate\\ 10-20 = Fair\\ \textgreater{}20 = Poor\end{tabular}              \\ \hline
-gps\_hdop      & Dilution of Precision measure for the horizontal plane                                                                                                                                                                                                                                                                                                                                                                                                                                                                     & See gps\_pdop                                                                                                                                                       \\ \hline
-gps\_vdop      & Dilution of Precision measure for the vertical plane                                                                                                                                                                                                                                                                                                                                                                                                                                                                       & See gps\_pdop                                                                                                                                                       \\ \hline
-gyro\_x        & Angular rotation rate about the right-to-left axis                                                                                                                                                                                                                                                                                                                                                                                                                                                                         & Degrees/sec                                                                                                                                                         \\ \hline
-gyro\_y        & Angular rotation rate about the forward-to-backward axis                                                                                                                                                                                                                                                                                                                                                                                                                                                                   & Degrees/sec                                                                                                                                                         \\ \hline
-gyro\_z        & Angular rotation rate about the up-to-down axis                                                                                                                                                                                                                                                                                                                                                                                                                                                                            & Degrees/sec                                                                                                                                                         \\ \hline
-gyro\_heading  & Heading calculated from compass and gyro data                                                                                                                                                                                                                                                                                                                                                                                                                                                                              & Degrees                                                                                                                                                             \\ \hline
-\end{tabular}
-\end{table}
-\end{center}
+ %\multicolumn{3}{| c |}{Beginning of Table}\\
+ %\hline
+ Variable & Units/Values & Description\\
+ \hline
+ \endfirsthead
+ 
+ \hline
+ \multicolumn{3}{|c|}{Continued from previous page}\\
+ \hline
+ Variable & Units/Values & Description\\
+ \hline
+ \endhead
+ 
+ \hline
+ \endfoot
+
+\hline
+%\multicolumn{3}{| c |}{End of Table}\\
+%\hline\hline
+\endlastfoot
+
+device & NA & Device ID of Black Box\\
+\hline
+drive & NA & Numeric value sequentially ordered across time indicating the drive number to which the data correspond\\
+\hline
+time\_utc & yyyy-mm-dd hh:mm:ss & Date timestamp in UTC\\
+\hline
+gps\_long & Decimal degrees & Longitude returned from GPS\\
+\hline
+gps\_lat & Decimal degrees & Latitude returned from GPS\\
+\hline
+gps\_elevation & Meters & Elevation returned from GPS\\
+\hline
+gps\_heading & Degrees & Direction over the ground the vehicle is currently moving (returned from GPS)\\
+\hline
+gps\_fix & 0 = no fix\newline 1 = time only\newline 2 = 2D fix (latitude and longitude)\newline 3 = 3D fix (latitude, longtitude, and elevation) & Value representing the quality of the connection (or ``fix") between the GPS receiver and the GPS satellite constellation. A fix type of 2 gives good GPS location data, but applications that need more precise location estimates (e.g., applications relying on GPS speed) should use a fix type of 3. Theoretically, a fix type of 1 is the worst quality fix type that gives GPS time information, but data inspection suggests that for this study, the worst fix type giving GPS time information may actually be 2.\\
+\hline
+gps\_sats & NA & Number of satellites the GPS can ``see"\\
+\hline
+gps\_pdop & \textless{}1 = Ideal\newline 1-2 = Excellent\newline 2-5 = Good\newline 5-10 = Moderate\newline 10-20 = Fair\newline \textgreater{}20 = Poor\newline & Dilution of precision measure for 3D position\\
+\hline
+gps\_hdop & See gps\_pdop & Dilution of precision for the horizontal plane\\
+\hline
+gps\_vdop & See gps\_pdop & Dilution of precision for the vertical axis\\
+\hline
+gyro\_x & Degrees/second & Angular rotation rate about the right-to-left axis\\
+\hline
+gyro\_y & Degrees/second & Angular rotation rate about the forward-to-backward axis\\
+\hline
+gyro\_z & Degrees/second & Angular rotation rate about the up-to-down axis\\
+\end{longtable}
 ```
 
 Metadata for naturalistic driving study
