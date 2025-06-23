@@ -47,7 +47,18 @@ tmap_mode("plot")
 
 \hh{please include the to do items from the email from two weeks ago}
 
-\hh{There is a huge difference between how the document renders in html and in pdf. For the thesis it is better to aim for a pdf document, because ISU accepts latex but not html. }
+\mh{To do items for the data sources}
+
+\mh{1. Find a good example that you can use to show the geospatial drift you mention and create code for a picture for both the NDS and the CV data.}
+
+\mh{2. For the NDS data, shift the data manually (using a single delta x, delta y for a shift) to the right place, and save that as the ‘target’. Calculate the sum of squares between the before and after locations. That is going to be our error for that example and will serve as the baseline to measure progress.}
+
+\mh{3. I am not completely sure what a GPS error will look like in the CV data. What I am hoping for is a time dependent GPS drift, when all of the measurements will shift by a delta x, delta y. If that is a case, we can proceed with creating an example in the same way as (2). If not, keep track of how the error is showing itself.}
+
+\mh{4. (For Later) We will need a couple more of these training examples, but let’s focus on the documentation of the first two examples first.}
+
+\mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles}
+
 
 # Introduction
 
