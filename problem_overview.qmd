@@ -67,15 +67,13 @@ For this project, we use two primary data sources: naturalistic driving study (N
 
 Even when four or more satellites are visible to the GPS receiver, GPS location measurements are not immune to errors. Errors may arise from a variety of sources, including satellite errors, transmission errors, environmental errors, and receiver errors [@isikIntegrityAnalysisGPSBased2020].
 
-Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are multiple different types of DOP coefficients, each accounting for a different location aspect: Geometric DOP (GDOP), Time PDOP (TDOP), Position DOP (PDOP), Horizontal DOP (HDOP), Vertical DOP (VDOP), East DOP (EDOP), and North DOP (NDOP) [@isikIntegrityAnalysisGPSBased2020].
+Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are multiple different types of DOP coefficients, each accounting for a different location aspect. We have three DOP types in our NDS data: Position DOP (PDOP), Horizontal DOP (HDOP), and Vertical DOP (VDOP).
 
-@isikIntegrityAnalysisGPSBased2020 presented the following relationships among the seven DOP coefficients:
+@isikIntegrityAnalysisGPSBased2020 presented the following relationship among the DOP coefficients we have available:
 
 $$
 \begin{aligned}
-\text{GDOP} &= \sqrt{\text{PDOP}^2 + \text{TDOP}^2}\\
 \text{PDOP} &= \sqrt{\text{HDOP}^2 + \text{VDOP}^2}\\
-\text{HDOP} &= \sqrt{\text{EDOP}^2 + \text{NDOP}^2}
 \end{aligned}
 $$
 
@@ -90,11 +88,9 @@ G &= \begin{bmatrix}
 -\cos(\theta_4)\sin(\varphi_4) & -\cos(\theta_4)\cos(\varphi_4) & -\sin(\theta_4) & 1\\
 \end{bmatrix}\\
 H &= \left(G^T \cdot G\right)^{-1}\\
-\text{GDOP} &= \sqrt{H_{11} H_{22} H_{33} H_{44}}\\
 \text{PDOP} &= \sqrt{H_{11} H_{22} H_{33}}\\
 \text{HDOP} &= \sqrt{H_{11} H_{22}}\\
-\text{VDOP} &= \sqrt{H_{33}}\\
-\text{TDOP} &= \sqrt{H_{44}}
+\text{VDOP} &= \sqrt{H_{33}}
 \end{aligned}
 $$
 
