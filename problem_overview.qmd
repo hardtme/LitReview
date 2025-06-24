@@ -41,6 +41,7 @@ library(glue)
 library(DrivePlotR)
 library(tmap)
 tmap_mode("plot")
+library(emoGG)
 ```
 
 # To Dos
@@ -105,7 +106,44 @@ H &= \left(G^T \cdot G\right)^{-1}\\
 \end{aligned}
 $$
 
-Higher DOP coefficients indicate worse positional accuracy, and two main factors increase DOP coefficients: sub-optimal geometry of the satellite constellation and obscured satellites [@isikIntegrityAnalysisGPSBased2020]. Even under ideal conditions, the geometry of the satellite constellation visible to the receiver constantly changes due to the movement of the satellites and the receiver. For DOP calculations, four satellites that are further apart in the sky (as visible from the receiver) are more optimal than four satellites that are close together in the sky [@isikIntegrityAnalysisGPSBased2020]. Satellite obscuration prevents some satellites from being visible to the receiver. Tall buildings in urban areas commonly obscure satellites, which is a problem because the receiver cannot see more optimal satellites and must instead rely on a suboptimal satellite constellation to determine location [@isikIntegrityAnalysisGPSBased2020].
+Higher DOP coefficients indicate worse positional accuracy, and two main factors increase DOP coefficients: sub-optimal geometry of the satellite constellation and obscured satellites [@isikIntegrityAnalysisGPSBased2020]. Even under ideal conditions, the geometry of the satellite constellation visible to the receiver constantly changes due to the movement of the satellites and the receiver. For DOP calculations, four satellites that are further apart in the sky (as visible from the receiver) are more optimal than four satellites that are close together in the sky, as shown in @fig-gps. Satellite obscuration prevents some satellites from being visible to the receiver. Tall buildings in urban areas commonly obscure satellites, which is a problem because the receiver cannot see more optimal satellites and must instead rely on a suboptimal satellite constellation to determine location [@isikIntegrityAnalysisGPSBased2020].
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| fig-cap: "GPS Satellite Constellation Geometry Examples"
+#| fig-subcap: 
+#|  - "Poor Geometry"
+#|  - "Good Geometry"
+#| label: fig-gps
+
+receiver <- data.frame( x= 0, y = 0)
+
+bad_satellites <- data.frame(x = c(-0.7, -0.3, -0.5, -0.8),
+                             y = c(7.5, 9.75, 9, 6.5))
+
+good_satellites <- data.frame(x = c(1, -1, -0.3, 0.4),
+                         y = c(7, 8, 10, 9.5))
+
+bad_sats <- ggplot() +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_emoji(data = bad_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
+  geom_segment(data = bad_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
+  theme_void() +
+  theme(panel.background = element_rect(fill = "lightblue1"))+
+  scale_y_continuous(limits = c(0, 10))
+bad_sats
+
+good_sats <- ggplot() +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_emoji(data = good_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
+  geom_segment(data = good_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
+  theme_void() +
+  theme(panel.background = element_rect(fill = "lightblue1"))+
+  scale_y_continuous(limits = c(0, 10))
+good_sats
+
+```
 
 @isikIntegrityAnalysisGPSBased2020 noted that there is no agreed-upon standard for relating DOP coefficient values to the quality of navigation data. Recall that lower DOP coefficient values indicate higher quality navigation data. @isikIntegrityAnalysisGPSBased2020 presented the scale for DOP coefficient values shown in @tbl-dop based on the literature and the results of their own work.
 
