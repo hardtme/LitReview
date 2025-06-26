@@ -62,7 +62,9 @@ library(emoGG) # HH not on CRAN, please include in comments how to install, like
 
 # Introduction and Background {#sec-background}
 
-\hh{XXX The purpose of this first section is to answer a lot of the What? and Why? }
+\hh{XXX The purpose of this first section is to motivate  your work by answering What? and Why?}
+
+\hh{XXX What is at the heart of your work? Spatio-temporal processes. As human beings we are surrounded by spatio-temporal processes. With increasing technology a lot of these processes are being captured quantitatively, and we are relying on a lot of devices that make use of capturing these quantities. }
 
 
 \hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.}
