@@ -60,7 +60,7 @@ library(emoGG) # HH not on CRAN, please include in comments how to install, like
 \mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles}
 
 
-# Introduction and Background {#sec-background}
+# Introduction {#sec-introduction}
 
 \hh{XXX The purpose of this first section is to motivate  your work by answering What? and Why?}
 
@@ -68,10 +68,9 @@ library(emoGG) # HH not on CRAN, please include in comments how to install, like
 
 
 \hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.}
-For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-background. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
+For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-gps, @sec-dop, and @sec-crs. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
 
-## Global Positioning System
-
+## Global Positioning System {#sec-gps}
 
 \mh{The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and navigation information. For any GNSS (including GPS), the space segment is a constellation of satellites orbiting the Earth in a specified pattern. Typically, 6 to 10 of the satellites in the constellation are above the horizon at any time, but not all of the satellites may be available for use due to obstructions like tall buildings. The GPS control segment is made up of a network of monitoring and control stations that continually determine the orbital paths of the satellites in the space segment. The stations make short-term predictions of satellite orbital locations and transmit them back to the satellites so they can relay their positions to users, enabling real-time position information [@iliffeDatumsMapProjections2008].}
 
@@ -79,7 +78,7 @@ For this project, we use two primary data sources: naturalistic driving study (N
 
 \mh{The distance from the GPS receiver to the satellite can be calculated by multiplying the signal's travel time by the signal's transmission speed (i.e., the speed of light). Theoretically, it should be possible to determine the GPS receiver's location based on observations from three satellites and solving a simultaneous system of three equations in three unknowns (say X, Y, Z). However, there is a problem with this method because the satellite clock and the receiver clock are not synchronized with each other. GPS satellites use very precise atomic clocks that are continuously monitored by ground stations, but receivers must make do with much cheaper, less accurate clocks. Since light travels approximately 300,000 km/s, an offset of 1 second between the satellite clock and the receiver clock will lead to a 300,000 km error in the distance calculation. To solve the problem, a fourth satellite is needed. Then the offset between the satellite times and the receiver time can be included in a simultaneous system of four equations in four unknowns (say X, Y, Z, $\Delta t$) [@iliffeDatumsMapProjections2008].}
 
-## Dilution of Precision
+## Dilution of Precision {#sec-dop}
 
 Even when four or more satellites are visible to the GPS receiver, GPS location measurements are not immune to errors. Errors may arise from a variety of sources, including satellite errors, transmission errors, environmental errors, and receiver errors [@isikIntegrityAnalysisGPSBased2020].
 
@@ -166,7 +165,7 @@ Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \
 Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020]
 :::
 
-## Coordinate Reference Systems
+## Coordinate Reference Systems {#sec-crs}
 
 To work with location data, we must know the coordinate reference system for the data. Coordinate reference systems arise from the positioning and orienting of a coordinate system with respect to a datum [@iliffeDatumsMapProjections2008]. For any coordinate system, the system dimension, or the number of axes for the system, must be defined. We also need to know the name of each axis, the order of the axes (which in turn gives the order of coordinates), the direction in which coordinates increase along the axes, and the measurement units for the axes [@iliffeDatumsMapProjections2008]. Coordinate systems for the approximately spherical (actually ellipsoidal) Earth use three axes: latitude (the angle north or south of the equatorial plane), longitude (the angle east or west from a specified prime meridian), and height (the distance above the surface of the Earth) [@iliffeDatumsMapProjections2008].
 
@@ -486,3 +485,6 @@ Map-matching with hidden Markov models (HMMs) was introduced by @newsonHiddenMar
 @chaoSurveyMapMatchingAlgorithms2020 surveyed available map-matching algorithms and noted that state-transition models are a popular model type. These include hidden Markov models (HMMs) and conditional random field (CRF) models. CRF models models account for interactions among observations while HMMs only consider the relationship between an observation and the most recent previous point [@chaoSurveyMapMatchingAlgorithms2020]. Weighted graph techniques can be used to infer the path from a weighted graph where the vertices are candidate points on the road system and edges are formed between two consecutive sample points. Weighted graph techniques tend to involve the following steps: (1) Initialize the graph (2) Use a scoring function to weight the edges in the graph (3) Infer the path based on the weighted graph [@chaoSurveyMapMatchingAlgorithms2020].
 
 As mentioned above, map-matching algorithms can suffer from data quality issues, as observed by @chaoSurveyMapMatchingAlgorithms2020. When the sampling rate is high, unnecessary detours can occur. This means that consecutive points may be too close to each other, so the later point is mapped in the upstream of the previous point. State-transition models, in particular, can suffer from matching breaks caused by outliers. The outlier point falls out of the candidate range for the true state, and so the map-matching route disconnects [@chaoSurveyMapMatchingAlgorithms2020]. Evaluating the accuracy of any map-matching algorithm can be challenging because the true path taken by the vehicle is unknown [@sakiPracticalGuideOpenSource2022].
+
+# References
+
