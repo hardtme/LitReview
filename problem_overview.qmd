@@ -414,7 +414,8 @@ farnam <- nds_data_sf |>
 
 # We need to shift the longitude and latitude values.
 #offset <- st_as_sfc("POINT(0.000065 -0.000065)", crs = "WGS84")
-offset <- st_as_sfc("POINT(0.000075 -0.000073)", crs = "WGS84")
+#offset <- st_as_sfc("POINT(0.000075 -0.000073)", crs = "WGS84")
+offset <- st_as_sfc("POINT(0.00015 0.000055)", crs = "WGS84")
 
 shifted_points <- farnam |>
   mutate(geometry = geometry + offset)
@@ -425,11 +426,47 @@ farnam_plot <- farnam |>
 shifted_points_plot <- shifted_points |>
   filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
 
-leaflet() |>
+shift1 <- leaflet() |>
   addProviderTiles(provider = "CartoDB.PositronNoLabels",
                    options = providerTileOptions(minZoom = 20, maxZoom = 20)) |>
   addCircleMarkers(data = farnam_plot, color = "blue") |>
-  addCircleMarkers(data = shifted_points_plot, color = "red")
+  addCircleMarkers(data = shifted_points_plot, color = "red", label = ~glue("{time_utc}"))
+
+offset2 <- st_as_sfc("POINT(0 -0.00008)", crs = "WGS84")
+
+before_turn <- shifted_points_plot |>
+  filter(time_utc <= ymd_hms("2019-05-28 21:17:24")) |>
+  mutate(geometry = geometry + offset2)
+
+after_turn <- shifted_points_plot |>
+  filter(time_utc > ymd_hms("2019-05-28 21:17:24"))
+
+shifted_points_plot2 <- rbind(before_turn, after_turn)
+
+shift2 <- leaflet() |>
+  addProviderTiles(provider = "CartoDB.PositronNoLabels",
+                   options = providerTileOptions(minZoom = 20, maxZoom = 20)) |>
+  addCircleMarkers(data = farnam_plot, color = "blue") |>
+  addCircleMarkers(data = shifted_points_plot2, color = "red")
+
+offset3 <- st_as_sfc("POINT(0 -0.000046)", crs = "WGS84")
+
+before_turn2 <- shifted_points_plot2 |>
+  filter(time_utc <= ymd_hms("2019-05-28 21:17:23")) |>
+  mutate(geometry = geometry + offset3)
+
+after_turn2 <- shifted_points_plot2 |>
+  filter(time_utc > ymd_hms("2019-05-28 21:17:23"))
+
+shifted_points_plot3 <- rbind(before_turn2, after_turn2)
+
+shift3 <- leaflet() |>
+  addProviderTiles(provider = "CartoDB.VoyagerNoLabels",
+                   options = providerTileOptions(minZoom = 20, maxZoom = 20)) |>
+  addCircleMarkers(data = farnam_plot, color = "blue") |>
+  addCircleMarkers(data = shifted_points_plot3, color = "red")
+
+#shift3
 ```
 
 :::{#fig-gps-drift}
