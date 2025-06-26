@@ -46,7 +46,6 @@ library(emoGG)
 
 # To Dos
 
-\hh{please include the to do items from the email from two weeks ago}
 
 \mh{To do items for the data sources}
 
