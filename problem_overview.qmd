@@ -60,13 +60,16 @@ library(emoGG) # HH not on CRAN, please include in comments how to install, like
 \mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles}
 
 
-# Introduction
+# Introduction and Background {#sec-background}
 
+\hh{XXX The purpose of this first section is to answer a lot of the What? and Why? }
+
+
+\hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.}
 For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-background. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
 
-# Background {#sec-background}
-
 ## Global Positioning System
+
 
 \mh{The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and navigation information. For any GNSS (including GPS), the space segment is a constellation of satellites orbiting the Earth in a specified pattern. Typically, 6 to 10 of the satellites in the constellation are above the horizon at any time, but not all of the satellites may be available for use due to obstructions like tall buildings. The GPS control segment is made up of a network of monitoring and control stations that continually determine the orbital paths of the satellites in the space segment. The stations make short-term predictions of satellite orbital locations and transmit them back to the satellites so they can relay their positions to users, enabling real-time position information [@iliffeDatumsMapProjections2008].}
 
