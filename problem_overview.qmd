@@ -41,7 +41,8 @@ library(glue)
 library(DrivePlotR)
 library(tmap)
 tmap_mode("plot")
-library(emoGG) # HH not on CRAN, please include in comments how to install, like this: # remotes::install_github("dill/emoGG")
+# remotes::install_github("dill/emoGG")
+library(emoGG)
 ```
 
 # To Dos
@@ -467,7 +468,8 @@ farnam_bbox_adj[2] <- farnam_bbox_adj[2] - 0.0001
 farnam_bbox_adj[3] <- farnam_bbox_adj[3] + 0.0001
 farnam_bbox_adj[4] <- farnam_bbox_adj[4] + 0.0001
 
-gps_drift_tmap <- tm_basemap(server = "CartoDB.PositronNoLabels")+
+# gps_drift_tmap <- tm_basemap(server = "CartoDB.PositronNoLabels")+
+gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(farnam_plot, bbox = farnam_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(shifted_points_plot, bbox = farnam_bbox_adj)+
