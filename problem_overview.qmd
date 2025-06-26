@@ -41,7 +41,7 @@ library(glue)
 library(DrivePlotR)
 library(tmap)
 tmap_mode("plot")
-library(emoGG)
+library(emoGG) # HH not on CRAN, please include in comments how to install, like this: # remotes::install_github("dill/emoGG")
 ```
 
 # To Dos
