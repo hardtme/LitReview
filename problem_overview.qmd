@@ -285,7 +285,7 @@ Connected vehicles collect a variety of data throughout their journeys, includin
 
 datapoint\_id & Derived & NA & Unique identifier for each data point & &\\
 \hline
-journey\_id & Raw & NA & Unique identifier for each vehicle journey. The journey id represents the same vehicle from ignition on to ignition off. & Streetlight notified InTrans that some journey ids are non-compliant due to not having an ignition on/off, typically due to data coming in late. & \\    
+journey\_id & Raw & NA & Unique identifier for each vehicle journey. The journey ID represents the same vehicle from ignition on to ignition off. & Streetlight notified InTrans that some journey IDs are non-compliant due to not having an ignition on/off, typically due to data coming in late. & \\    
 \hline
 capture\_time\_stamp & Raw & yyyy-mm-dd hh:mm:ss & Timestamp of the data in Central Time & & \\
 \hline
@@ -301,13 +301,13 @@ speed\_mph & Raw & Miles per hour & Speed of the vehicle for the data point & & 
 \hline
 acceleration & Derived & $\text{ft/s}^2$ & Derived acceleration between the previous data point and the current data point for the journey & & \\
 \hline
-ignition\_status & Raw & NA & Identifies whether the data is at the begining/end of the trip or part of the middle of the trip & & MIDTRIP, KEYON, KEYOFF  \\
+ignition\_status & Raw & NA & Identifies whether the data point is at the beginning/end of the trip or part of the middle of the trip & & MIDTRIP, KEYON, KEYOFF  \\
 \hline
-route\_id & Derived & NA & Closest route id segment to the data point & & \\
+route\_id & Derived & NA & Route ID of the closest segment to the data point & & \\
 \hline
-measure & Derived & Miles & Precise measure value along the route ID segments to the data point. The segmentation is based on Iowa DOT RAMS network. & & \\
+measure & Derived & Miles & Precise measure value along the route ID segments to the data point. The segmentation is based on the Iowa DOT RAMS network. & & \\
 \hline
-distance\_from\_route & Derived & Feet & Distance the data point is from the centerline of the RAMS network & Data points in parking lots and fields will still be associated to the closest roadway. & \\
+distance\_from\_route & Derived & Feet & Distance from the data point to the centerline of the RAMS network segment & Data points in parking lots and fields will still be associated to the closest roadway. & \\
 \hline
 segment\_start\_measure & Derived & Miles & Segment start measure value along the route ID segments to the data point & & \\
 \hline
@@ -319,11 +319,11 @@ masking\_digit & Derived & NA & Number of digits in the latitude or longitude (w
 \hline
 year & Derived & NA & Year partition in which the data point was downloaded (not necessarily the year of the capture time stamp) & & \\
 \hline
-county\_id & Derived & NA & County where the data point is located. The county is represented by a number which can be identified in RAMS located at the link in the domain. & & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/43}{RAMS}\\
+county\_id & Derived & NA & County where the data point is located. The county is represented by a number which can be identified at the RAMS link in the domain. & & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/43}{RAMS}\\
 \hline
 month & Derived & NA & Month partition in which the data point was downloaded (not necessarily the month of the capture time stamp) & & \\
 \hline
-day & Derived & NA & Day partition in which the data point was downloaded (not necessarily the day of the capture time stamp) & & \\
+day & Derived & NA & Day of month partition in which the data point was downloaded (not necessarily the day of the capture time stamp) & & \\
 \hline
 hour & Derived & NA & Hour partition in which the data point was downloaded (not necessarily the hour of the capture time stamp) & & \\
 \end{longtable}
