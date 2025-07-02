@@ -123,7 +123,7 @@ Even when four or more satellites are visible to the GPS receiver, GPS location 
 
 Dilution of Precision (DOP) coefficients are unitless measurements representing the relative positions of navigation satellites and the receiver and the influence of the relative positions on the location obtained [@isikIntegrityAnalysisGPSBased2020]. There are multiple different types of DOP coefficients, each accounting for a different location aspect. We have three DOP types in the NDS data we used: Position DOP (PDOP), Horizontal DOP (HDOP), and Vertical DOP (VDOP).
 
-@isikIntegrityAnalysisGPSBased2020 presented the following relationship among the DOP coefficients we have available:
+@isikIntegrityAnalysisGPSBased2020 presented the following relationship among the DOP coefficients we have available in the NDS data we used:
 
 $$
 \begin{aligned}
@@ -364,7 +364,7 @@ As described in the InTrans internal documentation, the CV data continuously str
 %\hline\hline
 \endlastfoot
 
-route\_id & RAMS & NA & This field is the unique identifier for a route. The segmentation is based on the Iowa DOT’s \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer}{RAMS network}. &  \\
+route\_id & RAMS & NA & Unique identifier for a route. The segmentation is based on the Iowa DOT’s \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer}{RAMS network}. &  \\
 \hline
 route\_from\_measure & RAMS & Miles & \textbf{Do not recommend using.} This field is the minimum measure for a route, but does not represent the actual location of the segment. & \\
 \hline
@@ -384,11 +384,11 @@ segment\_end\_measure & RAMS & Miles & Measure at the end of the segment along t
 \hline
 segment\_length & RAMS & Miles & Calculated distance of the segment based on the difference between the \texttt{segment\_start\_measure} and \texttt{segment\_end\_measure} & \\
 \hline
-geohash\_lrs & Derived & NA & Unique identifier for a specific region on earth. Can be used to identify a specific location for filtering data. & \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{IBM geohash documentation} \\
+geohash\_lrs & Derived & NA & Unique identifier for a specific region on earth that can be used to identify a specific location for filtering data & \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{IBM geohash documentation} \\
 \hline
-bearing & Derived & Degrees & Direction of the roadway in degrees (not the same as CV data). The bearing values include 0 degrees is North, 90 is East, 180 is South and 270 is West. For divided or one way roadways, the bearing represents the direction of travel for vehicles. For undivded roadways, the bearing represents the primary direction (North or East) of vehicles (but vehicles can also travel in the opposite direction of the bearing). & \\
+bearing & Derived & Degrees & Direction of the roadway in degrees (not the same as CV data), where 0 degrees is North, 90 is East, 180 is South and 270 is West. For divided or one way roadways, the bearing represents the direction of travel for vehicles. For undivded roadways, the bearing represents the primary direction (North or East) of vehicles (but vehicles can also travel in the opposite direction of the bearing). & \\
 \hline
-facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS. The facility type is defined in RAMS. & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/44}{RAMS facility types}\\
+facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/44}{RAMS facility types}\\
 \end{longtable}
 ```
 
