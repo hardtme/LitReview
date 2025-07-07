@@ -29,7 +29,7 @@ filters:
 commands: [rr,svp,hh]    
 ---
 
-```{r}
+```{r setup}
 #| echo: false
 #| warning: false
 #| message: false
@@ -38,6 +38,7 @@ library(tidyverse)
 library(leaflet)
 library(sf)
 library(glue)
+# remotes::install_github("hardtme/DrivePlotR)
 library(DrivePlotR)
 library(tmap)
 tmap_mode("plot")
@@ -76,7 +77,7 @@ For this project, we use two primary data sources: naturalistic driving study (N
 
 \mh{The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and navigation information. Any GNSS (including GPS) involves a constellation of satellites orbiting the Earth in a specified pattern. Typically, 6 to 10 of the satellites in the constellation are above the horizon at any time, but not all of the satellites may be usable by the receiver due to obstructions like tall buildings. A ground-based network of monitoring and control stations continually determines the orbital paths of the satellites in the constellation. The ground stations make short-term predictions of the locations of the satellites in orbit and transmit these predictions back to the satellites. The satellites then relay their positions to receivers [@iliffeDatumsMapProjections2008]. @fig-gps shows simplified depictions of signals being transmitted from GPS satellites in orbit to a receiver in a vehicle on the ground. GPS satellite constellation geometry is discussed further in @sec-dop. }
 
-```{r}
+```{r gps}
 #| echo: false
 #| layout-ncol: 2
 #| fig-cap: "Examples of GPS satellite constellation geometries"
@@ -402,7 +403,7 @@ Road network metadata
 
 As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
 
-```{r}
+```{r gps-drift-leaflet}
 #| echo: false
 #| eval: false
 #| label: fig-gps-drift-leaflet
@@ -476,7 +477,7 @@ shift3 <- leaflet() |>
 
 :::{#fig-gps-drift}
 
-```{r}
+```{r gps-drift}
 #| echo: false
  
 data("nds_data")
