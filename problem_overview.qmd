@@ -44,6 +44,7 @@ library(tmap)
 tmap_mode("plot")
 # remotes::install_github("dill/emoGG")
 library(emoGG)
+library(gpsdriving)
 ```
 
 # To Dos
@@ -77,7 +78,7 @@ For this project, we use two primary data sources: naturalistic driving study (N
 
 \mh{The Global Positioning System (GPS) is part of the Global Navigation Satellite System (GNSS), which provides accurate location and navigation information. Any GNSS (including GPS) involves a constellation of satellites orbiting the Earth in a specified pattern. Typically, 6 to 10 of the satellites in the constellation are above the horizon at any time, but not all of the satellites may be usable by the receiver due to obstructions like tall buildings. A ground-based network of monitoring and control stations continually determines the orbital paths of the satellites in the constellation. The ground stations make short-term predictions of the locations of the satellites in orbit and transmit these predictions back to the satellites. The satellites then relay their positions to receivers [@iliffeDatumsMapProjections2008]. @fig-gps shows simplified depictions of signals being transmitted from GPS satellites in orbit to a receiver in a vehicle on the ground. GPS satellite constellation geometry is discussed further in @sec-dop. }
 
-```{r gps}
+```{r}
 #| echo: false
 #| layout-ncol: 2
 #| fig-cap: "Examples of GPS satellite constellation geometries"
@@ -403,7 +404,7 @@ Road network metadata
 
 As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
 
-```{r gps-drift-leaflet}
+```{r}
 #| echo: false
 #| eval: false
 #| label: fig-gps-drift-leaflet
@@ -477,7 +478,7 @@ shift3 <- leaflet() |>
 
 :::{#fig-gps-drift}
 
-```{r gps-drift}
+```{r}
 #| echo: false
  
 data("nds_data")
@@ -523,7 +524,79 @@ gps_drift_tmap
 Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
 :::
 
-There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers and does not incorporate information from previous points. Another option used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
+There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. @fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to that road segment, but the match does not fit with the rest of the vehicle trajectory.
+
+:::{#fig-naive-map-matching}
+
+```{r}
+#| echo: false
+# USGS data
+data("oma_roads")
+# Make Farnam example bounding box into sf object
+farnam_bbox_sf <- farnam_bbox |>
+  st_as_sfc() |>
+  st_as_sf(crs = "WGS84")
+
+# Find road candidates within the bounding box for the Farnam example above
+poss_matches <- oma_roads |>
+  st_filter(farnam_bbox_sf, .predicate = st_intersects)
+
+# leaflet() |>
+#   addProviderTiles(provider = "CartoDB.Positron") |>
+#   addCircleMarkers(data = farnam_plot, color = "black") |>
+#   addPolygons(data = farnam_bbox_sf) |>
+#   addPolylines(data = poss_matches, color = "red")
+# The road candidates are what we would expect.
+
+# For each GPS point, find the nearest point on each of the road segments
+nearest_pts_ls <- st_nearest_points(farnam_plot, poss_matches)
+
+nearest_pts_ls_sf <- st_as_sf(nearest_pts_ls)
+
+# Find the distance between the original point and the matched point
+nearest_pts_ls_sf <- nearest_pts_ls_sf |>
+  rename(geometry = x) |>
+  mutate(dist = st_length(geometry))
+
+nearest_pts_ls_sf_start <- lwgeom::st_startpoint(nearest_pts_ls_sf) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+nearest_pts_ls_sf_end <- lwgeom::st_endpoint(nearest_pts_ls_sf) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+# For each starting point, find the closest matched point
+
+nearest_pts_end_match <- nearest_pts_ls_sf_end |>
+  mutate(id = rep(1:nrow(farnam_plot), each = nrow(poss_matches)),
+         dist = nearest_pts_ls_sf$dist) |>
+  group_by(id) |>
+  filter(dist == min(dist))
+
+# leaflet() |>
+#   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
+#   addPolylines(data = nearest_pts_ls_sf, color = "blue") |>
+#   addCircleMarkers(data = nearest_pts_ls_sf_start, color = "green") |>
+#   addCircleMarkers(data = nearest_pts_ls_sf_end, color = "orange")
+
+# leaflet() |>
+#   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
+#   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
+#   addCircleMarkers(data = nearest_pts_end_match, color = "red")
+
+mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
+  tm_shape(nearest_pts_end_match, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none")
+
+mm_tmap
+```
+Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
+:::
+
+Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
 
 Map-matching with hidden Markov models (HMMs) was introduced by @newsonHiddenMarkovMap2009, whose algorithm performed map matching using a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. However, @newsonHiddenMarkovMap2009's algorithm was not a real-time algorithm. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
 
