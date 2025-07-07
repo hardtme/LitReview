@@ -333,7 +333,6 @@ hour & Derived & NA & Hour partition in which the data point was downloaded (not
 Connected Vehicle Metadata
 :::
 
-
 ## Road Network Metadata {#sec-roadnetwork}
 
 As described in the InTrans internal documentation, the CV data continuously stream into InTrans, which listens and archives data approximately every 60 seconds. The data are processed as they are archived, and part of the process involves relating the CV data to the Iowa DOT road network, as provided by the Road Asset Management System (RAMS). The road network is broken into approximately 0.1 mile segments for relating to the CV data. The CV data points are associated to the closest roadway, and the priority of a roadway for association to the CV is determined by the roadway's facility type. @tbl-roadnetwork provides names and descriptions of the fields used to match the CV data to the road system, as described in the InTrans internal documentation.
@@ -394,6 +393,10 @@ facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS &
 
 Road network metadata
 :::
+
+## Similarities Between Data from Naturalistic Driving Studies and Connected Vehicles {#sec-similarities}
+
+\mh{NDS and CV data are very similar to each other. Both data sources provide observations from vehicle trips, including the vehicle location (latitude and longitude), speed, and heading. These data are reported frequently, usually every one to three seconds. Depending on the nature of the data acquisition systems installed in the study participants' vehicles, NDS data may include additional information that CV data do not provide, such as the DOP coefficients associated with the GPS data. However, NDS data and CV data contain the same fundamental information (location, speed, and direction of travel). It is also possible to acquire similar trajectory data from micromobility solutions like bicycles and scooters. }
 
 # Overview of the Problem {#sec-problemoverview}
 
