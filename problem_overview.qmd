@@ -585,11 +585,12 @@ nearest_pts_end_match <- nearest_pts_ls_sf_end |>
 #   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
 #   addCircleMarkers(data = nearest_pts_end_match, color = "red")
 
-mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+mm_tmap <- tm_basemap(server = "CartoDB.DarkMatterNoLabels", alpha = 1)+
+  tm_tiles(server = "CartoDB.PositronNoLabels", alpha = 0.6)+
   tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
+  tm_dots(size = 1, fill = "blue", fill_alpha = 0.25, group = "original", group.control = "none")+
   tm_shape(nearest_pts_end_match, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none")
+  tm_dots(size = 1, fill = "red", fill_alpha = 0.25, group = "matched", group.control = "none")
 
 mm_tmap
 ```
