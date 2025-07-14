@@ -152,7 +152,7 @@ $$
 
 Higher DOP coefficients indicate worse positional accuracy, and two main factors increase DOP coefficients: sub-optimal geometry of the satellite constellation and obscured satellites [@isikIntegrityAnalysisGPSBased2020]. Even under ideal conditions, the geometry of the satellite constellation visible to the receiver constantly changes due to the movement of the satellites and the receiver. For DOP calculations, four satellites that are further apart in the sky (as visible from the receiver) are more optimal than four satellites that are close together in the sky, as shown in @fig-gps. Satellite obscuration prevents some satellites from being visible to the receiver. Tall buildings in urban areas commonly obscure satellites, which is a problem because the receiver cannot see more optimal satellites and must instead rely on a suboptimal satellite constellation to determine location [@isikIntegrityAnalysisGPSBased2020].
 
-@isikIntegrityAnalysisGPSBased2020 noted that there is no agreed-upon standard for relating DOP coefficient values to the quality of navigation data. Recall that lower DOP coefficient values indicate higher quality navigation data. @isikIntegrityAnalysisGPSBased2020 presented the scale for DOP coefficient values shown in @tbl-dop based on the literature and the results of their own work.
+@isikIntegrityAnalysisGPSBased2020 noted that there is no agreed-upon standard for relating DOP coefficient values to the quality of navigation data. Recall that lower DOP coefficient values \mh{should} indicate higher quality navigation data. @isikIntegrityAnalysisGPSBased2020 presented the scale for DOP coefficient values shown in @tbl-dop based on the literature and the results of their own work.
 
 :::{#tbl-dop}
 
@@ -402,7 +402,7 @@ Road network metadata
 
 # Overview of the Problem {#sec-problemoverview}
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS. The red points show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, \mh{even when the DOP coefficients for the data points fall within the Excellent to Good ranges on the scale in @tbl-dop}. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, \mh{and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. }The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
 
 ```{r}
 #| echo: false
@@ -524,7 +524,9 @@ gps_drift_tmap
 Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
 :::
 
-There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. @fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to that road segment, but the match does not fit with the rest of the vehicle trajectory.
+There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. 
+
+@fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to \mh{that east-west} road segment \mh{instead of the north-south road segment}, but the match does not fit with the rest of the vehicle trajectory.
 
 :::{#fig-naive-map-matching}
 
@@ -580,6 +582,13 @@ nearest_pts_end_match <- nearest_pts_ls_sf_end |>
 #   addCircleMarkers(data = nearest_pts_ls_sf_start, color = "green") |>
 #   addCircleMarkers(data = nearest_pts_ls_sf_end, color = "orange")
 
+# mm_process_tmap <- tm_basemap(server = "CartoDB.DarkMatterNoLabels", alpha = 1)+
+#      tm_tiles(server = "CartoDB.PositronNoLabels", alpha = 0.6)+
+#      tm_shape(nearest_pts_ls_sf, bbox = farnam_bbox_adj) + 
+#      tm_lines(col = "black")+
+#      tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+#      tm_dots(size = 1, fill = "blue", fill_alpha = 0.25, group = "original", group.control = "none")
+     
 # leaflet() |>
 #   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
 #   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
