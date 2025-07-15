@@ -506,14 +506,25 @@ shifted_points_plot <- shifted_points |>
 farnam_bbox <- st_bbox(farnam_plot)
 
 farnam_bbox_adj <- farnam_bbox
-
 farnam_bbox_adj[1] <- farnam_bbox_adj[1] - 0.0001
 farnam_bbox_adj[2] <- farnam_bbox_adj[2] - 0.0001
 farnam_bbox_adj[3] <- farnam_bbox_adj[3] + 0.0001
 farnam_bbox_adj[4] <- farnam_bbox_adj[4] + 0.0001
 
-# gps_drift_tmap <- tm_basemap(server = "CartoDB.PositronNoLabels")+
+# USGS data
+data("oma_roads")
+# Make Farnam example bounding box into sf object
+farnam_bbox_sf <- farnam_bbox |>
+  st_as_sfc() |>
+  st_as_sf(crs = "WGS84")
+
+# Find road candidates within the bounding box for the Farnam example above
+poss_matches <- oma_roads |>
+  st_filter(farnam_bbox_sf, .predicate = st_intersects)
+
 gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10)+
   tm_shape(farnam_plot, bbox = farnam_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(shifted_points_plot, bbox = farnam_bbox_adj)+
@@ -532,16 +543,6 @@ There are many map-matching algorithms available, ranging from simple to complex
 
 ```{r}
 #| echo: false
-# USGS data
-data("oma_roads")
-# Make Farnam example bounding box into sf object
-farnam_bbox_sf <- farnam_bbox |>
-  st_as_sfc() |>
-  st_as_sf(crs = "WGS84")
-
-# Find road candidates within the bounding box for the Farnam example above
-poss_matches <- oma_roads |>
-  st_filter(farnam_bbox_sf, .predicate = st_intersects)
 
 # leaflet() |>
 #   addProviderTiles(provider = "CartoDB.Positron") |>
@@ -582,26 +583,28 @@ nearest_pts_end_match <- nearest_pts_ls_sf_end |>
 #   addCircleMarkers(data = nearest_pts_ls_sf_start, color = "green") |>
 #   addCircleMarkers(data = nearest_pts_ls_sf_end, color = "orange")
 
-# mm_process_tmap <- tm_basemap(server = "CartoDB.DarkMatterNoLabels", alpha = 1)+
-#      tm_tiles(server = "CartoDB.PositronNoLabels", alpha = 0.6)+
-#      tm_shape(nearest_pts_ls_sf, bbox = farnam_bbox_adj) + 
+# mm_process_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#      tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+#      tm_lines(col = "tan", lwd = 10)+
+#      tm_shape(nearest_pts_ls_sf, bbox = farnam_bbox_adj) +
 #      tm_lines(col = "black")+
 #      tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
-#      tm_dots(size = 1, fill = "blue", fill_alpha = 0.25, group = "original", group.control = "none")
+#      tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")
      
 # leaflet() |>
 #   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
 #   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
 #   addCircleMarkers(data = nearest_pts_end_match, color = "red")
 
-mm_tmap <- tm_basemap(server = "CartoDB.DarkMatterNoLabels", alpha = 1)+
-  tm_tiles(server = "CartoDB.PositronNoLabels", alpha = 0.6)+
+mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
   tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", fill_alpha = 0.25, group = "original", group.control = "none")+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(nearest_pts_end_match, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "red", fill_alpha = 0.25, group = "matched", group.control = "none")
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none")
 
-mm_tmap
+mm_tmap 
 ```
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
 :::
