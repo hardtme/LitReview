@@ -577,6 +577,12 @@ nearest_pts_end_match <- nearest_pts_ls_sf_end |>
   group_by(id) |>
   filter(dist == min(dist))
 
+# Get the lines between the original points and the matched points
+nearest_pts_ls_match <- nearest_pts_ls_sf |>
+  mutate(id = rep(1:nrow(farnam_plot), each = nrow(poss_matches))) |>
+  group_by(id) |>
+  filter(dist == min(dist))
+
 # leaflet() |>
 #   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
 #   addPolylines(data = nearest_pts_ls_sf, color = "blue") |>
@@ -599,6 +605,8 @@ nearest_pts_end_match <- nearest_pts_ls_sf_end |>
 mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(poss_matches, bbox = farnam_bbox_adj)+
   tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_match, bbox = farnam_bbox_adj)+
+  tm_lines(col = "black")+
   tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(nearest_pts_end_match, bbox = farnam_bbox_adj)+
