@@ -503,6 +503,13 @@ farnam_plot <- farnam |>
 shifted_points_plot <- shifted_points |>
   filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
 
+# Get the lines between the original points and the matched points
+all_points <- bind_rows(farnam_plot, shifted_points_plot)
+all_points_ls <- all_points |>
+  group_by(time_utc) |>
+  summarize() |>
+  st_cast("LINESTRING")
+
 farnam_bbox <- st_bbox(farnam_plot)
 
 farnam_bbox_adj <- farnam_bbox
@@ -525,6 +532,8 @@ poss_matches <- oma_roads |>
 gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(poss_matches, bbox = farnam_bbox_adj)+
   tm_lines(col = "tan", lwd = 10)+
+  tm_shape(all_points_ls, bbox = farnam_bbox_adj)+
+  tm_lines(col = "black")+
   tm_shape(farnam_plot, bbox = farnam_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(shifted_points_plot, bbox = farnam_bbox_adj)+
