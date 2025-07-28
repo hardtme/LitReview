@@ -402,7 +402,13 @@ NDS and CV data are very similar to each other. Both data sources provide observ
 
 # Overview of the Problem {#sec-problemoverview}
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges on the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system.
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges on the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. 
+
+\mh{The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system. Map-matching algorithms answer two fundamental questions: }
+
+\mh{1. On which road is the vehicle driving?}
+
+\mh{2. Where on the road is the vehicle driving?}
 
 ```{r}
 #| echo: false
