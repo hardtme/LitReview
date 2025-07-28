@@ -410,6 +410,8 @@ As we have worked with driving data, particularly the NDS data from the UNMC stu
 
 \mh{2. Where on the road is the vehicle driving?}
 
+\mh{All map-matching algorithms require a geospatial representation of the road system where the vehicle trajectories in question may be assumed to have occurred. For NDS and CV driving data, it is reasonable to expect the vast majority of driving will take place on public roads. Crucially, we assume the geospatial representation of the road system maps roads to their true locations with little to no noise. }
+
 ```{r}
 #| echo: false
 #| eval: false
