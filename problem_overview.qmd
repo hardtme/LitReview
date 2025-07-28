@@ -299,7 +299,7 @@ heading\_deg & Raw & Degrees & Direction the vehicle is traveling, where 0 degre
 \hline
 elevation\_ft & Raw & Feet & Vertical distance above sea level measured in feet & & \\
 \hline
-speed\_mph & Raw & Miles per hour & Speed of the vehicle for the data point & & \\
+speed\_mph & Raw & Miles per hour & Speed of the vehicle for the data point (collected by in-vehicle instrumentation) & & \\
 \hline
 acceleration & Derived & $\text{ft/s}^2$ & Derived acceleration between the previous data point and the current data point for the journey & & \\
 \hline
