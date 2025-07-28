@@ -644,3 +644,8 @@ As mentioned above, map-matching algorithms can suffer from data quality issues,
 
 # References
 
+\sloppy
+<!-- Inspired by https://github.com/jgm/pandoc/issues/10921 -->
+
+::: {#refs}
+:::
