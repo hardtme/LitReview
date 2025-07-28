@@ -484,11 +484,11 @@ shift3 <- leaflet() |>
 #shift3
 ```
 
-:::{#fig-gps-drift}
+:::{#fig-gps-drift-old}
 
 ```{r}
 #| echo: false
- 
+#| eval: false 
 data("nds_data")
 
 nds_data_sf  <- nds_data |>
@@ -546,6 +546,145 @@ gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
   tm_shape(shifted_points_plot, bbox = farnam_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none")
+
+gps_drift_tmap
+```
+Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
+:::
+
+:::{#fig-gps-drift}
+
+```{r}
+#| echo: false
+#| eval: true
+
+data("nds_data")
+
+nds_data_sf  <- nds_data |>
+  st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+
+farnam <- nds_data_sf |>
+  filter(drive == 23)
+
+farnam_plot <- farnam |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
+# leaflet() |>
+#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
+#   addCircleMarkers(data = farnam_plot, label = ~glue("{round(speed_mph, 2)} mph"))
+
+offset_pt1 <- st_as_sfc("POINT(0.00018 -0.000075)", crs = "WGS84")
+pt1 <- farnam_plot[1,]
+shifted_pt1 <- pt1 |>
+  mutate(geometry = geometry + offset_pt1)
+
+# Use the same offset as point 1 for point 2
+pt2 <- farnam_plot[2,]
+shifted_pt2 <- pt2 |>
+  mutate(geometry = geometry + offset_pt1)
+
+offset_pt3 <- st_as_sfc("POINT(0.00018 -0.000073)", crs = "WGS84")
+pt3 <- farnam_plot[3,]
+shifted_pt3 <- pt3 |>
+  mutate(geometry = geometry + offset_pt3)
+
+offset_pt4 <- st_as_sfc("POINT(0.00018 -0.00007)", crs = "WGS84")
+pt4 <- farnam_plot[4,]
+shifted_pt4 <- pt4 |>
+  mutate(geometry = geometry + offset_pt4)
+
+offset_pt5 <- st_as_sfc("POINT(0.00016 -0.00003)", crs = "WGS84")
+pt5 <- farnam_plot[5,]
+shifted_pt5 <- pt5 |>
+  mutate(geometry = geometry + offset_pt5)
+
+offset_pt6 <- st_as_sfc("POINT(0.00015 0.00005)", crs = "WGS84")
+pt6 <- farnam_plot[6,]
+shifted_pt6 <- pt6 |>
+  mutate(geometry = geometry + offset_pt6)
+
+# Use the same shift for point 7
+pt7 <- farnam_plot[7,]
+shifted_pt7 <- pt7 |>
+  mutate(geometry = geometry + offset_pt6)
+
+offset_pt8 <- st_as_sfc("POINT(0.000145 0.00005)", crs = "WGS84")
+pt8 <- farnam_plot[8,]
+shifted_pt8 <- pt8 |>
+  mutate(geometry = geometry + offset_pt8)
+
+# Use the same shift for point 9
+pt9 <- farnam_plot[9,]
+shifted_pt9 <- pt9 |>
+  mutate(geometry = geometry + offset_pt8)
+
+offset_pt10 <- st_as_sfc("POINT(0.00014 0.00005)", crs = "WGS84")
+pt10 <- farnam_plot[10,]
+shifted_pt10 <- pt10 |>
+  mutate(geometry = geometry + offset_pt10)
+
+# leaflet() |>
+#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
+#   addCircleMarkers(data = farnam_plot, label = ~glue("{round(speed_mph, 2)} mph")) |>
+#   addCircleMarkers(data = shifted_pt1, color = "brown") |>
+#   addCircleMarkers(data = shifted_pt2, color = "black") |>
+#   addCircleMarkers(data = shifted_pt3, color = "darkgray") |>
+#   addCircleMarkers(data = shifted_pt4, color = "darkorchid") |>
+#   addCircleMarkers(data = shifted_pt5, color = "magenta") |>
+#   addCircleMarkers(data = shifted_pt6, color = "red") |>
+#   addCircleMarkers(data = shifted_pt7, color = "orange") |>
+#   addCircleMarkers(data = shifted_pt8, color = "gold") |>
+#   addCircleMarkers(data = shifted_pt9, color = "green") |>
+#   addCircleMarkers(data = shifted_pt10, color = "turquoise")
+
+manual_shift_points <- bind_rows(shifted_pt1, shifted_pt2,
+                                 shifted_pt3, shifted_pt4,
+                                 shifted_pt5, shifted_pt6,
+                                 shifted_pt7, shifted_pt8,
+                                 shifted_pt9, shifted_pt10)
+
+manual_shift_points <- manual_shift_points |>
+  st_set_crs("WGS84")
+
+# leaflet() |>
+#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
+#   addCircleMarkers(data = farnam_plot, color = "blue") |>
+#   addCircleMarkers(data = manual_shift_points, color = "red")
+
+all_shifted_points <- bind_rows(farnam_plot, manual_shift_points)
+all_shifted_points_ls <- all_shifted_points |>
+  group_by(time_utc) |>
+  summarize() |>
+  st_cast("LINESTRING")
+
+farnam_bbox <- st_bbox(farnam_plot)
+
+farnam_bbox_adj <- farnam_bbox
+farnam_bbox_adj[1] <- farnam_bbox_adj[1] - 0.0002
+farnam_bbox_adj[2] <- farnam_bbox_adj[2] - 0.0002
+farnam_bbox_adj[3] <- farnam_bbox_adj[3] + 0.0002
+farnam_bbox_adj[4] <- farnam_bbox_adj[4] + 0.0002
+
+# USGS data
+data("oma_roads")
+# Make Farnam example bounding box into sf object
+farnam_bbox_sf <- farnam_bbox |>
+  st_as_sfc() |>
+  st_as_sf(crs = "WGS84")
+
+# Find road candidates within the bounding box for the Farnam example above
+poss_matches <- oma_roads |>
+  st_filter(farnam_bbox_sf, .predicate = st_intersects)
+
+gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10)+
+  tm_shape(all_shifted_points_ls, bbox = farnam_bbox_adj)+
+  tm_lines(col = "black")+
+  tm_shape(farnam_plot, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(manual_shift_points, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none", fill_alpha = 0.9)
 
 gps_drift_tmap
 ```
@@ -625,9 +764,9 @@ mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(nearest_pts_ls_match, bbox = farnam_bbox_adj)+
   tm_lines(col = "black")+
   tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
   tm_shape(nearest_pts_end_match, bbox = farnam_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none")
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
 
 mm_tmap 
 ```
