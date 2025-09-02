@@ -726,7 +726,6 @@ nearest_pts_ls_sf_end <- lwgeom::st_endpoint(nearest_pts_ls_sf) |>
   rename(geometry = x)
 
 # For each starting point, find the closest matched point
-
 nearest_pts_end_match <- nearest_pts_ls_sf_end |>
   mutate(id = rep(1:nrow(farnam_plot), each = nrow(poss_matches)),
          dist = nearest_pts_ls_sf$dist) |>
@@ -772,6 +771,121 @@ mm_tmap
 ```
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
 :::
+
+```{r}
+#| include: false
+# Find the distance between consecutive matched points
+# Create new dataset that is shifted by 1 index
+nearest_pts_end_match_shift <- nearest_pts_end_match[-1,]
+# Repeat the last point so st_distance doesn't throw an error
+nearest_pts_end_match_shift <- rbind(nearest_pts_end_match_shift, nearest_pts_end_match_shift[nrow(nearest_pts_end_match_shift),])
+
+match_consec_dists <- st_distance(x = nearest_pts_end_match,
+                                  y = nearest_pts_end_match_shift,
+                                  by_element = TRUE
+                                  )
+# There is a big jump between points 7 and 8.
+```
+
+```{r}
+#| include: false
+farnam_plot_matched_og <- farnam_plot |>
+  st_set_geometry(st_geometry(nearest_pts_end_match))
+
+nearest_pts_dist <- nearest_pts_ls_sf_end |>
+  mutate(id = rep(1:nrow(farnam_plot), each = nrow(poss_matches)),
+         dist = nearest_pts_ls_sf$dist) |>
+  group_by(id)
+
+# Manually replace the 7th point with the next closest point
+farnam_plot_matched_alt7 <- farnam_plot_matched_og
+#farnam_plot_matched_alt7$geometry[7] <- lwgeom::st_endpoint(nearest_pts_ls_sf$geometry[19])
+farnam_plot_matched_alt7$geometry[7] <- nearest_pts_dist$geometry[19]
+
+mm_tmap_alt7 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(farnam_plot_matched_alt7, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_alt7
+```
+
+```{r}
+#| include: false
+# Manually replace the sixth point with the next closest point
+farnam_plot_matched_alt76 <- farnam_plot_matched_alt7
+farnam_plot_matched_alt76$geometry[6] <- lwgeom::st_endpoint(nearest_pts_dist$geometry[16])
+
+mm_tmap_alt76 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(farnam_plot_matched_alt76, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_alt76
+```
+
+```{r}
+#| include: false
+# Manually replace the fifth point with the next closest point
+farnam_plot_matched_alt765 <- farnam_plot_matched_alt76
+farnam_plot_matched_alt765$geometry[5] <- lwgeom::st_endpoint(nearest_pts_dist$geometry[15])
+# The exact point may not matter here because it's matching to the endpoint shared by 2 segments.
+
+mm_tmap_alt765 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(farnam_plot_matched_alt765, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_alt765
+```
+
+```{r}
+#| echo: false
+# Manually replace the fourth point with the next closest point
+farnam_plot_matched_alt7654 <- farnam_plot_matched_alt765
+farnam_plot_matched_alt7654$geometry[4] <- lwgeom::st_endpoint(nearest_pts_dist$geometry[12])
+# The exact point may not matter here because it's matching to the endpoint shared by 2 segments.
+
+# Now the fourth and fifth points are on top of each other at the corner.
+
+# Get the lines between the original points and the matched points
+alt_points <- bind_rows(farnam_plot, farnam_plot_matched_alt7654)
+alt_points_ls <- alt_points |>
+  group_by(time_utc) |>
+  summarize() |>
+  st_cast("LINESTRING")
+
+
+farnam_plot_matched_alt7654_ls <- 
+  map2(.x = farnam_plot$geometry, .y = farnam_plot_matched_alt7654$geometry,
+       \(x, y) st_union(x, y) |> st_cast("LINESTRING")) |>
+  st_as_sfc() |>
+  st_as_sf()
+
+farnam_plot_matched_alt7654_ls <- farnam_plot_matched_alt7654_ls |>
+  rename(geometry = "x")
+
+mm_tmap_alt7654 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(alt_points_ls, bbox = farnam_bbox_adj) +
+  tm_lines(col = "black")+
+  tm_shape(nearest_pts_ls_sf_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(farnam_plot_matched_alt7654, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_alt7654
+```
 
 Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
 
