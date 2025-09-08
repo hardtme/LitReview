@@ -404,13 +404,13 @@ NDS and CV data are very similar to each other. Both data sources provide observ
 
 As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges from the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. 
 
-\mh{The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system. Map-matching algorithms answer two fundamental questions: }
+The map-matching problem arises from the need to associate GPS points from a moving vehicle to the road system. Map-matching algorithms answer two fundamental questions: 
 
-\mh{1. On which road is the vehicle driving?}
+1. On which road is the vehicle driving?
 
-\mh{2. Where on the road is the vehicle driving?}
+2. Where on the road is the vehicle driving?
 
-\mh{All map-matching algorithms require a geospatial representation of the road system where the vehicle trajectories in question may be assumed to have occurred. For NDS and CV driving data, it is reasonable to expect the vast majority of driving will take place on public roads. Crucially, we assume the geospatial representation of the road system maps roads to their true locations with little to no noise. }
+All map-matching algorithms require a geospatial representation of the road system where the vehicle trajectories in question may be assumed to have occurred. For NDS and CV driving data, it is reasonable to expect the vast majority of driving will take place on public roads. Crucially, we assume the geospatial representation of the road system maps roads to their true locations with little to no noise. 
 
 ```{r}
 #| echo: false
@@ -895,7 +895,7 @@ Map-matching with hidden Markov models (HMMs) was introduced by @newsonHiddenMar
 
 As mentioned above, map-matching algorithms can suffer from data quality issues, as observed by @chaoSurveyMapMatchingAlgorithms2020. When the sampling rate is high, unnecessary detours can occur. This means that consecutive points may be too close to each other, so the later point is mapped in the upstream of the previous point. State-transition models, in particular, can suffer from matching breaks caused by outliers. The outlier point falls out of the candidate range for the true state, and so the map-matching route disconnects [@chaoSurveyMapMatchingAlgorithms2020]. Evaluating the accuracy of any map-matching algorithm is challenging because the true path taken by the vehicle is unknown [@sakiPracticalGuideOpenSource2022]. 
 
-\mh{@newsonHiddenMarkovMap2009 provide one example vehicle trajectory from a route in Seattle, Washington, USA, along with the ground truth route traveled by the vehicle. @kubickaDatasetTestingTraining2015 provide one hundred example vehicle trajectories from various locations around the world along with a map-matched route for each trajectory. However, the true sequence of road segments traveled in each of these trajectories are unknown, and thus the matched routes represent experts' best ideas for the correct sequence of road segments. The sets of example trajectories from @newsonHiddenMarkovMap2009 and @kubickaDatasetTestingTraining2015 deal more with the determination of the road segment on which the vehicle was traveling at each time point as opposed to the location of the vehicle on the selected link.}
+@newsonHiddenMarkovMap2009 provide one example vehicle trajectory from a route in Seattle, Washington, USA, along with the ground truth route traveled by the vehicle. @kubickaDatasetTestingTraining2015 provide one hundred example vehicle trajectories from various locations around the world along with a map-matched route for each trajectory. However, the true sequence of road segments traveled in each of these trajectories are unknown, and thus the matched routes represent experts' best ideas for the correct sequence of road segments. The sets of example trajectories from @newsonHiddenMarkovMap2009 and @kubickaDatasetTestingTraining2015 deal more with the determination of the road segment on which the vehicle was traveling at each time point as opposed to the location of the vehicle on the selected link.
 
 # References
 
