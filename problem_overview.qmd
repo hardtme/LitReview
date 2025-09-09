@@ -486,11 +486,12 @@ shift3 <- leaflet() |>
 #shift3
 ```
 
-:::{#fig-gps-drift-old}
-
 ```{r}
 #| echo: false
-#| eval: false 
+#| eval: false
+#| label: fig-gps-drift-old 
+#| fig-caption: |
+#|  Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
 data("nds_data")
 
 nds_data_sf  <- nds_data |>
@@ -551,8 +552,6 @@ gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
 
 gps_drift_tmap
 ```
-Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
-:::
 
 :::{#fig-gps-drift}
 
