@@ -26,7 +26,9 @@ format:
 
 filters:
    - latex-environment
-commands: [rr,svp,hh]    
+commands: [rr,svp,hh] 
+execute: 
+  echo: false
 ---
 
 ```{r setup}
@@ -691,7 +693,7 @@ gps_drift_tmap
 Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
 :::
 
-There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. @sakiPracticalGuideOpenSource2022 noted that this method was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. 
+There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. \mh{InTrans uses this strategy to associate CV data points to the closest roadway, although the priority of a roadway for association to the CV data points is determined by the roadway's facility type. For example, a point is more likely to be matched to a nearby interstate highway than a nearby local road.} @sakiPracticalGuideOpenSource2022 noted that the method of orthogonal projection to the nearest road was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. 
 
 @fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the match does not fit with the rest of the vehicle trajectory.
 
@@ -887,9 +889,72 @@ mm_tmap_alt7654 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
 mm_tmap_alt7654
 ```
 
-Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
+Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. @sakiPracticalGuideOpenSource2022 observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as @sakiPracticalGuideOpenSource2022 noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. It is reasonable to assume that the heading of a vehicle traveling on a road should be similar to the heading of the road, so roads should be removed from consideration if the vehicle heading and the road heading disagree, as noted by @sakiPracticalGuideOpenSource2022. \mh{An example of this method is shown in @fig-naive-map-matching-heading. Road segments with headings within 45 degrees of the vehicle heading were kept as matching candidates. Note the temporal jump for the two points in the intersection for which the black lines indicating the match intersect.} @sakiPracticalGuideOpenSource2022 observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results.
 
-Map-matching with hidden Markov models (HMMs) was introduced by @newsonHiddenMarkovMap2009, whose algorithm performed map matching using a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. However, @newsonHiddenMarkovMap2009's algorithm was not a real-time algorithm. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
+```{r}
+#| echo: false
+poss_match_start <- lwgeom::st_startpoint(poss_matches)
+poss_match_end <- lwgeom::st_endpoint(poss_matches)
+
+road_bearings <- map2(.x = poss_match_start, .y = poss_match_end,
+                      \(x, y) lwgeom::st_geod_azimuth(st_sfc(st_point(x), st_point(y), crs = 4326)) |>
+                        units::set_units("degrees")) |>
+  list_c()
+
+poss_matches <- poss_matches |>
+  mutate(bearing = 360 + as.numeric(road_bearings))
+
+nearest_pts_ls_sf_id <- nearest_pts_ls_sf |>
+  mutate(ObjectID = rep(poss_matches$ObjectID, length.out = nrow(nearest_pts_ls_sf)),
+         time_utc = rep(farnam_plot$time_utc, each = nrow(poss_matches)))
+
+nearest_pts_ls_sf_id_heading <- left_join(nearest_pts_ls_sf_id, 
+                                          farnam_plot |> select(time_utc, gyro_heading) |> st_drop_geometry(),
+                                          by = "time_utc")
+
+nearest_pts_ls_sf_id_heading <- left_join(nearest_pts_ls_sf_id_heading,
+                                          poss_matches |> select(ObjectID, bearing) |> st_drop_geometry(),
+                                          by = "ObjectID")
+
+# Keep the points that have a heading within 45 degrees of the road segment heading
+nearest_pts_heading_filter <- nearest_pts_ls_sf_id_heading |>
+  mutate(abs_heading_dist = abs(gyro_heading - bearing)) |>
+  filter(abs_heading_dist <= 45)
+
+# Keep the closest point
+nearest_pts_heading_filter_dist <- nearest_pts_heading_filter |>
+  group_by(time_utc) |>
+  filter(dist == min(dist))
+
+nearest_pts_heading_filter_dist_start <- lwgeom::st_startpoint(nearest_pts_heading_filter_dist) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+nearest_pts_heading_filter_dist_end <- lwgeom::st_endpoint(nearest_pts_heading_filter_dist) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+```
+
+:::{#fig-map-matching-heading}
+
+```{r}
+mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = farnam_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_heading_filter_dist, bbox = farnam_bbox_adj)+
+  tm_lines(col = "black")+
+  tm_shape(nearest_pts_heading_filter_dist_start, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_shape(nearest_pts_heading_filter_dist_end, bbox = farnam_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_heading 
+```
+
+Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red) while accounting for heading. Note the time jump of the two points near the intersection for which the black lines indicating the match intersect.
+:::
+
+Map-matching with hidden Markov models (HMMs) was made famous by @newsonHiddenMarkovMap2009, whose algorithm performed map matching using a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. However, @newsonHiddenMarkovMap2009's algorithm was not a real-time algorithm. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
 
 @chaoSurveyMapMatchingAlgorithms2020 surveyed available map-matching algorithms and noted that state-transition models are a popular model type. These include hidden Markov models (HMMs) and conditional random field (CRF) models. CRF models models account for interactions among observations while HMMs only consider the relationship between an observation and the most recent previous point [@chaoSurveyMapMatchingAlgorithms2020]. Weighted graph techniques can be used to infer the path from a weighted graph where the vertices are candidate points on the road system and edges are formed between two consecutive sample points. Weighted graph techniques tend to involve the following steps: (1) Initialize the graph (2) Use a scoring function to weight the edges in the graph (3) Infer the path based on the weighted graph [@chaoSurveyMapMatchingAlgorithms2020].
 
