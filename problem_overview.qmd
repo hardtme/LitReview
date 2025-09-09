@@ -26,7 +26,7 @@ format:
 
 filters:
    - latex-environment
-commands: [rr,svp,hh] 
+commands: [mh,bg,hh] 
 execute: 
   echo: false
 ---
@@ -194,209 +194,15 @@ This project utilized data from an NDS conducted by the University of Nebraska M
 
 <!-- From the file BlackBox_FormatQAPass_DataDictionary.docx -->
 
-:::{#tbl-rwrad}
-
-```{=latex}
-\begin{longtable}[c]{|p{0.25\textwidth}|p{0.33\textwidth}|p{0.33\textwidth}|}
-\hline
- %\multicolumn{3}{| c |}{Beginning of Table}\\
- %\hline
- Variable & Units/Values & Description\\
- \hline
- \endfirsthead
- 
- \hline
- \multicolumn{3}{|c|}{Continued from previous page}\\
- \hline
- Variable & Units/Values & Description\\
- \hline
- \endhead
- 
- \hline
- \endfoot
-
-\hline
-%\multicolumn{3}{| c |}{End of Table}\\
-%\hline\hline
-\endlastfoot
-
-device & NA & Device ID of Black Box\\
-\hline
-drive & NA & Numeric value sequentially ordered across time indicating the drive number to which the data correspond\\
-\hline
-time\_utc & yyyy-mm-dd hh:mm:ss & Date timestamp in UTC\\
-\hline
-gps\_long & Decimal degrees & Longitude returned from GPS\\
-\hline
-gps\_lat & Decimal degrees & Latitude returned from GPS\\
-\hline
-gps\_elevation & Meters & Elevation returned from GPS\\
-\hline
-gps\_heading & Degrees & Direction over the ground the vehicle is currently moving (returned from GPS)\\
-\hline
-gps\_fix & 0 = no fix\newline 1 = time only\newline 2 = 2D fix (latitude and longitude)\newline 3 = 3D fix (latitude, longtitude, and elevation) & Value representing the quality of the connection (or ``fix") between the GPS receiver and the GPS satellite constellation. A fix type of 2 gives good GPS location data, but applications that need more precise location estimates (e.g., applications relying on GPS speed) should use a fix type of 3. Theoretically, a fix type of 1 is the worst quality fix type that gives GPS time information, but data inspection suggests that for this study, the worst fix type giving GPS time information may actually be 2.\\
-\hline
-gps\_sats & NA & Number of satellites the GPS can ``see"\\
-\hline
-gps\_pdop & \textless{}1 = Ideal\newline 1-2 = Excellent\newline 2-5 = Good\newline 5-10 = Moderate\newline 10-20 = Fair\newline \textgreater{}20 = Poor\newline & Dilution of precision measure for 3D position\\
-\hline
-gps\_hdop & See gps\_pdop & Dilution of precision for the horizontal plane\\
-\hline
-gps\_vdop & See gps\_pdop & Dilution of precision for the vertical axis\\
-\hline
-gyro\_x & Degrees/second & Angular rotation rate about the right-to-left axis\\
-\hline
-gyro\_y & Degrees/second & Angular rotation rate about the forward-to-backward axis\\
-\hline
-gyro\_z & Degrees/second & Angular rotation rate about the up-to-down axis\\
-\end{longtable}
-```
-
-Metadata for UNMC naturalistic driving study
-:::
-
 ## Connected Vehicle Data {#sec-cv}
 
 The CV data come from the data provider StreetLight and are available from the Institute for Transportation (InTrans) at Iowa State University. The connected vehicles directly provide trajectory information every 1-3 seconds throughout their journeys. Each trip is uniquely identified by a unique JourneyID and each data point has a unique DatapointID (InTrans internal documentation, 2025).
 
 Connected vehicles collect a variety of data throughout their journeys, including vehicle location, speed, and heading. Other variables, such as acceleration, are derived from the data. @tbl-cvmetadata provides an overview of the available variables in the CV data, as described in the InTrans internal documentation.
 
-:::{#tbl-cvmetadata}
-
-```{=latex}
-\begin{longtable}[c]{|p{0.25\textwidth}|p{0.08\textwidth}|p{0.1\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.1\textwidth}|}
-\hline
- %\multicolumn{6}{| c |}{Beginning of Table}\\
- %\hline
- Field & Source & Units & Description & Possible Issues & Domains\\
- \hline
- \endfirsthead
- 
-\hline
- \multicolumn{6}{|c|}{Continued from previous page}\\
- \hline
- Field & Source & Units & Description & Possible Issues & Domains\\
- \hline
- \endhead
-
-\hline
-\endfoot
-
-\hline
-%\multicolumn{6}{| c |}{End of Table}\\
-%\hline\hline
-\endlastfoot
-
-datapoint\_id & Derived & NA & Unique identifier for each data point & &\\
-\hline
-journey\_id & Raw & NA & Unique identifier for each vehicle journey. The journey ID represents the same vehicle from ignition on to ignition off. & Streetlight notified InTrans that some journey IDs are non-compliant due to not having an ignition on/off, typically due to data coming in late. & \\    
-\hline
-capture\_time\_stamp & Raw & yyyy-mm-dd hh:mm:ss & Timestamp of the data in Central Time & & \\
-\hline
-latitude & Raw & Decimal degrees WGS 84 & Latitude value for the data point & & \\
-\hline
-longitude & Raw & Decimal degrees WGS 84 & Longitude value for the data point & & \\
-\hline
-heading\_deg & Raw & Degrees & Direction the vehicle is traveling, where 0 degrees is East, 90 is North, 180 is West and 270 is South. & & \\
-\hline
-elevation\_ft & Raw & Feet & Vertical distance above sea level measured in feet & & \\
-\hline
-speed\_mph & Raw & Miles per hour & Speed of the vehicle for the data point (collected by in-vehicle instrumentation) & & \\
-\hline
-acceleration & Derived & $\text{ft/s}^2$ & Derived acceleration between the previous data point and the current data point for the journey & & \\
-\hline
-ignition\_status & Raw & NA & Identifies whether the data point is at the beginning/end of the trip or part of the middle of the trip & & MIDTRIP, KEYON, KEYOFF  \\
-\hline
-route\_id & Derived & NA & Route ID of the closest segment to the data point & & \\
-\hline
-measure & Derived & Miles & Precise measure value along the route ID segments to the data point. The segmentation is based on the Iowa DOT RAMS network. & & \\
-\hline
-distance\_from\_route & Derived & Feet & Distance from the data point to the centerline of the RAMS network segment & Data points in parking lots and fields will still be associated to the closest roadway. & \\
-\hline
-segment\_start\_measure & Derived & Miles & Segment start measure value along the route ID segments to the data point & & \\
-\hline
-segment\_end\_measure & Derived & Miles & Segment end measure value along the route ID segments to the data point & & \\
-\hline
-geohash & Derived & NA & Unique identifier for a specific region on earth & &  \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{Geohash documentation}  \\
-\hline
-masking\_digit & Derived & NA & Number of digits in the latitude or longitude (whichever is smaller). Used to identify whether the data is masked (value less than 5). & & \\
-\hline
-year & Derived & NA & Year partition in which the data point was downloaded (not necessarily the year of the capture time stamp) & & \\
-\hline
-county\_id & Derived & NA & County where the data point is located. The county is represented by a number which can be identified at the RAMS link in the domain. & & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/43}{RAMS}\\
-\hline
-month & Derived & NA & Month partition in which the data point was downloaded (not necessarily the month of the capture time stamp) & & \\
-\hline
-day & Derived & NA & Day of month partition in which the data point was downloaded (not necessarily the day of the capture time stamp) & & \\
-\hline
-hour & Derived & NA & Hour partition in which the data point was downloaded (not necessarily the hour of the capture time stamp) & & \\
-\end{longtable}
-
-```
-
-Connected Vehicle Metadata
-:::
-
 ## Road Network Metadata {#sec-roadnetwork}
 
 As described in the InTrans internal documentation, the CV data continuously stream into InTrans, which listens and archives data approximately every 60 seconds. The data are processed as they are archived, and part of the process involves relating the CV data to the Iowa DOT road network, as provided by the Road Asset Management System (RAMS). The road network is broken into approximately 0.1 mile segments for relating to the CV data. The CV data points are associated to the closest roadway, and the priority of a roadway for association to the CV is determined by the roadway's facility type. @tbl-roadnetwork provides names and descriptions of the fields used to match the CV data to the road system, as described in the InTrans internal documentation.
-
-:::{#tbl-roadnetwork}
-
-```{=latex}
-\begin{longtable}[c]{|p{0.25\textwidth}|p{0.08\textwidth}|p{0.1\textwidth}|p{0.25\textwidth}|p{0.15\textwidth}|}
-\hline
- %\multicolumn{5}{| c |}{Beginning of Table}\\
- %\hline
- Field & Source & Units & Description & Domains\\
- \hline
- \endfirsthead
- 
-\hline
- \multicolumn{5}{|c|}{Continued from previous page}\\
- \hline
- Field & Source & Units & Description & Domains\\
- \hline
- \endhead
-
-\hline
-\endfoot
-
-\hline
-%\multicolumn{5}{| c |}{End of Table}\\
-%\hline\hline
-\endlastfoot
-
-route\_id & RAMS & NA & Unique identifier for a route. The segmentation is based on the Iowa DOT’s \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer}{RAMS network}. &  \\
-\hline
-route\_from\_measure & RAMS & Miles & \textbf{Do not recommend using.} This field is the minimum measure for a route, but does not represent the actual location of the segment. & \\
-\hline
-route\_to\_measure & RAMS & Miles & \textbf{Do not recommend using.} This field is the maximum measure for a route, but does not represent the actual location of the segment. & \\
-\hline
-segment\_start\_latitude & RAMS & Decimal degrees  & Latitude of the start of the segment along the RAMS network  & \\
-\hline
-segment\_start\_longitude & RAMS & Decimal degrees & Longitude of the start of the segment along the RAMS network & \\
-\hline
-segment\_end\_latitude & RAMS & Decimal degrees & Latitude of the end of the segment along the RAMS network & \\
-\hline
-segment\_end\_longitude & RAMS & Decimal degrees & Longitude of the end of the segment along the RAMS network & \\
-\hline
-segment\_start\_measure & RAMS & Miles & Measure at the beginning of the segment along the RAMS network. \textbf{This field should be used when relating to the CV data.} & \\
-\hline
-segment\_end\_measure & RAMS & Miles & Measure at the end of the segment along the RAMS network. \textbf{This field should be used when relating to the CV data.} & \\
-\hline
-segment\_length & RAMS & Miles & Calculated distance of the segment based on the difference between the \texttt{segment\_start\_measure} and \texttt{segment\_end\_measure} & \\
-\hline
-geohash\_lrs & Derived & NA & Unique identifier for a specific region on earth that can be used to identify a specific location for filtering data & \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{IBM geohash documentation} \\
-\hline
-bearing & Derived & Degrees & Direction of the roadway in degrees (not the same as CV data), where 0 degrees is North, 90 is East, 180 is South and 270 is West. For divided or one way roadways, the bearing represents the direction of travel for vehicles. For undivded roadways, the bearing represents the primary direction (North or East) of vehicles (but vehicles can also travel in the opposite direction of the bearing). & \\
-\hline
-facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/44}{RAMS facility types}\\
-\end{longtable}
-```
-
-Road network metadata
-:::
 
 ## Similarities Between Data from Naturalistic Driving Studies and Connected Vehicles {#sec-similarities}
 
@@ -967,4 +773,204 @@ As mentioned above, map-matching algorithms can suffer from data quality issues,
 <!-- Inspired by https://github.com/jgm/pandoc/issues/10921 -->
 
 ::: {#refs}
+:::
+
+\newpage
+
+# Appendix {.appendix .unnumbered}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+
+:::{#tbl-rwrad}
+
+```{=latex}
+\begin{longtable}[c]{|p{0.25\textwidth}|p{0.33\textwidth}|p{0.33\textwidth}|}
+\hline
+ %\multicolumn{3}{| c |}{Beginning of Table}\\
+ %\hline
+ Variable & Units/Values & Description\\
+ \hline
+ \endfirsthead
+ 
+ \hline
+ \multicolumn{3}{|c|}{Continued from previous page}\\
+ \hline
+ Variable & Units/Values & Description\\
+ \hline
+ \endhead
+ 
+ \hline
+ \endfoot
+
+\hline
+%\multicolumn{3}{| c |}{End of Table}\\
+%\hline\hline
+\endlastfoot
+
+device & NA & Device ID of Black Box\\
+\hline
+drive & NA & Numeric value sequentially ordered across time indicating the drive number to which the data correspond\\
+\hline
+time\_utc & yyyy-mm-dd hh:mm:ss & Date timestamp in UTC\\
+\hline
+gps\_long & Decimal degrees & Longitude returned from GPS\\
+\hline
+gps\_lat & Decimal degrees & Latitude returned from GPS\\
+\hline
+gps\_elevation & Meters & Elevation returned from GPS\\
+\hline
+gps\_heading & Degrees & Direction over the ground the vehicle is currently moving (returned from GPS)\\
+\hline
+gps\_fix & 0 = no fix\newline 1 = time only\newline 2 = 2D fix (latitude and longitude)\newline 3 = 3D fix (latitude, longtitude, and elevation) & Value representing the quality of the connection (or ``fix") between the GPS receiver and the GPS satellite constellation. A fix type of 2 gives good GPS location data, but applications that need more precise location estimates (e.g., applications relying on GPS speed) should use a fix type of 3. Theoretically, a fix type of 1 is the worst quality fix type that gives GPS time information, but data inspection suggests that for this study, the worst fix type giving GPS time information may actually be 2.\\
+\hline
+gps\_sats & NA & Number of satellites the GPS can ``see"\\
+\hline
+gps\_pdop & \textless{}1 = Ideal\newline 1-2 = Excellent\newline 2-5 = Good\newline 5-10 = Moderate\newline 10-20 = Fair\newline \textgreater{}20 = Poor\newline & Dilution of precision measure for 3D position\\
+\hline
+gps\_hdop & See gps\_pdop & Dilution of precision for the horizontal plane\\
+\hline
+gps\_vdop & See gps\_pdop & Dilution of precision for the vertical axis\\
+\hline
+gyro\_x & Degrees/second & Angular rotation rate about the right-to-left axis\\
+\hline
+gyro\_y & Degrees/second & Angular rotation rate about the forward-to-backward axis\\
+\hline
+gyro\_z & Degrees/second & Angular rotation rate about the up-to-down axis\\
+\end{longtable}
+```
+
+Metadata for UNMC naturalistic driving study
+:::
+
+:::{#tbl-cvmetadata}
+
+```{=latex}
+\begin{longtable}[c]{|p{0.25\textwidth}|p{0.08\textwidth}|p{0.1\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.1\textwidth}|}
+\hline
+ %\multicolumn{6}{| c |}{Beginning of Table}\\
+ %\hline
+ Field & Source & Units & Description & Possible Issues & Domains\\
+ \hline
+ \endfirsthead
+ 
+\hline
+ \multicolumn{6}{|c|}{Continued from previous page}\\
+ \hline
+ Field & Source & Units & Description & Possible Issues & Domains\\
+ \hline
+ \endhead
+
+\hline
+\endfoot
+
+\hline
+%\multicolumn{6}{| c |}{End of Table}\\
+%\hline\hline
+\endlastfoot
+
+datapoint\_id & Derived & NA & Unique identifier for each data point & &\\
+\hline
+journey\_id & Raw & NA & Unique identifier for each vehicle journey. The journey ID represents the same vehicle from ignition on to ignition off. & Streetlight notified InTrans that some journey IDs are non-compliant due to not having an ignition on/off, typically due to data coming in late. & \\    
+\hline
+capture\_time\_stamp & Raw & yyyy-mm-dd hh:mm:ss & Timestamp of the data in Central Time & & \\
+\hline
+latitude & Raw & Decimal degrees WGS 84 & Latitude value for the data point & & \\
+\hline
+longitude & Raw & Decimal degrees WGS 84 & Longitude value for the data point & & \\
+\hline
+heading\_deg & Raw & Degrees & Direction the vehicle is traveling, where 0 degrees is East, 90 is North, 180 is West and 270 is South. & & \\
+\hline
+elevation\_ft & Raw & Feet & Vertical distance above sea level measured in feet & & \\
+\hline
+speed\_mph & Raw & Miles per hour & Speed of the vehicle for the data point (collected by in-vehicle instrumentation) & & \\
+\hline
+acceleration & Derived & $\text{ft/s}^2$ & Derived acceleration between the previous data point and the current data point for the journey & & \\
+\hline
+ignition\_status & Raw & NA & Identifies whether the data point is at the beginning/end of the trip or part of the middle of the trip & & MIDTRIP, KEYON, KEYOFF  \\
+\hline
+route\_id & Derived & NA & Route ID of the closest segment to the data point & & \\
+\hline
+measure & Derived & Miles & Precise measure value along the route ID segments to the data point. The segmentation is based on the Iowa DOT RAMS network. & & \\
+\hline
+distance\_from\_route & Derived & Feet & Distance from the data point to the centerline of the RAMS network segment & Data points in parking lots and fields will still be associated to the closest roadway. & \\
+\hline
+segment\_start\_measure & Derived & Miles & Segment start measure value along the route ID segments to the data point & & \\
+\hline
+segment\_end\_measure & Derived & Miles & Segment end measure value along the route ID segments to the data point & & \\
+\hline
+geohash & Derived & NA & Unique identifier for a specific region on earth & &  \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{Geohash documentation}  \\
+\hline
+masking\_digit & Derived & NA & Number of digits in the latitude or longitude (whichever is smaller). Used to identify whether the data is masked (value less than 5). & & \\
+\hline
+year & Derived & NA & Year partition in which the data point was downloaded (not necessarily the year of the capture time stamp) & & \\
+\hline
+county\_id & Derived & NA & County where the data point is located. The county is represented by a number which can be identified at the RAMS link in the domain. & & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/43}{RAMS}\\
+\hline
+month & Derived & NA & Month partition in which the data point was downloaded (not necessarily the month of the capture time stamp) & & \\
+\hline
+day & Derived & NA & Day of month partition in which the data point was downloaded (not necessarily the day of the capture time stamp) & & \\
+\hline
+hour & Derived & NA & Hour partition in which the data point was downloaded (not necessarily the hour of the capture time stamp) & & \\
+\end{longtable}
+```
+
+Connected Vehicle Metadata
+:::
+
+:::{#tbl-roadnetwork}
+
+```{=latex}
+\begin{longtable}[c]{|p{0.25\textwidth}|p{0.08\textwidth}|p{0.1\textwidth}|p{0.25\textwidth}|p{0.15\textwidth}|}
+\hline
+ %\multicolumn{5}{| c |}{Beginning of Table}\\
+ %\hline
+ Field & Source & Units & Description & Domains\\
+ \hline
+ \endfirsthead
+ 
+\hline
+ \multicolumn{5}{|c|}{Continued from previous page}\\
+ \hline
+ Field & Source & Units & Description & Domains\\
+ \hline
+ \endhead
+
+\hline
+\endfoot
+
+\hline
+%\multicolumn{5}{| c |}{End of Table}\\
+%\hline\hline
+\endlastfoot
+
+route\_id & RAMS & NA & Unique identifier for a route. The segmentation is based on the Iowa DOT’s \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer}{RAMS network}. &  \\
+\hline
+route\_from\_measure & RAMS & Miles & \textbf{Do not recommend using.} This field is the minimum measure for a route, but does not represent the actual location of the segment. & \\
+\hline
+route\_to\_measure & RAMS & Miles & \textbf{Do not recommend using.} This field is the maximum measure for a route, but does not represent the actual location of the segment. & \\
+\hline
+segment\_start\_latitude & RAMS & Decimal degrees  & Latitude of the start of the segment along the RAMS network  & \\
+\hline
+segment\_start\_longitude & RAMS & Decimal degrees & Longitude of the start of the segment along the RAMS network & \\
+\hline
+segment\_end\_latitude & RAMS & Decimal degrees & Latitude of the end of the segment along the RAMS network & \\
+\hline
+segment\_end\_longitude & RAMS & Decimal degrees & Longitude of the end of the segment along the RAMS network & \\
+\hline
+segment\_start\_measure & RAMS & Miles & Measure at the beginning of the segment along the RAMS network. \textbf{This field should be used when relating to the CV data.} & \\
+\hline
+segment\_end\_measure & RAMS & Miles & Measure at the end of the segment along the RAMS network. \textbf{This field should be used when relating to the CV data.} & \\
+\hline
+segment\_length & RAMS & Miles & Calculated distance of the segment based on the difference between the \texttt{segment\_start\_measure} and \texttt{segment\_end\_measure} & \\
+\hline
+geohash\_lrs & Derived & NA & Unique identifier for a specific region on earth that can be used to identify a specific location for filtering data & \href{https://www.ibm.com/docs/en/streams/4.3.0?topic=334-geohashes}{IBM geohash documentation} \\
+\hline
+bearing & Derived & Degrees & Direction of the roadway in degrees (not the same as CV data), where 0 degrees is North, 90 is East, 180 is South and 270 is West. For divided or one way roadways, the bearing represents the direction of travel for vehicles. For undivded roadways, the bearing represents the primary direction (North or East) of vehicles (but vehicles can also travel in the opposite direction of the bearing). & \\
+\hline
+facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS & \href{https://gis.iowadot.gov/rams/rest/services/lrs/FeatureServer/44}{RAMS facility types}\\
+\end{longtable}
+```
+
+Road network metadata
 :::
