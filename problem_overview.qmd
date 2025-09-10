@@ -47,6 +47,20 @@ tmap_mode("plot")
 # remotes::install_github("dill/emoGG")
 library(emoGG)
 library(gpsdriving)
+library(fontawesome)
+
+fa_by_name <- function(name) {
+  fa_png(
+    name = name,
+    fill = "blue",
+    fill_opacity = 1,
+    stroke = "white",
+    stroke_width = "1px", 
+    stroke_opacity = 1,
+    height = 512,
+    width = 512
+  )
+}
 ```
 
 # To Dos
@@ -500,7 +514,7 @@ Example of GPS drift and manual shifting from original points (blue) to points m
 
 There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem would be to orthogonally project the GPS points onto the nearest road. \mh{InTrans uses this strategy to associate CV data points to the closest roadway, although the priority of a roadway for association to the CV data points is determined by the roadway's facility type. For example, a point is more likely to be matched to a nearby interstate highway than a nearby local road.} @sakiPracticalGuideOpenSource2022 noted that the method of orthogonal projection to the nearest road was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but @sakiPracticalGuideOpenSource2022 note that it is sensitive to outliers. 
 
-@fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the match does not fit with the rest of the vehicle trajectory.
+@fig-naive-map-matching shows a shortcoming of orthogonally projecting GPS points onto the nearest road segment using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the match does not fit with the rest of the vehicle trajectory. 
 
 :::{#fig-naive-map-matching}
 
@@ -578,6 +592,91 @@ mm_tmap
 ```
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
 :::
+
+@fig-mmarrows shows the same map-matching result as @fig-naive-map-matching, but the original points are shown with underlying arrows that indicate the vehicle heading. @fig-mmcircarrows provides another version of the plot, this time with white arrows inside the blue points representing the original GPS locations. 
+
+:::{#fig-mmarrows}
+
+```{r}
+# Get caret icons
+fa_by_name("caret-up")
+fa_by_name("caret-left")
+fa_by_name("caret-down")
+fa_by_name("caret-right")
+
+up <- tmap_icons("caret-up.png")
+left <- tmap_icons("caret-left.png")
+down <- tmap_icons("caret-down.png")
+right <- tmap_icons("caret-right.png")
+
+mm_tmap_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "black")+
+  tm_shape(exdrive_plot #|> mutate(
+    #gyro_heading = 360 - gyro_heading + 90) # use compass rose instead of unit circle representation
+  ) + 
+  tm_symbols(shape = "gyro_heading", size = 1, 
+             shape.scale = tm_scale_intervals(
+               style = "fixed",
+               n = 5,
+               #values = list(right, up, left, down, right),
+               values = list(up, right, down, left, up),
+               breaks = c(0, 45, 135, 225, 315, 360)),
+             group = "original", group.control = "none", 
+             shape.legend = tm_legend(title = "Vehicle Heading (0 Degrees = North)")) +
+  tm_dots(size = .5, fill = "white", group = "matched", group.control = "none", fill_alpha = 0.9)+ 
+  tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_arrows 
+```
+Example of the shortcomings of naively orthogonally projecting GPS points (white with underlying blue arrows showing the vehicle heading) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
+:::
+
+:::{#fig-mmcircarrows}
+
+```{r}
+#| warning: false
+#| message: false
+# Get caret icons
+fa_by_name("circle-chevron-up")
+fa_by_name("circle-chevron-left")
+fa_by_name("circle-chevron-down")
+fa_by_name("circle-chevron-right")
+
+up_ca <- tmap_icons("circle-chevron-up.png")
+left_ca <- tmap_icons("circle-chevron-left.png")
+down_ca <- tmap_icons("circle-chevron-down.png")
+right_ca <- tmap_icons("circle-chevron-right.png")
+
+mm_tmap_circle_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10) +
+  tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "black")+
+  tm_shape(exdrive_plot #|> mutate(
+    #gyro_heading = 360 - gyro_heading + 90) # use compass rose instead of unit circle representation
+  ) + 
+  tm_dots(size = 1, fill = "white", group = "matched", group.control = "none", fill_alpha = 1)+ 
+  tm_symbols(shape = "gyro_heading", size = 0.33, 
+             shape.scale = tm_scale_intervals(
+               style = "fixed",
+               n = 5,
+               #values = list(right, up, left, down, right),
+               values = list(up_ca, right_ca, down_ca, left_ca, up_ca),
+               breaks = c(0, 45, 135, 225, 315, 360)),
+             group = "original", group.control = "none", 
+             shape.legend = tm_legend(title = "Vehicle Heading (0 Degrees = North)")) +
+  tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
+  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_circle_arrows 
+```
+Example of the shortcomings of naively orthogonally projecting GPS points (blue with white arrows indicating vehicle heading) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
+:::
+
 
 ```{r}
 #| include: false
