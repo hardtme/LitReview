@@ -390,6 +390,9 @@ exdrive <- nds_data_sf |>
 exdrive_plot <- exdrive |>
   filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
 
+exdrive_plot <- exdrive_plot |>
+  mutate(pt_label = c("Start", rep("", 8), "End"))
+
 # leaflet() |>
 #   addProviderTiles("CartoDB.VoyagerNoLabels") |>
 #   addCircleMarkers(data = exdrive_plot, label = ~glue("{round(speed_mph, 2)} mph"))
@@ -504,6 +507,7 @@ gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_lines(col = "black")+
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+  tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))+
   tm_shape(manual_shift_points, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none", fill_alpha = 0.9)
 
