@@ -631,7 +631,7 @@ mm_tmap_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
                values = list(up, right, down, left, up),
                breaks = c(0, 45, 135, 225, 315, 360)),
              group = "original", group.control = "none", 
-             shape.legend = tm_legend(title = "Vehicle Heading (0 Degrees = North)")) +
+             shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
   tm_dots(size = .5, fill = "white", group = "matched", group.control = "none", fill_alpha = 0.9)+ 
   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
@@ -674,7 +674,7 @@ mm_tmap_circle_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
                values = list(up_ca, right_ca, down_ca, left_ca, up_ca),
                breaks = c(0, 45, 135, 225, 315, 360)),
              group = "original", group.control = "none", 
-             shape.legend = tm_legend(title = "Vehicle Heading (0 Degrees = North)")) +
+             shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
 
