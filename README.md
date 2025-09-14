@@ -1,20 +1,14 @@
 # Literature Review
 
+This repository contains files related to Marie Hardt's PhD in Statistics at Iowa State University.
 
-- add a qmd file for an overview.
-- what the overview will need to cover are (not necessarily in this order):
-  - general motivation: 
-    1. car accidents due to cognitive impairment are a problem for all. 
-    2. Some meds are available to slow cognitive decline. If cognitive impairment can be detected early, that's obviously beneficial.
-  - small discussion of how cognitive impairment is evaluated in 'our' study, and which stages there are (with some equivalence)
-  - relationship established in the literature between mental health and driving
-  - maybe also a review of what is known about the cognitive load of driving and how different aspects of cognition are affected by cognitive impairment.
-- summarize the GPS driving paper in a sentence and include it in the overview. What the sentence needs at a minimum are: 
-  1. stage of cognition targeted in the response, 
-  2. population (size, age, cognitive status),
-  3. what data was collected,
-  4. Statistical method used. 
+File descriptions are given below: 
 
+* `gpsdriving.qmd` contains notes about an article relating senior citizens' driving behavior and cognition published in 2021 Bayat et al. called "GPS Driving: A Digital Biomarker for Preclinical Alzheimer Disease"
 
-Good leads from the GPS driving paper: AD symptomatic: 17, 18 (downloaded); preclinical AD: 19, 20, 21 (all from same group as GPS driving)
+* `overview.qmd` contains notes about various articles relating senior citizens' driving behavior and cognition
+
+* `problem_overview.qmd` is an overview of telematics data and GPS and a literature review for the map matching problem
+
+* `overviewreferences.bib` is the bibliography for `problem_overview.qmd`
 
