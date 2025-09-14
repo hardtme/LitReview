@@ -61,6 +61,33 @@ fa_by_name <- function(name) {
     width = 512
   )
 }
+
+example_tmap <- function(basemap = "CartoDB.VoyagerNoLabels",
+                         road_system,
+                         bbox,
+                         road_system_color = "tan",
+                         road_system_lwd = 10,
+                         og_points,
+                         og_points_color = "blue",
+                         new_points,
+                         new_points_color = "red",
+                         point_size = 1,
+                         point_fill_alpha = 1,
+                         match_lines,
+                         match_lines_color = "black"){
+ex_tmap <- tm_basemap(server = basemap)+
+  tm_shape(road_system, bbox = bbox)+
+  tm_lines(col = road_system_color, lwd = road_system_lwd)+
+  tm_shape(match_lines, bbox = bbox)+
+  tm_lines(col = match_lines_color)+
+  tm_shape(og_points, bbox = bbox)+
+  tm_dots(size = point_size, fill = og_points_color, fill_alpha = point_fill_alpha, 
+          group = "original", group.control = "none")+
+  tm_shape(new_points, bbox = bbox)+
+  tm_dots(size = point_size, fill = new_points_color, fill_alpha = point_fill_alpha,
+          group = "shifted", group.control = "none")
+return(ex_tmap)
+}
 ```
 
 # To Dos
@@ -362,16 +389,23 @@ exdrive_bbox_sf <- exdrive_bbox |>
 poss_matches <- oma_roads |>
   st_filter(exdrive_bbox_sf, .predicate = st_intersects)
 
-gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10)+
-  tm_shape(all_points_ls, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "black")+
-  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
-  tm_shape(shifted_points_plot, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none")
+# gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "tan", lwd = 10)+
+#   tm_shape(all_points_ls, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "black")+
+#   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")+
+#   tm_shape(shifted_points_plot, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none")
+# 
+# gps_drift_tmap
 
+gps_drift_tmap <- example_tmap(road_system = poss_matches,
+                               bbox = exdrive_bbox_adj,
+                               og_points = exdrive_plot,
+                               new_points = shifted_points_plot,
+                               match_lines = all_points_ls)
 gps_drift_tmap
 ```
 
@@ -502,16 +536,29 @@ exdrive_bbox_sf <- exdrive_bbox |>
 poss_matches <- oma_roads |>
   st_filter(exdrive_bbox_sf, .predicate = st_intersects)
 
-gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10)+
-  tm_shape(all_shifted_points_ls, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "black")+
+# gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "tan", lwd = 10)+
+#   tm_shape(all_shifted_points_ls, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "black")+
+#   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+#   tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))+
+#   tm_shape(manual_shift_points, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none", fill_alpha = 0.9)
+# 
+# gps_drift_tmap
+
+gps_drift_tmap <- example_tmap(road_system = poss_matches,
+                               bbox = exdrive_bbox_adj,
+                               og_points = exdrive_plot,
+                               new_points = manual_shift_points,
+                               match_lines = all_shifted_points_ls,
+                               point_fill_alpha = 0.9)
+
+gps_drift_tmap <- gps_drift_tmap +
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-  tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))+
-  tm_shape(manual_shift_points, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none", fill_alpha = 0.9)
+  tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))
 
 gps_drift_tmap
 ```
@@ -584,17 +631,24 @@ nearest_pts_ls_match <- nearest_pts_ls_sf |>
 #   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
 #   addCircleMarkers(data = nearest_pts_end_match, color = "red")
 
-mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10) +
-  tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "black")+
-  tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-  tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "tan", lwd = 10) +
+#   tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "black")+
+#   tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+#   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# 
+# mm_tmap 
 
-mm_tmap 
+mm_tmap <- example_tmap(road_system = poss_matches,
+                               bbox = exdrive_bbox_adj,
+                               og_points = nearest_pts_ls_sf_start,
+                               new_points = nearest_pts_end_match,
+                               match_lines = nearest_pts_ls_match)
+mm_tmap
 ```
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
 :::
@@ -788,16 +842,23 @@ exdrive_plot_matched_alt7654_ls <-
 exdrive_plot_matched_alt7654_ls <- exdrive_plot_matched_alt7654_ls |>
   rename(geometry = "x")
 
-mm_tmap_alt7654 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10) +
-  tm_shape(alt_points_ls, bbox = exdrive_bbox_adj) +
-  tm_lines(col = "black")+
-  tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-  tm_shape(exdrive_plot_matched_alt7654, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# mm_tmap_alt7654 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "tan", lwd = 10) +
+#   tm_shape(alt_points_ls, bbox = exdrive_bbox_adj) +
+#   tm_lines(col = "black")+
+#   tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+#   tm_shape(exdrive_plot_matched_alt7654, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# 
+# mm_tmap_alt7654
 
+mm_tmap_alt7654 <- example_tmap(road_system = poss_matches,
+                               bbox = exdrive_bbox_adj,
+                               og_points = nearest_pts_ls_sf_start,
+                               new_points = exdrive_plot_matched_alt7654,
+                               match_lines = alt_points_ls)
 mm_tmap_alt7654
 ```
 
@@ -850,17 +911,24 @@ nearest_pts_heading_filter_dist_end <- lwgeom::st_endpoint(nearest_pts_heading_f
 :::{#fig-map-matching-heading}
 
 ```{r}
-mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10) +
-  tm_shape(nearest_pts_heading_filter_dist, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "black")+
-  tm_shape(nearest_pts_heading_filter_dist_start, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-  tm_shape(nearest_pts_heading_filter_dist_end, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "tan", lwd = 10) +
+#   tm_shape(nearest_pts_heading_filter_dist, bbox = exdrive_bbox_adj)+
+#   tm_lines(col = "black")+
+#   tm_shape(nearest_pts_heading_filter_dist_start, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
+#   tm_shape(nearest_pts_heading_filter_dist_end, bbox = exdrive_bbox_adj)+
+#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+# 
+# mm_tmap_heading 
 
-mm_tmap_heading 
+mm_tmap_heading <- example_tmap(road_system = poss_matches,
+                                bbox = exdrive_bbox_adj,
+                                og_points = nearest_pts_heading_filter_dist_start,
+                                new_points = nearest_pts_heading_filter_dist_end,
+                                match_lines = nearest_pts_heading_filter_dist)
+mm_tmap_heading
 ```
 
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red) while accounting for heading. Note the time jump of the two points near the intersection for which the black lines indicating the match intersect.
