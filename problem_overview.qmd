@@ -85,10 +85,10 @@ fa_by_name <- function(name) {
 
 \hh{XXX What is at the heart of your work? Spatio-temporal processes. As human beings we are surrounded by spatio-temporal processes. With increasing technology a lot of these processes are being captured quantitatively, and we are relying on a lot of devices that make use of capturing these quantities. }
 
-We increasingly rely on connected devices to improve the quality of our lives. For example, navigation apps in our smartphones make it easy to navigate to anywhere we need to go. Such smart devices provide a wealth of data about complex spatio-temporal processes. However, even the most sophisticated smart devices can fail and return obviously incorrect data, such as location data for driving trips that fall nowhere near a roadway. Such erroneous data must be cleaned and corrected before they can be used to develop insight in applications. We created new statistical methods to orthogonally project driving trip trajectories onto the road system. We also developed tools for working with and visualizing spatio-temporal data such as driving trip trajectories. 
+We increasingly rely on connected devices to improve the quality of our lives. For example, navigation apps in our smartphones make it easy to navigate to anywhere we need to go. Such smart devices provide a wealth of data about complex spatio-temporal processes. However, even the most sophisticated smart devices can fail and return obviously incorrect data, such as location data for driving trips that fall nowhere near a roadway. Such erroneous data must be cleaned and corrected before they can be used to develop insight in applications. We created new statistical methods to orthogonally project driving trip trajectories onto the road system. We also developed tools for working with and visualizing spatio-temporal telematics data such as driving trip trajectories. 
 
 \hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.}
-For this project, we use two primary data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these data sources, make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-gps, @sec-dop, and @sec-crs. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
+For this project, we use two primary telematics data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these telematics data sources make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-gps, @sec-dop, and @sec-crs. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
 
 ## Global Positioning System {#sec-gps}
 
@@ -113,20 +113,22 @@ good_satellites <- data.frame(x = c(1, -1, -0.3, 0.4),
 
 bad_sats <- ggplot() +
   geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_hline(yintercept = -0.4, linewidth = 4, color = "gray30")+
   geom_emoji(data = bad_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
   geom_segment(data = bad_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
   theme_void() +
   theme(panel.background = element_rect(fill = "lightblue1"))+
-  scale_y_continuous(limits = c(0, 10))
+  scale_y_continuous(limits = c(-0.5, 10.5), expand = expansion(mult = c(0, 0), add = c(0, 0)))
 bad_sats
 
 good_sats <- ggplot() +
-  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f699") +
+  geom_hline(yintercept = -0.4, linewidth = 4, color = "gray30")+
   geom_emoji(data = good_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
   geom_segment(data = good_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
   theme_void() +
   theme(panel.background = element_rect(fill = "lightblue1"))+
-  scale_y_continuous(limits = c(0, 10))
+  scale_y_continuous(limits = c(-0.5, 10.5), expand = expansion(mult = c(0, 0), add = c(0, 0)))
 good_sats
 
 ```
@@ -864,7 +866,7 @@ mm_tmap_heading
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red) while accounting for heading. Note the time jump of the two points near the intersection for which the black lines indicating the match intersect.
 :::
 
-Map-matching with hidden Markov models (HMMs) was made famous by @newsonHiddenMarkovMap2009, whose algorithm performed map matching using a hidden Markov model to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. However, @newsonHiddenMarkovMap2009's algorithm was not a real-time algorithm. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
+@newsonHiddenMarkovMap2009 introduced a groundbreaking map-matching method. They used hidden Markov models (HMMs) to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. However, this algorithm was not a real-time algorithm. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
 
 @chaoSurveyMapMatchingAlgorithms2020 surveyed available map-matching algorithms and noted that state-transition models are a popular model type. These include hidden Markov models (HMMs) and conditional random field (CRF) models. CRF models models account for interactions among observations while HMMs only consider the relationship between an observation and the most recent previous point. Weighted graph techniques can be used to infer the path from a weighted graph where the vertices are candidate points on the road system and edges are formed between two consecutive sample points. Chao et al. explained that weighted graph techniques tend to involve the following steps: (1) Initialize the graph (2) Use a scoring function to weight the edges in the graph (3) Infer the path based on the weighted graph.
 
