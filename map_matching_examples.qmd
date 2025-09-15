@@ -1,0 +1,303 @@
+---
+title: "Example Map-Matching Trajectories"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(sf)
+library(leaflet)
+library(here)
+library(glue)
+```
+
+# Example from Newson and Krumm (2009)
+
+How to download the data:
+
+1. Navigate to https://www.microsoft.com/en-us/research/publication/hidden-markov-map-matching-noise-sparseness/
+
+2. Save the test trip GPS data text file to your machine as `hmm_test_trip_data.txt`.
+
+3. Save the road network data text file to your machine as `hmm_road_network.txt`.
+
+4. Save the ground truth path text file to your machine as `hmm_ground_truth.txt`.
+
+This example dataset came from a drive in Seattle, Washington, USA.
+
+```{r}
+sea_trip <- read_tsv(here("hmm_test_trip_data.txt"), col_names = TRUE) |>
+  select(`Date (UTC)`, `Time (UTC)`, Latitude, Longitude)
+```
+
+```{r}
+sea_trip_sf <- sea_trip |>
+  st_as_sf(coords = c("Longitude", "Latitude"), 
+           crs = 4326)
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = sea_trip_sf, label = ~glue("{`Time (UTC)`}"))
+```
+
+```{r}
+sea_roads <- read_delim(here("hmm_road_network.txt"), col_names = TRUE)
+```
+
+```{r}
+sea_roads_geometry <- sea_roads$`LINESTRING()` |>
+  map(\(x) st_as_sfc(x, crs = 4326))
+
+sea_roads_geometry_listc <- list_c(sea_roads_geometry)
+
+sea_roads_sf <- sea_roads |>
+  select(!`LINESTRING()`) |>
+  st_set_geometry(sea_roads_geometry_listc)
+```
+
+```{r}
+sea_route <- read_delim(here("hmm_ground_truth.txt"), col_names = TRUE)
+
+sea_route_sf <- left_join(sea_route, sea_roads_sf, by = "Edge ID") |>
+  st_as_sf(crs = 4326)
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = sea_trip_sf, label = ~glue("{`Time (UTC)`}"), color = "blue") |>
+  addPolylines(data = sea_route_sf, label = ~glue("{`Edge ID`}"), color = "gray")
+```
+
+
+# Examples from Kubička et al (2015)
+
+How to download the data:
+
+1. Navigate to https://zenodo.org/records/57731
+
+2. Download `map-matching-dataset.zip` to your machine.
+
+3. Unzip `map-matching-dataset.zip`.
+
+The 100 example datasets came from a public collection called Planet GPX, which is part of the Open Street Map project. OSM uses the WGS84 CRS, so we will assume that the example datasets do too.
+
+```{r}
+metadata <- xml2::read_xml(here("map-matching-dataset/metadata.xml"))
+
+metadata_xml <- XML::xmlParse(metadata)
+```
+
+```{r}
+# Track 0 is somewhere in Russia
+track0 <- read_tsv(here("map-matching-dataset/00000000/00000000.track"), col_names = FALSE)
+
+track0 <- track0 |>
+  rename(lon = "X1",
+         lat = "X2",
+         time = "X3")
+
+track0_sf <- track0 |>
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = "WGS84")
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = track0_sf, label = ~glue("{time}"))
+```
+
+```{r}
+# Road segment endpoints
+nodes0 <- read_tsv(here("map-matching-dataset/00000000/00000000.nodes"), col_names = FALSE)
+
+nodes0 <- nodes0 |>
+  rename(lon = "X1",
+         lat = "X2") |>
+  mutate(node_id = seq(0, nrow(nodes0) - 1, 1))
+
+nodes0_sf <- nodes0 |>
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = "WGS84")
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = track0_sf, label = ~glue("{time}"), color = "blue") |>
+  addCircleMarkers(data = nodes0_sf, color = "red")
+```
+
+```{r}
+# Road segment connections
+arcs0 <- read_tsv(here("map-matching-dataset/00000000/00000000.arcs"), col_names = FALSE)
+
+arcs0 <- arcs0 |>
+  rename(start_node = "X1",
+         end_node = "X2")
+```
+
+```{r}
+# Sequence of arcs on which the vehicle traveled
+# Each row refers to an arc in the arcs table using its (zero-based) row number.
+route0 <- read_tsv(here("map-matching-dataset/00000000/00000000.route"), col_names = FALSE)
+```
+
+```{r}
+test_start <- nodes0_sf |> filter(node_id == 0)
+test_end <- nodes0_sf |> filter(node_id == 2433)
+
+test_ls <- st_cast(st_union(test_start, test_end, by_feature = TRUE), "LINESTRING")
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = test_start, color = "red", label = "0") |>
+  addCircleMarkers(data = test_end, color = "purple", label = "2433") |>
+  addPolylines(data = test_ls, color = "black")
+```
+
+```{r}
+test_start
+lwgeom::st_startpoint(test_ls)
+# These don't match
+```
+
+```{r}
+test_end
+lwgeom::st_endpoint(test_ls)
+# These don't match
+```
+
+```{r}
+# Try a different way to make lwgeom::st_startpoint and lwgeom::st_endpoint behave as expected
+test_ls2 <- st_linestring(rbind(st_coordinates(test_start), st_coordinates(test_end))) |>
+  st_sfc(crs = "WGS84")
+
+test_ls2_df <- data.frame(start_node = 0, end_node = 2433) |>
+  st_set_geometry(test_ls2)
+```
+
+```{r}
+test_start
+lwgeom::st_startpoint(test_ls2)
+# These match
+```
+
+```{r}
+test_end
+lwgeom::st_endpoint(test_ls2)
+# These match
+```
+
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = test_start, color = "red", label = "0") |>
+  addCircleMarkers(data = test_end, color = "purple", label = "2433") |>
+  addPolylines(data = test_ls, color = "gray")
+```
+
+```{r}
+road_segments0 <- map2(
+  .x = arcs0$start_node, .y = arcs0$end_node,
+  \(x, y) data.frame(start_node = x, end_node = y) |>
+    st_set_geometry(st_linestring(rbind(st_coordinates(nodes0_sf |> filter(node_id == x)), st_coordinates(nodes0_sf |> filter(node_id == y)))) |>
+  st_sfc(crs = "WGS84"))
+)
+
+road_segments0_df <- bind_rows(road_segments0)
+
+road_segments0_df <- road_segments0_df |>
+  mutate(arc_id = seq(0, nrow(road_segments0_df) - 1, 1))
+```
+
+```{r}
+all.equal(arcs0$start_node, road_segments0_df$start_node) # TRUE
+
+all.equal(arcs0$end_node, road_segments0_df$end_node) # TRUE
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = track0_sf, label = ~glue("{time}"), color = "blue") |>
+  addCircleMarkers(data = nodes0_sf, color = "red") |>
+  addPolylines(data = road_segments0_df, color = "gray", label = ~glue("Start: {start_node}, End: {end_node}"))
+```
+
+```{r}
+route0 <- route0 |>
+  rename(arc_id = "X1")
+```
+
+```{r}
+route_arcs <- left_join(route0, road_segments0_df, by = "arc_id") |> st_as_sf()
+```
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = track0_sf, label = ~glue("{time}"), color = "blue") |>
+  #addCircleMarkers(data = nodes0_sf, color = "red") |>
+  addPolylines(data = route_arcs, color = "gray", label = ~glue("Start: {start_node}, End: {end_node}"))
+```
+Find a track in the United States
+```{r}
+track <- read_tsv(here("map-matching-dataset/00000090/00000090.track"), col_names = FALSE)
+
+track <- track |>
+  rename(lon = "X1",
+         lat = "X2",
+         time = "X3")
+
+track_sf <- track |>
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = "WGS84")
+```
+
+```{r}
+leaflet() |>
+  addProviderTiles(provider = "CartoDB.Positron") |>
+  addCircleMarkers(data = track_sf, label = ~glue("{time}"))
+```
+* Track 1 is in Russia.
+
+* Track 2 is in Germany.
+
+* Track 3 is in Germany.
+
+* Track 4 is in Russia.
+
+* Track 5 is in Ukraine.
+
+* Track 6 is in Ukraine.
+
+* Track 7 is in Kazakhstan.
+
+* Track 8 is in Alabama.
+
+* Track 9 is in Italy.
+
+* Track 10 is in Russia.
+
+* Track 20 is in Belarus.
+
+* Track 30 is in Spain.
+
+* Track 40 is in Russia.
+
+* Track 50 is in Germany.
+
+* Track 60 is in Poland.
+
+* Track 70 is in France.
+
+* Track 80 is in Argentina.
+
+* Track 90 is in Germany.
