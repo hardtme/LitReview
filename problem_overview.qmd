@@ -645,9 +645,14 @@ nearest_pts_ls_match <- nearest_pts_ls_sf |>
 
 mm_tmap <- example_tmap(road_system = poss_matches,
                                bbox = exdrive_bbox_adj,
-                               og_points = nearest_pts_ls_sf_start,
+                               og_points = exdrive_plot,
                                new_points = nearest_pts_end_match,
                                match_lines = nearest_pts_ls_match)
+
+mm_tmap <- mm_tmap +
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))
+
 mm_tmap
 ```
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
@@ -688,6 +693,7 @@ mm_tmap_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
                breaks = c(0, 45, 135, 225, 315, 360)),
              group = "original", group.control = "none", 
              shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
   tm_dots(size = .5, fill = "white", group = "matched", group.control = "none", fill_alpha = 0.9)+ 
   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
@@ -731,6 +737,7 @@ mm_tmap_circle_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
                breaks = c(0, 45, 135, 225, 315, 360)),
              group = "original", group.control = "none", 
              shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
 
@@ -773,7 +780,7 @@ exdrive_plot_matched_alt7$geometry[7] <- nearest_pts_dist$geometry[19]
 mm_tmap_alt7 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
   tm_lines(col = "tan", lwd = 10) +
-  tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
   tm_shape(exdrive_plot_matched_alt7, bbox = exdrive_bbox_adj)+
   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
@@ -856,9 +863,12 @@ exdrive_plot_matched_alt7654_ls <- exdrive_plot_matched_alt7654_ls |>
 
 mm_tmap_alt7654 <- example_tmap(road_system = poss_matches,
                                bbox = exdrive_bbox_adj,
-                               og_points = nearest_pts_ls_sf_start,
+                               og_points = exdrive_plot,
                                new_points = exdrive_plot_matched_alt7654,
                                match_lines = alt_points_ls)
+mm_tmap_alt7654 <- mm_tmap_alt7654 + 
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))
 mm_tmap_alt7654
 ```
 
@@ -928,6 +938,9 @@ mm_tmap_heading <- example_tmap(road_system = poss_matches,
                                 og_points = nearest_pts_heading_filter_dist_start,
                                 new_points = nearest_pts_heading_filter_dist_end,
                                 match_lines = nearest_pts_heading_filter_dist)
+mm_tmap_heading <- mm_tmap_heading + 
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))
 mm_tmap_heading
 ```
 
