@@ -1,0 +1,123 @@
+---
+title: "Statistical Tools for Large-Scale Spatiotemporal Telematics Data"
+author: "Marie Hardt"
+date: "2025-10-20"
+institute: "Iowa State University"
+format: 
+  revealjs:
+    theme: simple
+---
+
+# Telematics Data
+
+## Sources
+
+* Naturalistic driving studies (NDS)
+
+* Connected vehicles
+
+## Data Structure
+
+Spatiotemporal data recorded every 1 to 3 seconds
+
+* Location (latitude/longitude)
+
+* Time
+
+## Use Cases
+
+* Studying driving behavior
+
+* Driving maneuver detection
+
+* Work zone influence/performance
+
+* Etc.
+
+## Issues
+
+* GPS drift/GPS errors
+
+* Large data volume
+
+* Low CV data coverage at certain times
+
+* Etc.
+
+# GPS Data
+
+## Overview
+
+* How GPS works
+
+* Relationship between satellites and receiver
+
+## Dilution of Precision
+
+* Measure of GPS data quality
+
+* Different types
+
+## Issues
+
+* Poor GPS signal
+
+* Low DOP doesn't always mean good quality GPS data
+
+* Etc.
+
+# Map Matching
+
+## Main Questions
+
+1. Which road segment is the vehicle using?
+
+2. Where exactly on the road segment is the vehicle?
+
+## Existing Map Matching Methods
+
+* Naive methods
+
+* More advanced naive methods
+
+* Hidden Markov models
+
+* Etc.
+
+## Map Matching Challenges
+
+* True path is usually unknown
+
+* Error quantification
+
+* Outlier sensitivity
+
+* Etc.
+
+# Areas of Interest
+
+## Visualizing Telematics Data
+
+* Relating location in time and space to other variables 
+
+* R package `DrivePlotR`
+
+## Processing Telematics Data
+
+* Map matching
+
+* Correctly locating telematics data in space (latitude/longitude on correct part of the road system) and time
+
+## Drawing Insights from Telematics Data
+
+For example,
+
+* Developing driving biomarkers for age-related cognitive decline in senior citizens
+
+* Deriving the time to complete turning maneuvers at intersections
+
+* Quantifying the influence of work zones, crashes, etc. on traffic flow
+
+## References
+
+
