@@ -123,7 +123,7 @@ The Global Positioning System (GPS) is part of the Global Navigation Satellite S
 
 ```{r}
 #| echo: false
-#| layout-ncol: 2
+#| layout: [[45,-10, 45]]
 #| fig-cap: "Examples of GPS satellite constellation geometries"
 #| fig-subcap: 
 #|  - "Poor geometry"
@@ -149,7 +149,7 @@ bad_sats <- ggplot() +
 bad_sats
 
 good_sats <- ggplot() +
-  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f699") +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
   geom_hline(yintercept = -0.4, linewidth = 4, color = "gray30")+
   geom_emoji(data = good_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
   geom_segment(data = good_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
