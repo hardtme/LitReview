@@ -12,3 +12,7 @@ File descriptions are given below:
 
 * `overviewreferences.bib` is the bibliography for `problem_overview.qmd`
 
+* `MH_oral_prelim_slides.qmd` is the source code for Marie's oral preliminary exam slides.
+
+* `map_matching_examples.qmd` explains how to download and read example map-matching trajectories from the literature into R.
+
