@@ -981,6 +981,24 @@ As mentioned above, map-matching algorithms can suffer from data quality issues,
 
 \newpage
 
+# Chapter Overviews
+
+## Chapter 0: Literature Review & Problem Statement
+
+This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Telematics data are discussed, and an overview of GPS and related quality measures are presented. I discuss prior work on the map-matching problem. I also explain the new contributions of my work.
+
+## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
+
+This chapter discusses software tools I developed for visualizing large-scale spatiotemporal transportation data and explains how insights based on the visualizations led to subsequent work.
+
+## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
+
+This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented.
+
+## Chapter 3: Determining Precise Vehicle Locations on the Road System
+
+This chapter covers my new method for determining a vehicle's location on a road segment. An application using this method is discussed.
+
 # Appendix {.appendix .unnumbered}
 
 \setcounter{table}{0}
