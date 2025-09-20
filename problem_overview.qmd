@@ -49,13 +49,13 @@ library(emoGG)
 library(gpsdriving)
 library(fontawesome)
 
-fa_by_name <- function(name) {
+fa_by_name <- function(name, fill = "blue", stroke = "white", stroke_width = "1px") {
   fa_png(
     name = name,
-    fill = "blue",
+    fill = fill,
     fill_opacity = 1,
-    stroke = "white",
-    stroke_width = "1px", 
+    stroke = stroke,
+    stroke_width = stroke_width, 
     stroke_opacity = 1,
     height = 512,
     width = 512
@@ -643,6 +643,16 @@ nearest_pts_ls_match <- nearest_pts_ls_sf |>
 # 
 # mm_tmap 
 
+#fa_by_name("triangle-exclamation", fill = "gold", stroke = "black")
+fa_by_name("circle-exclamation", fill = "gold", stroke = "black", stroke_width = "5px")
+
+warn_pt <- st_sfc(st_point(x = c(-95.99816, 41.25787)), crs = 4326) |>
+  st_as_sf() |>
+  st_cast("POINT")
+
+#warn_pt_icon <- tmap_icons("triangle-exclamation.png")
+warn_pt_icon <- tmap_icons("circle-exclamation.png")
+
 mm_tmap <- example_tmap(road_system = poss_matches,
                                bbox = exdrive_bbox_adj,
                                og_points = exdrive_plot,
@@ -651,11 +661,14 @@ mm_tmap <- example_tmap(road_system = poss_matches,
 
 mm_tmap <- mm_tmap +
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
+  tm_shape(warn_pt, bbox = exdrive_bbox_adj) +
+  tm_dots(size = 0.7, col = "black", fill_alpha = 1)+
+  tm_symbols(shape = warn_pt_icon, size = 0.4)
 
 mm_tmap
 ```
-Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
+Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). The yellow warning symbol west of the intersection draws attention to four nonsensically matched red points.
 :::
 
 @fig-mmarrows shows the same map-matching result as @fig-naive-map-matching, but the original points are shown with underlying arrows that indicate the vehicle heading. @fig-mmcircarrows provides another version of the plot, this time with white arrows inside the blue points representing the original GPS locations. 
@@ -727,7 +740,7 @@ mm_tmap_circle_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(exdrive_plot #|> mutate(
     #gyro_heading = 360 - gyro_heading + 90) # use compass rose instead of unit circle representation
   ) + 
-  tm_dots(size = 1, fill = "white", group = "matched", group.control = "none", fill_alpha = 1)+ 
+  tm_dots(size = 1, fill = "white", group = "original", group.control = "none", fill_alpha = 1)+ 
   tm_symbols(shape = "gyro_heading", size = 0.33, 
              shape.scale = tm_scale_intervals(
                style = "fixed",
