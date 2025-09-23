@@ -124,10 +124,10 @@ The Global Positioning System (GPS) is part of the Global Navigation Satellite S
 ```{r}
 #| echo: false
 #| layout: [[45,-10, 45]]
-#| fig-cap: "Examples of GPS satellite constellation geometries"
+#| fig-cap: "Examples of GPS satellite constellation geometries."
 #| fig-subcap: 
-#|  - "Poor geometry"
-#|  - "Good geometry"
+#|  - "Poor satellite geometry."
+#|  - "Good satellite geometry."
 #| label: fig-gps
 
 receiver <- data.frame( x = 0, y = 0)
@@ -211,7 +211,7 @@ Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \
 \end{table}
 ```
 
-Scale relating the value of dilution of precision (DOP) coefficients to location data quality. [@isikIntegrityAnalysisGPSBased2020]
+Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020].
 :::
 
 ## Coordinate Reference Systems {#sec-crs}
@@ -673,50 +673,7 @@ mm_tmap
 Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). The yellow warning symbol west of the intersection draws attention to four nonsensically matched red points.
 :::
 
-@fig-mmarrows shows the same map-matching result as @fig-naive-map-matching, but the original points are shown with underlying arrows that indicate the vehicle heading. @fig-mmcircarrows provides another version of the plot, this time with white arrows inside the blue points representing the original GPS locations. 
-
-:::{#fig-mmarrows}
-
-```{r}
-#|warning: false
-#|message: false
-# Get caret icons
-fa_by_name("caret-up")
-fa_by_name("caret-left")
-fa_by_name("caret-down")
-fa_by_name("caret-right")
-
-up <- tmap_icons("caret-up.png")
-left <- tmap_icons("caret-left.png")
-down <- tmap_icons("caret-down.png")
-right <- tmap_icons("caret-right.png")
-
-mm_tmap_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10) +
-  tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "black")+
-  tm_shape(exdrive_plot #|> mutate(
-    #gyro_heading = 360 - gyro_heading + 90) # use compass rose instead of unit circle representation
-  ) + 
-  tm_symbols(shape = "gyro_heading", size = 1, 
-             shape.scale = tm_scale_intervals(
-               style = "fixed",
-               n = 5,
-               #values = list(right, up, left, down, right),
-               values = list(up, right, down, left, up),
-               breaks = c(0, 45, 135, 225, 315, 360)),
-             group = "original", group.control = "none", 
-             shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
-  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
-  tm_dots(size = .5, fill = "white", group = "matched", group.control = "none", fill_alpha = 0.9)+ 
-  tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
-
-mm_tmap_arrows 
-```
-Example of the shortcomings of naively orthogonally projecting GPS points (white with underlying blue arrows showing the vehicle heading) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection.
-:::
+@fig-mmcircarrows shows the same map-matching result as @fig-naive-map-matching, but the original points are shown with arrows that indicate the vehicle heading. 
 
 :::{#fig-mmcircarrows}
 
