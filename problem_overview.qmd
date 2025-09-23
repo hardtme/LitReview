@@ -174,7 +174,7 @@ Dilution of Precision (DOP) coefficients are unitless measurements representing 
 
 $$
 \begin{aligned}
-\text{PDOP} &= \sqrt{\text{HDOP}^2 + \text{VDOP}^2}\\
+\text{PDOP} &= \sqrt{\text{HDOP}^2 + \text{VDOP}^2}.\\
 \end{aligned}
 $$
 
@@ -187,11 +187,11 @@ G &= \begin{bmatrix}
 -\cos(\theta_2)\sin(\varphi_2) & -\cos(\theta_2)\cos(\varphi_2) & -\sin(\theta_2) & 1\\
 -\cos(\theta_3)\sin(\varphi_3) & -\cos(\theta_3)\cos(\varphi_3) & -\sin(\theta_3) & 1\\
 -\cos(\theta_4)\sin(\varphi_4) & -\cos(\theta_4)\cos(\varphi_4) & -\sin(\theta_4) & 1\\
-\end{bmatrix}\\
-H &= \left(G^T \cdot G\right)^{-1}\\
-\text{PDOP} &= \sqrt{H_{11} H_{22} H_{33}}\\
-\text{HDOP} &= \sqrt{H_{11} H_{22}}\\
-\text{VDOP} &= \sqrt{H_{33}}
+\end{bmatrix},\\
+H &= \left(G^T \cdot G\right)^{-1},\\
+\text{PDOP} &= \sqrt{H_{11} H_{22} H_{33}},\\
+\text{HDOP} &= \sqrt{H_{11} H_{22}},\\
+\text{VDOP} &= \sqrt{H_{33}}.
 \end{aligned}
 $$
 
@@ -211,7 +211,7 @@ Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \
 \end{table}
 ```
 
-Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020]
+Scale relating the value of dilution of precision (DOP) coefficients to location data quality. [@isikIntegrityAnalysisGPSBased2020]
 :::
 
 ## Coordinate Reference Systems {#sec-crs}
@@ -564,7 +564,7 @@ gps_drift_tmap <- gps_drift_tmap +
 
 gps_drift_tmap
 ```
-Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red) 
+Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red). 
 :::
 
 There are many map-matching algorithms available, ranging from simple to complex. A simple way to solve the GPS drift problem is to find the road segment closest to the recorded vehicle location and then orthogonally project the vehicle location onto the closest road segment. \mh{InTrans uses this strategy to associate CV data points to the closest roadway, although the priority of a roadway for association to the CV data points is determined by the roadway's facility type. For example, a point is more likely to be matched to a nearby interstate highway than a nearby local road.} @sakiPracticalGuideOpenSource2022 noted that the method of orthogonal projection to the nearest road was used by @bernsteinIntroductionMapMatching1996, @whiteMapMatchingAlgorithms2000, and @taylorRoadReductionFiltering2001. This method is fast, but Saki et al. commented that it is sensitive to outliers. 
@@ -1066,7 +1066,7 @@ gyro\_z & Degrees/second & Angular rotation rate about the up-to-down axis\\
 \end{longtable}
 ```
 
-Metadata for UNMC naturalistic driving study
+Metadata for UNMC naturalistic driving study.
 :::
 
 :::{#tbl-cvmetadata}
@@ -1141,7 +1141,7 @@ hour & Derived & NA & Hour partition in which the data point was downloaded (not
 \end{longtable}
 ```
 
-Connected Vehicle Metadata
+Connected Vehicle Metadata.
 :::
 
 :::{#tbl-roadnetwork}
@@ -1198,5 +1198,5 @@ facility\_type & RAMS & NA & Type of roadway the segment is defined as in RAMS &
 \end{longtable}
 ```
 
-Road network metadata
+Road network metadata.
 :::
