@@ -274,7 +274,7 @@ The map-matching problem arises from the need to associate recorded locations of
 
 \mh{The map-matching question of more focus depends on the intended application for the algorithm. For example, to determine traffic volume for a particular road segment, it is sufficient to know how many vehicles traveled on the road segment. In this case, the exact locations of the vehicles on the road segment are unimportant. For other applications, the precise locations of vehicles on the road segment are important. Consider the case where we want to know whether drivers are stopping behind the stop bar at a stop-controlled intersection. Highly precise vehicle locations are needed to compare with the stop bar location.}
 
-\mh{Regardless of the intended application,} all map-matching algorithms require a geospatial representation of the road system where the vehicle trajectories in question may be assumed to have occurred. For NDS and CV driving data, it is reasonable to expect the vast majority of driving will take place on public roads. The scale and quality of the road system representation affects the potential accuracy of corrected vehicle trajectories that may be achieved.}
+\mh{Regardless of the intended application,} all map-matching algorithms require a geospatial representation of the road system where the vehicle trajectories in question may be assumed to have occurred. For NDS and CV driving data, it is reasonable to expect the vast majority of driving will take place on public roads. The scale and quality of the road system representation affects the potential accuracy of corrected vehicle trajectories that may be achieved.
 
 ```{r}
 #| echo: false
@@ -586,7 +586,7 @@ Example of GPS drift and manual shifting from original points (blue) to points m
 
 \mh{Despite the known issues with geometric map-matching methods and the later appearance of alternative methods (to be discussed later), this type of strategy is still used in applications. For example, InTrans uses the nearest road method to associate CV data points to the closest roadway. However, the priority of a roadway for association to the CV data points is determined by the roadway's facility type. This means that, for example, a point is more likely to be matched to a nearby interstate highway than a nearby local road. The position determination problem is subsequently solved by orthogonally projecting the recorded vehicle location onto the selected road segment.}
 
-@fig-naive-map-matching shows a shortcoming of \mh{a geometric map-matching method} using the same example as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projection looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the matches do not fit with the rest of the vehicle trajectory. \mh{A more sophisticated map-matching method is needed.}
+@fig-naive-map-matching shows \mh{an example of a case where the closest road identified by a geometric map-matching method is not the correct road. The example uses the same data} as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projections \mh{onto the road system} looks good for six of the ten points, but the four points west of the intersection are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the matches do not fit with the rest of the vehicle trajectory. \mh{A more sophisticated map-matching method is needed.}
 
 <!-- Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. Saki et al. observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as Saki et al. noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. -->
 
@@ -691,7 +691,7 @@ mm_tmap <- mm_tmap +
 
 mm_tmap
 ```
-Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red). The yellow warning symbol west of the intersection draws attention to four nonsensically matched red points.
+Example of the shortcomings of a geometric map-matching method where the closest road is not the correct road. The original GPS points (blue) were orthogonally projected onto the nearest road segment (red). The yellow warning symbol west of the intersection draws attention to four nonsensically matched red points.
 :::
 
 <!-- :::{#fig-mmcircarrows} -->
@@ -960,7 +960,7 @@ mm_tmap_heading <- mm_tmap_heading +
 mm_tmap_heading
 ```
 
-Example of the shortcomings of naively orthogonally projecting GPS points (blue) onto the nearest road segment (red) while accounting for heading. Note the temporal jump of the two points near the intersection for which the black lines indicating the match intersect.
+Example of the shortcomings of a geometric map-matching method that accounts for heading. The original GPS points (blue with white chevrons indicating the heading) were orthogonally projected onto the nearest road segment (red) after accounting for heading. Note the temporal jump of the two points near the intersection for which the black lines indicating the match intersect.
 :::
 
 @newsonHiddenMarkovMap2009 introduced a groundbreaking map-matching method. They used hidden Markov models (HMMs) to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. Hidden Markov models are a common basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022].
