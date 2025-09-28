@@ -1,5 +1,6 @@
 ---
-title: "Problem Overview"
+title: "Project Proposal"
+date: "2025-10-20"
 author: "Marie Hardt"
 bibliography: "`r rbbt::bbt_write_bib('overviewreferences.bib', keys=rbbt::bbt_detect_citations(here::here('problem_overview.qmd')),
    ignore = stringr::str_subset(rbbt::bbt_detect_citations(here::here('problem_overview.qmd')), '(^fig-|^tbl-|^eq-|^sec-|^lst-|^thm-|^lem-|^cor-|^prp-|^cnj-|^def-|^exm-|^exr-)'), overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
@@ -90,29 +91,31 @@ return(ex_tmap)
 }
 ```
 
-# To Dos
+<!-- # To Dos -->
 
 
-\mh{To do items for the data sources}
+<!-- \mh{To do items for the data sources} -->
 
-\mh{1. Find a good example that you can use to show the geospatial drift you mention and create code for a picture for both the NDS and the CV data.}
+<!-- \mh{1. Find a good example that you can use to show the geospatial drift you mention and create code for a picture for both the NDS and the CV data.} -->
 
-\mh{2. For the NDS data, shift the data manually (using a single delta x, delta y for a shift) to the right place, and save that as the ‘target’. Calculate the sum of squares between the before and after locations. That is going to be our error for that example and will serve as the baseline to measure progress.}
+<!-- \mh{2. For the NDS data, shift the data manually (using a single delta x, delta y for a shift) to the right place, and save that as the ‘target’. Calculate the sum of squares between the before and after locations. That is going to be our error for that example and will serve as the baseline to measure progress.} -->
 
-\mh{3. I am not completely sure what a GPS error will look like in the CV data. What I am hoping for is a time dependent GPS drift, when all of the measurements will shift by a delta x, delta y. If that is a case, we can proceed with creating an example in the same way as (2). If not, keep track of how the error is showing itself.}
+<!-- \mh{3. I am not completely sure what a GPS error will look like in the CV data. What I am hoping for is a time dependent GPS drift, when all of the measurements will shift by a delta x, delta y. If that is a case, we can proceed with creating an example in the same way as (2). If not, keep track of how the error is showing itself.} -->
 
-\mh{4. (For Later) We will need a couple more of these training examples, but let’s focus on the documentation of the first two examples first.}
+<!-- \mh{4. (For Later) We will need a couple more of these training examples, but let’s focus on the documentation of the first two examples first.} -->
 
-\mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles}
+<!-- \mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles} -->
 
 
 # Introduction {#sec-introduction}
 
-\hh{XXX The purpose of this first section is to motivate  your work by answering What? and Why?}
+<!-- \hh{XXX The purpose of this first section is to motivate  your work by answering What? and Why?} -->
 
-\hh{XXX What is at the heart of your work? Spatio-temporal processes. As human beings we are surrounded by spatio-temporal processes. With increasing technology a lot of these processes are being captured quantitatively, and we are relying on a lot of devices that make use of capturing these quantities. }
+<!-- \hh{XXX What is at the heart of your work? Spatio-temporal processes. As human beings we are surrounded by spatio-temporal processes. With increasing technology a lot of these processes are being captured quantitatively, and we are relying on a lot of devices that make use of capturing these quantities. } -->
 
 <!-- We increasingly rely on connected devices to improve the quality of our lives. For example, navigation apps in our smartphones make it easy to navigate to anywhere we need to go. Such smart devices provide a wealth of data about complex spatio-temporal processes. However, even the most sophisticated smart devices can fail and return obviously incorrect data, such as location data for driving trips that fall nowhere near a roadway. Such erroneous data must be cleaned and corrected before they can be used to develop insight in applications. We created new statistical methods to orthogonally project driving trip trajectories onto the road system. We also developed tools for working with and visualizing spatio-temporal telematics data such as driving trip trajectories.  -->
+
+## Large-Scale Transportation Data {#sec-transportationdata}
 
 \mh{We live in a world filled with spatio-temporal processes. Consider the everyday activity of driving as an example. Advancements in data collection technology, such as in-vehicle instrumentation and smartphone apps, quantitatively capture telematics data from vehicles as they are driven. Such data include the vehicle's location, speed, and direction of travel, among other possibilities depending on the instrumentation used. Driving data have applications in many fields, including transportation, logistics, insurance, and health.}
 
@@ -122,9 +125,8 @@ return(ex_tmap)
 
 \mh{It is essential to project erroneously recorded driving location data onto the road system. The level of the precision of the projection depends on the application. Some applications only require the knowledge of which road segment the vehicle used, while others depend on the precise location of the vehicle on the road segment. A huge variety of methods have been introduced to address this issue. }
 
-\hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.}
-For this project, we use two primary telematics data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these telematics data sources make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-gps, @sec-dop, and @sec-crs. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of some methods used to orthogonally project GPS location information onto the road system.
-
+<!-- \hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.} -->
+For this project, we use two primary telematics data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these telematics data sources make extensive use of location information from the Global Positioning System (GPS). We first discuss some essential background regarding GPS data in @sec-gps, @sec-dop, and @sec-crs. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. \mh{@sec-problemoverview provides an overview of the map-matching problem. Some map-matching algorithms and their drawbacks are discussed in @sec-MMalgos. Current solutions to the position determination problem in map-matching are provided in @sec-roadselection. A proposal for this work is found in @sec-proposal.}
 
 ## Global Positioning System {#sec-gps}
 
@@ -171,7 +173,7 @@ good_sats
 
 GPS satellites send information to receivers by modulating the information onto a set of underlying carrier waves of specified frequencies. In addition to satellite location information and general system information, each satellite also transmits a pre-determined sequence of binary codes at particular times. These codes can be thought of as time information if the user can receive them. To aid the process in the case of weak signals, the GPS receiver already stores a copy of the code to give it an idea of what to expect. The GPS receiver generates the code itself and then finds the time offset between its own code and the code it receives from the satellite, thus finding the signal's travel time.
 
-The distance from the GPS receiver to the satellite can be calculated by multiplying the signal's travel time by the signal's transmission speed (i.e., the speed of light). Theoretically, it should be possible to determine the GPS receiver's location based on observations from three satellites and solving a simultaneous system of three equations in three unknowns (say X, Y, Z). However, there is a problem with this method because the satellite clock and the receiver clock are not synchronized with each other. GPS satellites use very precise atomic clocks that are continuously monitored by the ground stations, but receivers must make do with much cheaper, less accurate clocks. Since light travels approximately 300,000 km/s, an offset of 1 second between the satellite clock and the receiver clock will lead to a 300,000 km error in the distance calculation. To solve the problem, a fourth satellite is needed. Then the offset between the satellite times and the receiver time can be included in a simultaneous system of four equations in four unknowns (say X, Y, Z, $\Delta t$).
+The distance from the GPS receiver to the satellite can be calculated by multiplying the signal's travel time by the signal's transmission speed (i.e., the speed of light). Theoretically, it should be possible to determine the GPS receiver's location based on observations from three satellites and solving a simultaneous system of three equations in three unknowns (say X, Y, Z). However, there is a problem with this method because the satellite clock and the receiver clock are not synchronized with each other. GPS satellites use very precise atomic clocks that are continuously monitored by the ground stations, but receivers must make do with much cheaper, less accurate clocks. Since light travels approximately 300,000 km/s, an offset of 1 second between the satellite clock and the receiver clock will lead to a 300,000 km error in the distance calculation. To solve the problem, a fourth satellite is needed. Then the offset between the satellite times and the receiver time can be included in a simultaneous system of four equations in four unknowns (say $X$, $Y$, $Z$, $\Delta t$).
 
 ## Dilution of Precision {#sec-dop}
 
@@ -260,7 +262,9 @@ As described in the InTrans internal documentation, the CV data continuously str
 
 NDS and CV data are very similar to each other. Both data sources provide observations from vehicle trips, including the vehicle location (latitude and longitude), speed, and heading. These data are reported frequently, usually every one to three seconds. Depending on the nature of the data acquisition systems installed in the study participants' vehicles, NDS data may include additional information that CV data do not provide, such as the DOP coefficients associated with the GPS data. However, NDS data and CV data contain the same fundamental information (location, speed, and direction of travel for the vehicle). It is also possible to acquire similar trajectory data from micromobility solutions like bicycles and scooters. 
 
-# Overview of the Problem {#sec-problemoverview}
+# Map-Matching Problem {#sec-MM}
+
+## Overview {#sec-problemoverview}
 
 As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges from the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. \mh{This situation also illustrates the need for analysts to explore and visualize driving trajectory data.} The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the blue points. GPS errors like these make geospatial analysis of the data much more challenging. 
 
@@ -577,6 +581,8 @@ gps_drift_tmap
 ```
 Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red). 
 :::
+
+## Brief Overview of Map-Matching Algorithms and Related Issues {#sec-MMalgos}
 
 \mh{The map-matching problem has attracted a great deal of attention since GPS was made available for civilian applications in the early 1990s. Hundreds of different map-matching algorithms and algorithm improvements have been introduced since then. These map-matching methods range from intuitive and simple to computationally complex and highly accurate. Several surveys of the available map-matching literature have been conducted over the years; see, for example, @quddusCurrentMapmatchingAlgorithms2007, @weiMapMatchingComparison2013, @kubickaComparativeStudyApplicationOriented2018, @chaoSurveyMapMatchingAlgorithms2020, @sakiPracticalGuideOpenSource2022, and @guptaComprehensiveReviewMapMatching2022. Only a subset of the most relevant map-matching methods will be discussed here.} 
 
@@ -965,6 +971,8 @@ Example of the shortcomings of a geometric map-matching method that accounts for
 
 \mh{Due to their poor performance, geometric map-matching methods have fallen out of favor in the literature. A vast array of more sophisticated map-matching algorithms employing a plethora of estimation techniques have been proposed. The work by @newsonHiddenMarkovMap2009 is widely regarded as seminal. They used hidden Markov models (HMMs) to find the most likely route on the road system corresponding to a time-stamped set of GPS coordinates while accounting for noisy data and the configuration of the road network. Hidden Markov models have since become a basis for many later map-matching algorithms [@sakiPracticalGuideOpenSource2022]. However, even sophisticated map-matching methods can still experience issues with incorrect road selection, such as those illustrated in @fig-naive-map-matching and @fig-map-matching-heading.}
 
+## Solving the Road Selection Problem {#sec-roadselection}
+
 \mh{Most attention in the map-matching literature has been devoted to the road selection problem, with less attention going toward the position determination problem. Given this apparent imbalance in the literature and the importance of the position determination problem in applications, we decided to focus on the position determination problem. Autonomous vehicle localization is a related research area, but localization methods require data from additional sensors such as cameras and light detection and ranging (LiDAR) systems that are not available for connected vehicles and naturalistic driving study instrumentation packages.}
 
 \mh{Orthogonal projection is a common way to solve the position determination problem. Once the map-matching algorithm selects the road used by the vehicle, the vehicle's position on the road is determined by an orthogonal projection from the vehicle's recorded location onto the chosen road. The orthogonal projection location-determination method has been used from the earliest days of map-matching and continues to be widely utilized for position determination. For more recent uses of orthogonal projection for vehicle location determination, see, for example, @jimenezDefinitionEnhancedMapMatching2016 and @alkhazrajiEnhancingMapMatching2024.}
@@ -974,6 +982,8 @@ Example of the shortcomings of a geometric map-matching method that accounts for
 \mh{In a map-matching method using the topology of the road network, @quddusGeneralMapMatching2003 used a weighted average of two points to estimate the vehicle's position on the chosen road segment. One point was obtained from the orthogonal projection of the observed vehicle location onto the selected road. The location of the other point was calculated based on the previous location of the vehicle, the speed of the vehicle at the current time, and the bearing of the selected road segment. A weighted average of the two points, with weights based on the error variances for the road network and the position sensor, provided the estimate of the vehicle's position on the selected road segment. Quddus and colleagues used similar approaches to solving the position determination problem in subsequent works [@ochiengMapmatchingComplexUrban2003; @quddusHighAccuracyFuzzy2006].}
 
 \mh{@quddusCurrentMapmatchingAlgorithms2007 described an approach used by @kimEfficientUseDigital2000 to solve the position determination problem. After selecting the correct road segment using a point-to-curve map-matching technique, Kim et al. used orthogonal projection onto the road segment as an initial estimate of the vehicle's location. Kim et al. then used an extended Kalman filter with inputs from the GPS position fixes to estimate the vehicle's position again, with the goal of minimizing the error in position along the road. Quddus et al. noted that the method of Kim et al. could be improved by using a better technique to select the correct road segment. Kalman filters remain an important component for data processing in many map-matching algorithms, e.g., works by @barriosImprovingEstimationVehicles2011, @wangMultisensorFusionMethod2014, and @ersanMapMatchingKalman2020. However, orthogonal projection remains the final word in position determination.}
+
+# Project Proposal {#sec-proposal}
 
 \mh{As metioned previously, there are many different map-matching algorithms. Many of these algorithms focus more heavily on the road selection problem than on the position determination problem. The position determination problem is essential for many applications, and thus is an important area for further research. We propose to develop a new method for solving the position determination problem to be used as a final step alongside powerful map-matching algorithms for road selection. Thus, we can utilize highly accurate estimates for the road on which a vehicle is driving and combine them with a more precise position determination method than that achievable from simple orthogonal projection onto the selected road segment. The separation from the map-matching algorithm for road selection will allow our position determination algorithm to be used with any existing or yet-to-be-proposed map-matching algorithm for road selection. Our work also presents novel ways to visualize large-scale spatiotemporal transportation data and unlocks new insights from applications.}
 
