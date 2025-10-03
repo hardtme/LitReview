@@ -126,7 +126,7 @@ Errors in driving location data carry through to affect analyses done with the d
 <!-- \hh{XXX The following sentence is the answer to a How? question - it doesn't motivate.} -->
 In pursuit of our goals to create new statistical tools to visualize, process, and analyze large-scale geospatial transportation data, we use two primary telematics data sources: naturalistic driving study (NDS) data and connected vehicle (CV) data. Both of these telematics data sources make extensive use of location information acquired from the Global Positioning System (GPS). 
 
-The organization of this work is as follows. We first discuss some essential background regarding GPS data in @sec-crs, @sec-gps, and @sec-dop. We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of the map-matching problem. Some map-matching algorithms and their drawbacks are discussed in @sec-MMalgos. Current solutions to the position determination problem in map-matching are provided in @sec-roadselection. A proposal for this work is found in @sec-proposal.
+The organization of this work is as follows. We first discuss some essential background regarding GPS data in @sec-crs, @sec-gps, and @sec-dop. @sec-physics \mh{explains the physics of motion based on location data from vehicles.} We describe NDS data in @sec-nds and also describe CV data in @sec-cv. @sec-problemoverview provides an overview of the map-matching problem. Some map-matching algorithms and their drawbacks are discussed in @sec-MMalgos. Current solutions to the position determination problem in map-matching are provided in @sec-roadselection. A proposal for this work is found in @sec-proposal.
 
 # Geolocation Data from the Global Positioning System 
 
@@ -237,6 +237,33 @@ Location Data Quality & Ideal & Excellent & Good  & Moderate & Fair    & Poor  \
 Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020].
 :::
 
+## Physics of Motion {#sec-physics}
+
+\mh{We now present the physics of motion in the context of GPS points recorded from moving vehicles. For simplicity, the equations presented will use Cartesian coordinates instead of a projected coordinate system like those discussed in @sec-crs. Over small distances, such as those between consecutive GPS locations with a high sampling rate, the differences between the two types of coordinate systems become negligible.}
+
+\mh{Suppose that for a given driving trip, we have recorded the vehicle's location (longitude and latitude) at a finite number of time points $t$, $t = 0, 1, ..., T$. In practice, the time difference between consecutive observations is not necessarily one second, nor is the time interval between consecutive observations necessarily consistent throughout the drive. Consider two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. Then the average velocity of the vehicle between the two positions is given by @eq-avgvelocity:}
+$$
+\symbfit{v}_{\text{avg}} = \frac{\symbfit{r}_{t+\Delta t} - \symbfit{r}_t}{(t + \Delta t) - t} = \frac{\Delta \symbfit{r}}{\Delta t}.
+$$ {#eq-avgvelocity}
+\mh{That is, average velocity is the change in position divided by the change in time.}
+
+\mh{As the difference in time, $\Delta t$, between consecutive location observations goes to 0, we can use the limit of the average velocity to find the instantaneous velocity of the vehicle. In other words, instantaneous velocity is the first derivative of position with respect to time. Instantaneous position is given by @eq-instvelocity:}
+$$
+\symbfit{v}_{\text{inst}} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \symbfit{r}}{\Delta t}  = \frac{d\symbfit{r}}{dt}.
+$$ {#eq-instvelocity}
+
+\mh{Now consider the average acceleration (rate of change for velocity) of the vehicle between two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. This is given by @eq-avgaccel:}
+$$
+\symbfit{a}_{\text{avg}} = \frac{\symbfit{v}_{t + \delta t} - \symbfit{v}_t}{(t + \Delta t) - t} = \frac{\Delta \symbfit{v}}{\Delta t}.
+$$ {#eq-avgaccel}
+
+\mh{Instantaneous acceleration is defined in a very similar way to instantaneous velocity, as shown in @eq-instaccel:}
+$$
+\symbfit{a}_{\text{inst}} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \symbfit{v}}{\Delta t} = \frac{d\symbfit{v}}{dt} = \frac{d^2 \symbfit{r}}{dt^2}.
+$$ {#eq-instaccel}
+\mh{Hence, we can see that instaneous acceleration is the first derivative of velocity with respect to time and the second derivative of position with respect to time.}
+
+\mh{Acceleration depends on velocity, which in turn depends on position. Thus, errors in GPS position fixes propagate through to negatively impact GPS-derived velocity and acceleration measures as well. A common issue with GPS locations for vehicles is that position and heading fixes are highly prone to error when the vehicle is stationary or moving slowly [@kubickaDatasetTestingTraining2015]. Position fix issues can still occur even when the vehicle is moving at speed. Recall from @sec-dop that such issues may be due to satellite errors, transmission errors, environmental errors, or receiver errors. Thus, it is important to become familiar with the sources of GPS vehicle trajectory data and the expected magnitude of the position errors within the data.}
 
 # Driving Data Sources {#sec-drivingdatasources}
 
@@ -247,7 +274,7 @@ Research Board of the National Academies as part of the
 Second Strategic Highway Research Program (SHRP 2), which aimed to understand how driver performance and behavior impact traffic safety. For the SHRP 2 NDS, study participants from
 six different US states consented to have their driving monitored by an in-vehicle DAS equipped with various data collection channels, including video cameras, a global positioning system (GPS) unit, and accelerometers, among others [@campbellSHRP2Naturalistic2012]. The Longitudinal Research on Aging Drivers (LongROAD) study was a more recent NDS that focused on collecting data from participants aged 65 to 79 to better understand how medical, behavioral, environmental, and technological factors influence road safety as drivers age [@liLongitudinalResearchAging2017].
 
-This project utilized data from an NDS conducted by the University of Nebraska Medical Center (UNMC) \mh{The study was supported by the National Institutes of Health (NIH), the National Institute on Aging (NIA 5R01AG17177-18), and the University of Nebraska Medical Center Mind \& Brain Health Labs.} This NDS aimed to use driving data from older drivers to develop biomarkers for early detection and monitoring of cognitive decline. The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad. The most essential variables in the dataset are the latitude/longitude, timestamp, speed, heading, and DOP measures. Observations are given at a sampling frequency of 1 Hz, i.e., one observation every second.
+This project utilized data from an NDS conducted by the University of Nebraska Medical Center (UNMC) \mh{The study was supported by the National Institutes of Health (NIH), the National Institute on Aging (NIA 5R01AG17177-18), and the University of Nebraska Medical Center Mind \& Brain Health Labs.} This NDS aimed to use driving data from older drivers to develop biomarkers for early detection and monitoring of cognitive decline. The variables available in the processed UNMC NDS data are described (as per the internal study documentation) in @tbl-rwrad. The most essential variables in the dataset are the latitude/longitude, timestamp, speed, heading, and the DOP measures. Observations are given at a sampling frequency of 1 Hz, i.e., one observation every second.
 
 <!-- From the file BlackBox_FormatQAPass_DataDictionary.docx -->
 
@@ -271,7 +298,7 @@ NDS and CV data are very similar to each other. Both data sources provide observ
 
 As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges from the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. This situation also illustrates the need for analysts to explore and visualize driving trajectory data. The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the original blue points onto the road system, represented as brown lines. GPS errors like these make geospatial analysis of the data much more challenging. 
 
-The map-matching problem arises from the need to associate recorded locations of a moving vehicle to a finite road system represented as $\mathcal{R}$. We have recorded observations of the vehicle's location at a finite number of time points $t$, $t = 0, 1, ..., T$. Let $P_t$ denote the vehicle's true location at time $t$. Due to error in the position fix, $P_t$ is unknown. Let $P^*_t$ denote the vehicle's recorded location at time $t$. $P^*_t$ may not fall on the road system, $\mathcal{R}$, due to position error. The goal of a map-matching algorithm is to use $P^*_t$ to determine the road $R_t$ in $\mathcal{R}$ where the true vehicle location, $P_t$, was found. After determining $R_t$, it may also be of interest to provide an estimate $\widehat{P}_t$ of $P_t$ based on $P^*_t$ and located on $R_t$.
+The map-matching problem arises from the need to associate recorded locations of a moving vehicle to a finite road system represented as $\mathcal{R}$. We have recorded observations of the vehicle's location at a finite number of time points $t$, $t = 0, 1, ..., T$. Let $\symbfit{p}_t$ denote the vehicle's true location \mh{(given in latitude and longitude with a known CRS)} at time $t$. Due to error in the position fix, $\symbfit{p}_t$ is unknown. Let $\symbfit{p}^*_t$ denote the vehicle's recorded location at time $t$, which may not fall on the road system, $\mathcal{R}$, due to position error. The goal of a map-matching algorithm is to use $\symbfit{p}^*_t$ to determine the road $R_t$ in $\mathcal{R}$ where the true vehicle location, $\symbfit{p}_t$, was found. After determining $R_t$, it may also be of interest to provide an estimate $\widehat{\symbfit{p}}_t$ of $\symbfit{p}_t$ based on $\symbfit{p}^*_t$ and located on $R_t$.
 
 Thus, map-matching algorithms seek to solve two fundamental problems: 
 
