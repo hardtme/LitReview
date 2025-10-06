@@ -299,7 +299,7 @@ NDS and CV data are very similar to each other. Both data sources provide observ
 
 ## Overview {#sec-problemoverview}
 
-As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges from the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle for an NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not exhibit high quality GPS location data. This situation also illustrates the need for analysts to explore and visualize driving trajectory data. The red points in @fig-gps-drift show the results of a manual shift of the latitude and longitude values for the original blue points onto the road system, represented as brown lines. GPS errors like these make geospatial analysis of the data much more challenging. 
+As we have worked with driving data, particularly the NDS data from the UNMC study, we have noticed that GPS location data can drift away from the road system, even when the DOP coefficients for the data points fall within the Excellent to Good ranges from the scale in @tbl-dop. The blue points in @fig-gps-drift are the original points returned by the GPS unit installed in a vehicle used in a NDS, and the PDOP values for these points range from 1.63 to 2.36. Despite their low PDOP values, these points do not fall on the road system and thus are not high quality GPS location data. This situation also illustrates the need for analysts to explore and visualize driving trajectory data before performing any analyses. GPS errors like these make geospatial analysis of the data much more challenging. 
 
 The map-matching problem arises from the need to associate recorded locations of a moving vehicle to a finite road system represented as $\mathcal{R}$. We have recorded observations of the vehicle's location at a finite number of time points $t$, $t = 0, 1, ..., T$. Let $\symbfit{p}_t$ denote the vehicle's true location (given in latitude and longitude with a known CRS) at time $t$. Due to error in the position fix, $\symbfit{p}_t$ is unknown. Let $\symbfit{p}^*_t$ denote the vehicle's recorded location at time $t$, which may not fall on the road system, $\mathcal{R}$, due to position error. The goal of a map-matching algorithm is to use $\symbfit{p}^*_t$ to determine the road $R_t$ in $\mathcal{R}$ where the true vehicle location, $\symbfit{p}_t$, was found. After determining $R_t$, it may also be of interest to provide an estimate $\widehat{\symbfit{p}}_t$ of $\symbfit{p}_t$ based on $\symbfit{p}^*_t$ and located on $R_t$.
 
@@ -483,55 +483,55 @@ exdrive_plot <- exdrive_plot |>
 #   addProviderTiles("CartoDB.VoyagerNoLabels") |>
 #   addCircleMarkers(data = exdrive_plot, label = ~glue("{round(speed_mph, 2)} mph"))
 
-offset_pt1 <- st_as_sfc("POINT(0.00018 -0.000075)", crs = "WGS84")
-pt1 <- exdrive_plot[1,]
-shifted_pt1 <- pt1 |>
-  mutate(geometry = geometry + offset_pt1)
+# offset_pt1 <- st_as_sfc("POINT(0.00018 -0.000075)", crs = "WGS84")
+# pt1 <- exdrive_plot[1,]
+# shifted_pt1 <- pt1 |>
+#   mutate(geometry = geometry + offset_pt1)
 
 # Use the same offset as point 1 for point 2
-pt2 <- exdrive_plot[2,]
-shifted_pt2 <- pt2 |>
-  mutate(geometry = geometry + offset_pt1)
+# pt2 <- exdrive_plot[2,]
+# shifted_pt2 <- pt2 |>
+#   mutate(geometry = geometry + offset_pt1)
 
-offset_pt3 <- st_as_sfc("POINT(0.00018 -0.000073)", crs = "WGS84")
-pt3 <- exdrive_plot[3,]
-shifted_pt3 <- pt3 |>
-  mutate(geometry = geometry + offset_pt3)
+# offset_pt3 <- st_as_sfc("POINT(0.00018 -0.000073)", crs = "WGS84")
+# pt3 <- exdrive_plot[3,]
+# shifted_pt3 <- pt3 |>
+#   mutate(geometry = geometry + offset_pt3)
 
-offset_pt4 <- st_as_sfc("POINT(0.00018 -0.00007)", crs = "WGS84")
-pt4 <- exdrive_plot[4,]
-shifted_pt4 <- pt4 |>
-  mutate(geometry = geometry + offset_pt4)
+# offset_pt4 <- st_as_sfc("POINT(0.00018 -0.00007)", crs = "WGS84")
+# pt4 <- exdrive_plot[4,]
+# shifted_pt4 <- pt4 |>
+#   mutate(geometry = geometry + offset_pt4)
 
-offset_pt5 <- st_as_sfc("POINT(0.00016 -0.00003)", crs = "WGS84")
-pt5 <- exdrive_plot[5,]
-shifted_pt5 <- pt5 |>
-  mutate(geometry = geometry + offset_pt5)
+# offset_pt5 <- st_as_sfc("POINT(0.00016 -0.00003)", crs = "WGS84")
+# pt5 <- exdrive_plot[5,]
+# shifted_pt5 <- pt5 |>
+#   mutate(geometry = geometry + offset_pt5)
 
-offset_pt6 <- st_as_sfc("POINT(0.00015 0.00005)", crs = "WGS84")
-pt6 <- exdrive_plot[6,]
-shifted_pt6 <- pt6 |>
-  mutate(geometry = geometry + offset_pt6)
+# offset_pt6 <- st_as_sfc("POINT(0.00015 0.00005)", crs = "WGS84")
+# pt6 <- exdrive_plot[6,]
+# shifted_pt6 <- pt6 |>
+#   mutate(geometry = geometry + offset_pt6)
 
 # Use the same shift for point 7
-pt7 <- exdrive_plot[7,]
-shifted_pt7 <- pt7 |>
-  mutate(geometry = geometry + offset_pt6)
+# pt7 <- exdrive_plot[7,]
+# shifted_pt7 <- pt7 |>
+#   mutate(geometry = geometry + offset_pt6)
 
-offset_pt8 <- st_as_sfc("POINT(0.000145 0.00005)", crs = "WGS84")
-pt8 <- exdrive_plot[8,]
-shifted_pt8 <- pt8 |>
-  mutate(geometry = geometry + offset_pt8)
+# offset_pt8 <- st_as_sfc("POINT(0.000145 0.00005)", crs = "WGS84")
+# pt8 <- exdrive_plot[8,]
+# shifted_pt8 <- pt8 |>
+#   mutate(geometry = geometry + offset_pt8)
 
 # Use the same shift for point 9
-pt9 <- exdrive_plot[9,]
-shifted_pt9 <- pt9 |>
-  mutate(geometry = geometry + offset_pt8)
+# pt9 <- exdrive_plot[9,]
+# shifted_pt9 <- pt9 |>
+#   mutate(geometry = geometry + offset_pt8)
 
-offset_pt10 <- st_as_sfc("POINT(0.00014 0.00005)", crs = "WGS84")
-pt10 <- exdrive_plot[10,]
-shifted_pt10 <- pt10 |>
-  mutate(geometry = geometry + offset_pt10)
+# offset_pt10 <- st_as_sfc("POINT(0.00014 0.00005)", crs = "WGS84")
+# pt10 <- exdrive_plot[10,]
+# shifted_pt10 <- pt10 |>
+#   mutate(geometry = geometry + offset_pt10)
 
 # leaflet() |>
 #   addProviderTiles("CartoDB.VoyagerNoLabels") |>
@@ -547,25 +547,25 @@ shifted_pt10 <- pt10 |>
 #   addCircleMarkers(data = shifted_pt9, color = "green") |>
 #   addCircleMarkers(data = shifted_pt10, color = "turquoise")
 
-manual_shift_points <- bind_rows(shifted_pt1, shifted_pt2,
-                                 shifted_pt3, shifted_pt4,
-                                 shifted_pt5, shifted_pt6,
-                                 shifted_pt7, shifted_pt8,
-                                 shifted_pt9, shifted_pt10)
-
-manual_shift_points <- manual_shift_points |>
-  st_set_crs("WGS84")
+# manual_shift_points <- bind_rows(shifted_pt1, shifted_pt2,
+#                                  shifted_pt3, shifted_pt4,
+#                                  shifted_pt5, shifted_pt6,
+#                                  shifted_pt7, shifted_pt8,
+#                                  shifted_pt9, shifted_pt10)
+# 
+# manual_shift_points <- manual_shift_points |>
+#   st_set_crs("WGS84")
 
 # leaflet() |>
 #   addProviderTiles("CartoDB.VoyagerNoLabels") |>
 #   addCircleMarkers(data = exdrive_plot, color = "blue") |>
 #   addCircleMarkers(data = manual_shift_points, color = "red")
 
-all_shifted_points <- bind_rows(exdrive_plot, manual_shift_points)
-all_shifted_points_ls <- all_shifted_points |>
-  group_by(time_utc) |>
-  summarize() |>
-  st_cast("LINESTRING")
+# all_shifted_points <- bind_rows(exdrive_plot, manual_shift_points)
+# all_shifted_points_ls <- all_shifted_points |>
+#   group_by(time_utc) |>
+#   summarize() |>
+#   st_cast("LINESTRING")
 
 exdrive_bbox <- st_bbox(exdrive_plot)
 
@@ -599,12 +599,19 @@ poss_matches <- oma_roads |>
 # 
 # gps_drift_tmap
 
-gps_drift_tmap <- example_tmap(road_system = poss_matches,
-                               bbox = exdrive_bbox_adj,
-                               og_points = exdrive_plot,
-                               new_points = manual_shift_points,
-                               match_lines = all_shifted_points_ls,
-                               point_fill_alpha = 0.9)
+# gps_drift_tmap <- example_tmap(road_system = poss_matches,
+#                                bbox = exdrive_bbox_adj,
+#                                og_points = exdrive_plot,
+#                                new_points = manual_shift_points,
+#                                match_lines = all_shifted_points_ls,
+#                                point_fill_alpha = 0.9)
+
+gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels") +
+  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10)+
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", fill_alpha = 0.9, 
+          group = "original", group.control = "none")
 
 gps_drift_tmap <- gps_drift_tmap +
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
@@ -612,7 +619,7 @@ gps_drift_tmap <- gps_drift_tmap +
 
 gps_drift_tmap
 ```
-Example of GPS drift and manual shifting from original points (blue) to points more in line with the road (red). 
+Example of drift in recorded GPS locations for a moving vehicle. 
 :::
 
 ## Brief Overview of Map-Matching Algorithms and Related Issues {#sec-MMalgos}
@@ -625,7 +632,7 @@ The simplest way to solve the road selection problem is to find the road segment
 
 Despite the known issues with geometric map-matching methods and the later appearance of alternative methods (to be discussed later), this type of strategy is still used in applications. For example, InTrans uses a nearest-road method to associate CV data points to the closest roadway. However, the priority of a roadway for association to the CV data points is determined by the roadway's facility type. This means that, for example, a point is more likely to be matched to a nearby interstate highway than a nearby local road. The position determination problem is subsequently solved by orthogonally projecting the recorded vehicle location onto the selected road segment.
 
-@fig-naive-map-matching shows an example of a case where the closest road identified by a geometric map-matching method is not the correct road. The example uses the same data as @fig-gps-drift. Once again, the original points are blue and the matched points are red. The orthogonal projections onto the road system} looks good for six of the ten points, but the four points west of the intersection (near the yellow warning symbol) are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the matches do not fit with the rest of the vehicle trajectory. A more sophisticated map-matching method is needed.
+@fig-naive-map-matching shows an example of a case where the closest road identified by a geometric map-matching method is not the correct road. The example uses the same data as @fig-gps-drift. Once again, the original points are blue. The matched points are red. The orthogonal projections onto the road system looks good for six of the ten points, but the four points west of the intersection (near the yellow warning symbol) are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the matches do not fit with the rest of the vehicle trajectory. A more sophisticated map-matching method is needed.
 
 <!-- Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. Saki et al. observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as Saki et al. noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. -->
 
@@ -719,7 +726,8 @@ mm_tmap <- example_tmap(road_system = poss_matches,
                                bbox = exdrive_bbox_adj,
                                og_points = exdrive_plot,
                                new_points = nearest_pts_end_match,
-                               match_lines = nearest_pts_ls_match)
+                               match_lines = nearest_pts_ls_match,
+                        point_fill_alpha = 0.9)
 
 mm_tmap <- mm_tmap +
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
