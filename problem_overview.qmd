@@ -1024,6 +1024,24 @@ There are several potential directions to be pursued to create our new method (o
 
 Thus, we can utilize highly accurate estimates for the road on which a vehicle is driving and combine them with a more precise position determination method than is achievable from simple orthogonal projection onto the selected road segment. The separation from the map-matching algorithm for road selection will allow our position determination algorithm to be used with any existing or yet-to-be-proposed map-matching algorithm for road selection. Our work will also include novel ways to visualize large-scale spatiotemporal transportation data and unlock new insights from applications. These new insights will not be possible without new ways to visualize large-scale spatiotemporal transportation data and an improved method to determine the positions of vehicles on the road system after matching.
 
+# Proposed Chapter Overviews
+
+## Chapter 0: Literature Review & Problem Statement
+
+This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Telematics data are discussed, and an overview of GPS and related quality measures are presented. Prior work on the map-matching problem is discussed. The new contributions of the work are explained.
+
+## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
+
+This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data and explains how insights based on the visualizations led to subsequent work.
+
+## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
+
+This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented.
+
+## Chapter 3: Determining Precise Vehicle Locations on the Road System
+
+This chapter covers a new method for determining a vehicle's location on a road segment after a map-matching algorithm is used. An application using this method is discussed.
+
 <!-- \mh{Both the reported locations in a vehicle's trajectory and the road system used in the map-matching process are subject to error, which leads to uncertainty in the revised locations produced by the map-matching process. @quddusIntegrityMapmatchingAlgorithms2006 developed a metric for the integrity of map-matching algorithms. The results indicated that both the capability of the map-matching algorithm and the resolution of the digital map of the road system affect affect the integrity of the method.} -->
 
 
@@ -1041,24 +1059,6 @@ Thus, we can utilize highly accurate estimates for the road on which a vehicle i
 :::
 
 \newpage
-
-# Chapter Overviews
-
-## Chapter 0: Literature Review & Problem Statement
-
-This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Telematics data are discussed, and an overview of GPS and related quality measures are presented. I discuss prior work on the map-matching problem. I also explain the new contributions of my work.
-
-## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
-
-This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data and explains how insights based on the visualizations led to subsequent work.
-
-## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
-
-This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented.
-
-## Chapter 3: Determining Precise Vehicle Locations on the Road System
-
-This chapter covers a new method for determining a vehicle's location on a road segment. An application using this method is discussed.
 
 # Appendix {.appendix .unnumbered}
 
