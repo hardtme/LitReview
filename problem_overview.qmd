@@ -30,6 +30,8 @@ filters:
 commands: [mh,bg,hh] 
 execute: 
   echo: false
+abstract: |
+  Driving is a spatiotemporal process essential to modern life. Advancements in data collection technologies allow the capture of telematics data from vehicles as they are driven. Such data include the vehicle's location (latitude/longitude, often from GPS), speed, heading, etc. These driving data are used in a wide variety of applications, including traffic flow analysis and cognitive health monitoring for older drivers. However, the vehicle location data are usually recorded with errors that cause the reported locations of a vehicle to not fall on the road system. These errors increase the challenges of working with such telematics data. An overview of GPS data collection and how position errors can arise and affect recorded locations is presented. The types of telematics data used in this research are discussed. Then, the map-matching problem (a way to correct GPS data errors by matching points to the road system) is introduced. Lastly, ideas for new statistical tools in the realm of large-scale spatiotemporal transportation data are proposed.
 ---
 
 ```{r setup}
