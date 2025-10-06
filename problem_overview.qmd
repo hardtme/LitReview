@@ -1,5 +1,6 @@
 ---
-title: "Project Proposal"
+title: "Statistical Tools for Large-Scale Spatiotemporal Transportation Data"
+subtitle: "Project Proposal"
 date: "2025-10-20"
 author: "Marie Hardt"
 bibliography: "`r rbbt::bbt_write_bib('overviewreferences.bib', keys=rbbt::bbt_detect_citations(here::here('problem_overview.qmd')),
