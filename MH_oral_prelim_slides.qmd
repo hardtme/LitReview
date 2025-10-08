@@ -79,7 +79,7 @@ return(ex_tmap)
 
 * Collected from vehicles as they are driven.
 
-* Points observed regularly (e.g., every 1-3 sec. for our data sources).
+* Observations taken regularly (e.g., every 1-3 sec. for our data sources).
 
 ## Typical Variables
 
@@ -121,7 +121,7 @@ It's 25 degrees outside today.
 
 * Celsius: 😎
 
-## Coordinate Reference Systems[^gps]
+## Coordinate Reference Systems [@iliffeDatumsMapProjections2008]
 
 * Describe how latitude/longitude coordinates relate to real places on the Earth's surface.
 
@@ -129,15 +129,13 @@ It's 25 degrees outside today.
 
 * CRS for GPS data: WGS 84.
 
-[^gps]: @iliffeDatumsMapProjections2008
-
 ## Projected Coordinate Systems
 
 * Project coordinates from the Earth's surface (3-D) down to 2 dimensions.
 
 * 3-D surfaces can't be projected down to 2 dimensions without distortion (but that's okay).
 
-* Example: WGS 84 Web Mercator projection for coordinates using the WGS 84 projection.
+* Example: WGS 84 Web Mercator projection for coordinates using the WGS 84 CRS.
 
 ## GPS Overview (Simplified)
 
@@ -150,6 +148,8 @@ It's 25 degrees outside today.
 * Satellites transmit their positions to receivers.
 
 * Receivers determine the travel time of the signal from the satellite and thus the distance to the satellite. 
+
+* 4 satellites are needed to get a position fix.
 
 ## Examples of GPS Satellite Constellation Geometries
 
@@ -195,7 +195,7 @@ good_sats
 ```
 :::
 
-## Dilution of Precision (DOP)[^dop]
+## Dilution of Precision (DOP) [@isikIntegrityAnalysisGPSBased2020]
 
 * Measure of GPS data quality.
 
@@ -206,8 +206,7 @@ good_sats
   - Horizontal DOP (HDOP).
   
   - Vertical DOP (VDOP).
-  
-[^dop]: @isikIntegrityAnalysisGPSBased2020
+
   
 ## DOP Values and Data Quality
 
@@ -223,9 +222,10 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 * Position errors → velocity errors → acceleration errors.
 
+* GPS headings are unreliable at low speeds.
+
 * Low DOP doesn't always mean good quality GPS data.
 
-* GPS headings are unreliable at low speeds.
 
 ## GPS Drift Example
 
@@ -485,7 +485,7 @@ mm_tmap_heading
 :::
 :::
 
-## Issues with Geometric MM Algorithms[^issues]
+## Issues with Geometric MM Algorithms[@quddusCurrentMapmatchingAlgorithms2007]
 
 * Sensitivity to outliers.
 
@@ -493,7 +493,6 @@ mm_tmap_heading
 
 * Closest road may not be the correct road.
 
-[^issues]: @quddusCurrentMapmatchingAlgorithms2007
 
 ## More Advanced MM Algorithms
 
