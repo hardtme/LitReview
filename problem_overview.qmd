@@ -1025,7 +1025,7 @@ In a map-matching method using the topology of the road network, @quddusGeneralM
 
 # Project Proposal {#sec-proposal}
 
-As metioned previously, there are many different map-matching algorithms. Many of these algorithms focus more heavily on the road selection problem than on the position determination problem. The position determination problem is essential for many applications, and thus is an important area for further research. We propose to develop a new method for solving the position determination problem to be used as a final step alongside powerful map-matching algorithms that perform road selection.
+As mentioned previously, there are many different map-matching algorithms. Many of these algorithms focus more heavily on the road selection problem than on the position determination problem. The position determination problem is essential for many applications, and thus is an important area for further research. We propose to develop a new method for solving the position determination problem to be used as a final step alongside powerful map-matching algorithms that perform road selection.
 
 For the proposed method for vehicle position determination after map matching, we first need accurate road segments corresponding to the observed GPS points. If ground truth segment information is available, it will be utilized. To harmonize with the process currently used by InTrans for CV data, the closest road segments will be considered for these data. An advanced map-matching algorithm, such as one based on a hidden Markov model, will be used to provide highly accurate road segment selections from the map-matching algorithm when ground truth is unavailable.
 
