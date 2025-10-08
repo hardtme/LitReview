@@ -482,7 +482,7 @@ mm_tmap_heading
 :::
 :::
 
-## Issues with Geometric MM Methods[^issues]
+## Issues with Geometric MM Algorithms[^issues]
 
 * Sensitivity to outliers.
 
@@ -492,40 +492,42 @@ mm_tmap_heading
 
 [^issues]: @quddusCurrentMapmatchingAlgorithms2007
 
-## Existing Map-Matching Methods
+## More Advanced MM Algorithms
 
-* Naive methods
+* Vast array of more sophisticated MM algorithms for selecting the road.
 
-* More advanced naive methods
+* Seminal work: algorithm by @newsonHiddenMarkovMap2009 using hidden Markov models to select the road.
 
-* Hidden Markov models
+* Even advanced methods can still make errors like those shown in the examples.
 
-* Etc.
+## Position Determination Problem
 
-## Map Matching Challenges
+* Has not received much attention in the MM literature.
 
-* True path is usually unknown
+* Important for applications.
 
-* Error quantification
+## Position Determination Methods in the Literature
 
-* Outlier sensitivity
+* Orthogonal projection: still very popular even though @greenfeldMatchingGPSObservations2002 noted that the projection onto the road system may not correspond to the vehicle's true location.
 
-* Etc.
+* @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road.
 
-# Areas of Interest
+* @kimEfficientUseDigital2000: Kalman filter.
 
-## Visualizing Telematics Data
+# Proposed Work
 
-* Relating location in time and space to other variables 
+## Develop a New Way to Solve the Position Determination Problem in Map-Matching
 
-* R package `DrivePlotR`
+* After using any MM algorithm to select the road, use the new method to determine the vehicle's position on the selected road.
 
-## Processing Telematics Data
+* Ideas for approaches:
 
-* Map matching
-
-* Correctly locating telematics data in space (latitude/longitude on correct part of the road system) and time
-
+  - Linkage problem [@taylorFastBayesianRecord2024].
+  
+  - Oblique least squares [@mccartinObliqueLinearLeast2010]
+  
+  - Revisit Kalman filter.
+  
 ## Drawing Insights from Telematics Data
 
 For example,
