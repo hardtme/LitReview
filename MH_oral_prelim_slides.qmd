@@ -118,17 +118,19 @@ It's 25 degrees outside today.
 
 * Celsius: 😎
 
-## Coordinate Reference System
+## Coordinate Reference Systems[^gps]
 
-* Describes how latitude/longitude coordinates relate to real places on the Earth's surface.
+* Describe how latitude/longitude coordinates relate to real places on the Earth's surface.
 
-* Ensures locations are properly located because they are related to the correct ellipsoidal approximation of the Earth.
+* Ensure locations are properly located because they are related to the correct ellipsoidal approximation of the Earth.
 
 * CRS for GPS data: WGS 84.
 
-## Projected Coordinate System
+[^gps]: @iliffeDatumsMapProjections2008
 
-* Projects coordinates from the Earth's surface (3-D) down to 2 dimensions.
+## Projected Coordinate Systems
+
+* Project coordinates from the Earth's surface (3-D) down to 2 dimensions.
 
 * 3-D surfaces can't be projected down to 2 dimensions without distortion (but that's okay).
 
@@ -190,7 +192,7 @@ good_sats
 ```
 :::
 
-## Dilution of Precision (DOP)
+## Dilution of Precision (DOP)[^dop]
 
 * Measure of GPS data quality.
 
@@ -201,6 +203,8 @@ good_sats
   - Horizontal DOP (HDOP).
   
   - Vertical DOP (VDOP).
+  
+[^dop]: @isikIntegrityAnalysisGPSBased2020
   
 ## DOP Values and Data Quality
 
