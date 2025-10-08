@@ -222,6 +222,8 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 * Low DOP doesn't always mean good quality GPS data.
 
+* GPS headings are unreliable at low speeds.
+
 ## GPS Drift Example
 
 PDOP values: 1.63 to 2.36 (Excellent to Very Good)
@@ -278,7 +280,11 @@ gps_drift_tmap
 ```
 
 
-# Map Matching
+# Map-Matching Problem
+
+## Goal
+
+Associate (erroneously) recorded locations of a moving vehicle to the road system.
 
 ## Main Problems to Solve
 
@@ -286,7 +292,207 @@ gps_drift_tmap
 
 2. Where on the road is the vehicle driving? (Position determination problem)
 
-## Existing Map Matching Methods
+## Brief Overview of Map-Matching Algorithms
+
+* Active research area since the late 20th century.
+
+* Hundreds of MM algorithms have been proposed.
+
+* Wide range of method complexity.
+
+
+## Simple Geometric MM Algorithms
+
+Goal: find the closest road segment to each GPS point.
+
+* Point-to-point.
+
+* Point-to-curve.
+
+* Curve-to-curve.
+
+## Example of Point-to-Point MM Algorithm
+
+:::columns
+::: {.column width="50%"}
+1. Find the road corresponding to the nearest point on the road system.
+
+2. Orthogonally project the recorded point onto the selected road.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| fig.asp: 1
+# For each GPS point, find the nearest point on each of the road segments
+nearest_pts_ls <- st_nearest_points(exdrive_plot, poss_matches)
+
+nearest_pts_ls_sf <- st_as_sf(nearest_pts_ls)
+
+# Find the distance between the original point and the matched point
+nearest_pts_ls_sf <- nearest_pts_ls_sf |>
+  rename(geometry = x) |>
+  mutate(dist = st_length(geometry))
+
+nearest_pts_ls_sf_start <- lwgeom::st_startpoint(nearest_pts_ls_sf) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+nearest_pts_ls_sf_end <- lwgeom::st_endpoint(nearest_pts_ls_sf) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+# For each starting point, find the closest matched point
+nearest_pts_end_match <- nearest_pts_ls_sf_end |>
+  mutate(id = rep(1:nrow(exdrive_plot), each = nrow(poss_matches)),
+         dist = nearest_pts_ls_sf$dist) |>
+  group_by(id) |>
+  filter(dist == min(dist))
+
+# Get the lines between the original points and the matched points
+nearest_pts_ls_match <- nearest_pts_ls_sf |>
+  mutate(id = rep(1:nrow(exdrive_plot), each = nrow(poss_matches))) |>
+  group_by(id) |>
+  filter(dist == min(dist))
+
+fa_by_name("circle-exclamation", fill = "gold", stroke = "black", stroke_width = "5px")
+
+warn_pt <- st_sfc(st_point(x = c(-95.99816, 41.25787)), crs = 4326) |>
+  st_as_sf() |>
+  st_cast("POINT")
+
+warn_pt_icon <- tmap_icons("circle-exclamation.png")
+
+mm_tmap <- example_tmap(road_system = poss_matches,
+                        road_system_lwd = 20,
+                        bbox = exdrive_bbox_adj,
+                        og_points = exdrive_plot,
+                        new_points = nearest_pts_end_match,
+                        match_lines = nearest_pts_ls_match,
+                        point_size = 1.5,
+                        point_fill_alpha = 0.9)
+
+mm_tmap <- mm_tmap +
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
+  tm_shape(warn_pt, bbox = exdrive_bbox_adj) +
+  tm_dots(size = 0.7, col = "black", fill_alpha = 1)+
+  tm_symbols(shape = warn_pt_icon, size = 0.4)
+
+mm_tmap
+```
+:::
+:::
+
+## Account for Vehicle Heading
+
+* Find closest road segment, as before.
+
+* Restrict candidate roads to have similar bearings as the vehicle heading.
+
+## Example of Point-to-Point MM Algorithm that Accounts for Heading
+
+:::columns
+::: {.column width="50%"}
+1. Of the candidate road segments that have a similar bearing to the vehicle heading, find the road corresponding to the nearest point on the road system.
+
+2. Orthogonally project the recorded point onto the selected road.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+up_ca <- tmap_icons("circle-chevron-up.png")
+left_ca <- tmap_icons("circle-chevron-left.png")
+down_ca <- tmap_icons("circle-chevron-down.png")
+right_ca <- tmap_icons("circle-chevron-right.png")
+
+poss_match_start <- lwgeom::st_startpoint(poss_matches)
+poss_match_end <- lwgeom::st_endpoint(poss_matches)
+
+road_bearings <- map2(.x = poss_match_start, .y = poss_match_end,
+                      \(x, y) lwgeom::st_geod_azimuth(st_sfc(st_point(x), st_point(y), crs = 4326)) |>
+                        units::set_units("degrees")) |>
+  list_c()
+
+poss_matches <- poss_matches |>
+  mutate(bearing = 360 + as.numeric(road_bearings))
+
+nearest_pts_ls_sf_id <- nearest_pts_ls_sf |>
+  mutate(ObjectID = rep(poss_matches$ObjectID, length.out = nrow(nearest_pts_ls_sf)),
+         time_utc = rep(exdrive_plot$time_utc, each = nrow(poss_matches)))
+
+nearest_pts_ls_sf_id_heading <- left_join(nearest_pts_ls_sf_id, 
+                                          exdrive_plot |> select(time_utc, gyro_heading) |> st_drop_geometry(),
+                                          by = "time_utc")
+
+nearest_pts_ls_sf_id_heading <- left_join(nearest_pts_ls_sf_id_heading,
+                                          poss_matches |> select(ObjectID, bearing) |> st_drop_geometry(),
+                                          by = "ObjectID")
+
+# Keep the points that have a heading within 45 degrees of the road segment heading
+nearest_pts_heading_filter <- nearest_pts_ls_sf_id_heading |>
+  mutate(abs_heading_dist = abs(gyro_heading - bearing)) |>
+  filter(abs_heading_dist <= 45)
+
+# Keep the closest point
+nearest_pts_heading_filter_dist <- nearest_pts_heading_filter |>
+  group_by(time_utc) |>
+  filter(dist == min(dist))
+
+nearest_pts_heading_filter_dist_start <- lwgeom::st_startpoint(nearest_pts_heading_filter_dist) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+
+nearest_pts_heading_filter_dist_end <- lwgeom::st_endpoint(nearest_pts_heading_filter_dist) |> 
+  st_as_sf() |>
+  rename(geometry = x)
+```
+
+```{r}
+#| fig.asp: 1
+mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "tan", lwd = 20) +
+  tm_shape(nearest_pts_heading_filter_dist, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "black")+
+  tm_shape(exdrive_plot #|> mutate(
+    #gyro_heading = 360 - gyro_heading + 90) # use compass rose instead of unit circle representation
+  ) + 
+  tm_dots(size = 1.5, fill = "white", group = "original", group.control = "none", fill_alpha = 1)+ 
+  tm_symbols(shape = "gyro_heading", size = 0.48, 
+             shape.scale = tm_scale_intervals(
+               style = "fixed",
+               n = 5,
+               #values = list(right, up, left, down, right),
+               values = list(up_ca, right_ca, down_ca, left_ca, up_ca),
+               breaks = c(0, 45, 135, 225, 315, 360)),
+             group = "original", group.control = "none", 
+             shape.legend = tm_legend(title = "Vehicle Heading\n(0 Degrees = North)")) +
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
+  tm_shape(nearest_pts_heading_filter_dist_end, bbox = exdrive_bbox_adj)+
+  tm_dots(size = 1.5, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
+
+mm_tmap_heading <- mm_tmap_heading + 
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))
+mm_tmap_heading
+```
+
+:::
+:::
+
+## Issues with Geometric MM Methods[^issues]
+
+* Sensitivity to outliers.
+
+* Unstable results in urban areas with many roads close together.
+
+* Closest road may not be the correct road.
+
+[^issues]: @quddusCurrentMapmatchingAlgorithms2007
+
+## Existing Map-Matching Methods
 
 * Naive methods
 
