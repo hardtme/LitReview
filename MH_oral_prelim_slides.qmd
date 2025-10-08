@@ -8,6 +8,65 @@ format:
     theme: simple
 ---
 
+```{r setup}
+#| echo: false
+#| warning: false
+#| message: false
+library(rbbt)
+library(tidyverse)
+library(leaflet)
+library(sf)
+library(glue)
+# remotes::install_github("hardtme/DrivePlotR)
+library(DrivePlotR)
+library(tmap)
+tmap_mode("plot")
+# remotes::install_github("dill/emoGG")
+library(emoGG)
+library(gpsdriving)
+library(fontawesome)
+
+fa_by_name <- function(name, fill = "blue", stroke = "white", stroke_width = "1px") {
+  fa_png(
+    name = name,
+    fill = fill,
+    fill_opacity = 1,
+    stroke = stroke,
+    stroke_width = stroke_width, 
+    stroke_opacity = 1,
+    height = 512,
+    width = 512
+  )
+}
+
+example_tmap <- function(basemap = "CartoDB.VoyagerNoLabels",
+                         road_system,
+                         bbox,
+                         road_system_color = "tan",
+                         road_system_lwd = 10,
+                         og_points,
+                         og_points_color = "blue",
+                         new_points,
+                         new_points_color = "red",
+                         point_size = 1,
+                         point_fill_alpha = 1,
+                         match_lines,
+                         match_lines_color = "black"){
+ex_tmap <- tm_basemap(server = basemap)+
+  tm_shape(road_system, bbox = bbox)+
+  tm_lines(col = road_system_color, lwd = road_system_lwd)+
+  tm_shape(match_lines, bbox = bbox)+
+  tm_lines(col = match_lines_color)+
+  tm_shape(og_points, bbox = bbox)+
+  tm_dots(size = point_size, fill = og_points_color, fill_alpha = point_fill_alpha, 
+          group = "original", group.control = "none")+
+  tm_shape(new_points, bbox = bbox)+
+  tm_dots(size = point_size, fill = new_points_color, fill_alpha = point_fill_alpha,
+          group = "shifted", group.control = "none")
+return(ex_tmap)
+}
+```
+
 # Spatiotemporal Transportation Data
 
 ## Vehicle Trajectory Data
@@ -84,7 +143,49 @@ It's 25 degrees outside today.
 
 * Receivers determine the travel time of the signal from the satellite and thus the distance to the satellite. 
 
-## Satellite Geometry
+## Examples of GPS Satellite Constellation Geometries
+
+:::{layout-ncol=2}
+
+```{r}
+#| echo: false
+#| fig-cap: "Poor Satellite Geometry"
+
+receiver <- data.frame( x = 0, y = 0)
+
+bad_satellites <- data.frame(x = c(-0.7, -0.3, -0.5, -0.8),
+                             y = c(7.5, 9.75, 9, 6.5))
+
+good_satellites <- data.frame(x = c(1, -1, -0.3, 0.4),
+                         y = c(7, 8, 10, 9.5))
+
+bad_sats <- ggplot() +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_hline(yintercept = -0.4, linewidth = 4, color = "gray30")+
+  geom_emoji(data = bad_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
+  geom_segment(data = bad_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
+  theme_void() +
+  theme(panel.background = element_rect(fill = "lightblue1"))+
+  scale_y_continuous(limits = c(-0.5, 10.5), expand = expansion(mult = c(0, 0), add = c(0, 0)))
+bad_sats
+```
+
+```{r}
+#| echo: false
+#| fig-cap: "Good Satellite Geometry"
+
+good_sats <- ggplot() +
+  geom_emoji(data = receiver, mapping = aes(x = x, y = y), emoji = "1f697") +
+  geom_hline(yintercept = -0.4, linewidth = 4, color = "gray30")+
+  geom_emoji(data = good_satellites, mapping = aes(x = x, y = y), emoji = "1f6f0")+
+  geom_segment(data = good_satellites, aes(x = 0, y = 0, xend = x, yend = y), linewidth = 0.2)+
+  theme_void() +
+  theme(panel.background = element_rect(fill = "lightblue1"))+
+  scale_y_continuous(limits = c(-0.5, 10.5), expand = expansion(mult = c(0, 0), add = c(0, 0)))
+good_sats
+
+```
+:::
 
 ## Dilution of Precision
 
