@@ -209,14 +209,14 @@ good_sats
 
 Scale relating the value of dilution of precision (DOP) coefficients to location data quality [@isikIntegrityAnalysisGPSBased2020].
 
+## GPS Data Issues
 
-## Issues
+* Poor GPS signal → position errors.
 
-* Poor GPS signal
+* Position errors → velocity errors → acceleration errors.
 
-* Low DOP doesn't always mean good quality GPS data
+* Low DOP doesn't always mean good quality GPS data.
 
-* Etc.
 
 # Map Matching
 
