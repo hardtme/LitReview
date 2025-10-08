@@ -276,11 +276,11 @@ gps_drift_tmap
 
 # Map Matching
 
-## Main Questions
+## Main Problems to Solve
 
-1. Which road segment is the vehicle using?
+1. On which road is the vehicle driving? (Road selection problem)
 
-2. Where exactly on the road segment is the vehicle?
+2. Where on the road is the vehicle driving? (Position determination problem)
 
 ## Existing Map Matching Methods
 
