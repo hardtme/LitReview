@@ -8,6 +8,7 @@ bibliography: "`r rbbt::bbt_write_bib('slidereferences.bib', keys=rbbt::bbt_dete
 format: 
   revealjs:
     theme: simple
+    slide-number: true
 ---
 
 ```{r setup}
