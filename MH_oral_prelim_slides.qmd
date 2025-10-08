@@ -217,6 +217,61 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 * Low DOP doesn't always mean good quality GPS data.
 
+## GPS Drift Example
+
+PDOP values: 1.63 to 2.36 (Excellent to Very Good)
+
+```{r}
+#| echo: false
+#| eval: true
+
+data("nds_data")
+
+nds_data_sf  <- nds_data |>
+  st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+
+exdrive <- nds_data_sf |>
+  filter(drive == 23)
+
+exdrive_plot <- exdrive |>
+  filter(time_utc >= ymd_hms("2019-05-28 21:17:20"), time_utc <= ymd_hms("2019-05-28 21:17:29"))
+
+exdrive_plot <- exdrive_plot |>
+  mutate(pt_label = c("Start", rep("", 8), "End"))
+
+exdrive_bbox <- st_bbox(exdrive_plot)
+
+exdrive_bbox_adj <- exdrive_bbox
+exdrive_bbox_adj[1] <- exdrive_bbox_adj[1] - 0.0002
+exdrive_bbox_adj[2] <- exdrive_bbox_adj[2] - 0.0002
+exdrive_bbox_adj[3] <- exdrive_bbox_adj[3] + 0.0002
+exdrive_bbox_adj[4] <- exdrive_bbox_adj[4] + 0.0002
+
+# USGS data
+data("oma_roads")
+# Make exdrive example bounding box into sf object
+exdrive_bbox_sf <- exdrive_bbox |>
+  st_as_sfc() |>
+  st_as_sf(crs = "WGS84")
+
+# Find road candidates within the bounding box for the exdrive example above
+poss_matches <- oma_roads |>
+  st_filter(exdrive_bbox_sf, .predicate = st_intersects)
+
+gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels") +
+  tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
+  tm_lines(col = "tan", lwd = 10)+
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_dots(size = 1, fill = "blue", fill_alpha = 0.9, 
+          group = "original", group.control = "none")
+
+gps_drift_tmap <- gps_drift_tmap +
+  tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
+  tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))
+
+gps_drift_tmap
+```
+
 
 # Map Matching
 
