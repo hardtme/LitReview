@@ -9,6 +9,9 @@ format:
   revealjs:
     theme: simple
     slide-number: true
+    auto-stretch: false
+    width: 1470
+    height: 980
 ---
 
 ```{r setup}
@@ -231,7 +234,7 @@ PDOP values: 1.63 to 2.36 (Excellent to Very Good)
 ```{r}
 #| echo: false
 #| eval: true
-
+#| fig.align: center
 data("nds_data")
 
 nds_data_sf  <- nds_data |>
@@ -355,13 +358,13 @@ nearest_pts_ls_match <- nearest_pts_ls_sf |>
   group_by(id) |>
   filter(dist == min(dist))
 
-fa_by_name("circle-exclamation", fill = "gold", stroke = "black", stroke_width = "5px")
+#fa_by_name("circle-exclamation", fill = "gold", stroke = "black", stroke_width = "5px")
 
-warn_pt <- st_sfc(st_point(x = c(-95.99816, 41.25787)), crs = 4326) |>
-  st_as_sf() |>
-  st_cast("POINT")
+# warn_pt <- st_sfc(st_point(x = c(-95.99816, 41.25787)), crs = 4326) |>
+#   st_as_sf() |>
+#   st_cast("POINT")
 
-warn_pt_icon <- tmap_icons("circle-exclamation.png")
+#warn_pt_icon <- tmap_icons("circle-exclamation.png")
 
 mm_tmap <- example_tmap(road_system = poss_matches,
                         road_system_lwd = 20,
@@ -374,10 +377,10 @@ mm_tmap <- example_tmap(road_system = poss_matches,
 
 mm_tmap <- mm_tmap +
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))+
-  tm_shape(warn_pt, bbox = exdrive_bbox_adj) +
-  tm_dots(size = 0.7, col = "black", fill_alpha = 1)+
-  tm_symbols(shape = warn_pt_icon, size = 0.4)
+  tm_labels(text = "pt_label", xmod = 1.25, ymod = -0.5, options = opt_tm_labels(point.label = FALSE))#+
+  #tm_shape(warn_pt, bbox = exdrive_bbox_adj) +
+  #tm_dots(size = 0.7, col = "black", fill_alpha = 1)+
+  #tm_symbols(shape = warn_pt_icon, size = 0.4)
 
 mm_tmap
 ```
@@ -528,15 +531,51 @@ mm_tmap_heading
   
   - Revisit Kalman filter.
   
-## Drawing Insights from Telematics Data
+## Create an Open-Source Tool for Visualizing Spatiotemporal Transportation Data
+
+* R package `DrivePlotR`.
+
+* Interactive plot-maps relate location in time and space to other variables.
+
+## `DrivePlotR` Example
+
+```{r}
+#| echo: false
+drive <- nds_data |> dplyr::filter(drive == 7)
+drive <- drive |> 
+  sf::st_as_sf(coords = c("gps_long", "gps_lat"), 
+               crs = "WGS84")
+drive <- drive |>
+  dplyr::mutate(time_cst = lubridate::ymd_hms(time_cst, tz = "US/Central"),
+                gps_minute = as.factor(lubridate::minute(time_cst)))
+
+shared_drive <- shared_drive <- 
+  crosstalk::SharedData$new(drive)
+
+driveplot(
+  shareddata = shared_drive, 
+  maplabel = time_cst, colorvar = gps_minute, 
+  colorpalette = "viridis", fillOpacity = 1, 
+  time = time_cst, y1 = speed_mph, 
+  y2 = gyro_heading, 
+  y3 = gps_pdop, 
+  timelabel = "Time", y1label = "Speed (MPH)", 
+  y2label = "Gyro Heading", 
+  y3label = "GPS PDOP", showlegend = TRUE, 
+  legendtitle = "Minute", 
+  spacing = 0.05)
+```
+
+
+## Detect Driving Behavior from Large-Scale Spatiotemporal Transportation Data
 
 For example,
 
-* Developing driving biomarkers for age-related cognitive decline in senior citizens
+* Develop driving biomarkers for age-related cognitive decline in senior citizens.
 
-* Deriving the time to complete turning maneuvers at intersections
+* Derive the time to complete turning maneuvers at intersections.
 
-* Quantifying the influence of work zones, crashes, etc. on traffic flow
+* Quantify the influence of work zones, crashes, etc. on traffic flow.
 
 ## References
 
