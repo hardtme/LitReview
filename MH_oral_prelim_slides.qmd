@@ -297,7 +297,7 @@ Associate (erroneously) recorded locations of a moving vehicle to the road syste
 
 ## Brief Overview of Map-Matching Algorithms
 
-* Active research area since the late 20th century.
+* Active research area since the early 1990s.
 
 * Hundreds of MM algorithms have been proposed.
 
