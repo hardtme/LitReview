@@ -556,7 +556,7 @@ driveplot(
   maplabel = time_cst, colorvar = gps_minute, 
   colorpalette = "viridis", fillOpacity = 1, 
   time = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading, 
+  y2 = gyro_heading_raw, 
   y3 = gps_pdop, 
   timelabel = "Time", y1label = "Speed (MPH)", 
   y2label = "Gyro Heading", 
