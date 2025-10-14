@@ -91,8 +91,6 @@ Summer 2026
 
 Industry or research institution
 
-
-
 # Spatiotemporal Transportation Data
 
 ## Vehicle Trajectory Data
@@ -132,14 +130,6 @@ Industry or research institution
 * Etc.
 
 # GPS Data
-
-## Units Are Important!
-
-It's 25 degrees outside today.
-
-* Fahrenheit: 🥶
-
-* Celsius: 😎
 
 ## Coordinate Reference Systems [@iliffeDatumsMapProjections2008]
 
