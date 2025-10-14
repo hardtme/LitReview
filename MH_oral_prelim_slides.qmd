@@ -228,23 +228,23 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 ## GPS Data Issues
 
+:::columns
+::: {.column width="50%"}
 * Poor GPS signal → position errors.
 
 * Position errors → velocity errors → acceleration errors.
 
 * GPS headings are unreliable at low speeds.
 
-* Low DOP doesn't always mean good quality GPS data.
+* Low DOP doesn't always mean good quality GPS data. 
+:::
 
-
-## GPS Drift Example
-
-PDOP values: 1.63 to 2.36 (Excellent to Very Good)
-
+::: {.column width="50%"}
 ```{r}
 #| echo: false
 #| eval: true
-#| fig.align: center
+#| fig.asp: 1
+#| fig.cap: "PDOP values: 1.63 to 2.36 (Excellent to Very Good)"
 data("nds_data")
 
 nds_data_sf  <- nds_data |>
@@ -280,9 +280,9 @@ poss_matches <- oma_roads |>
 
 gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels") +
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-  tm_lines(col = "tan", lwd = 10)+
+  tm_lines(col = "tan", lwd = 20)+
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-  tm_dots(size = 1, fill = "blue", fill_alpha = 0.9, 
+  tm_dots(size = 1.5, fill = "blue", fill_alpha = 0.9, 
           group = "original", group.control = "none")
 
 gps_drift_tmap <- gps_drift_tmap +
@@ -291,7 +291,8 @@ gps_drift_tmap <- gps_drift_tmap +
 
 gps_drift_tmap
 ```
-
+:::
+:::
 
 # Map-Matching Problem
 
