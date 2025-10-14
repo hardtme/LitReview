@@ -73,6 +73,26 @@ return(ex_tmap)
 }
 ```
 
+## About Me
+
+### Education at Iowa State University
+
+* B.Sc. in Mathematics and B.Sc. in Statistics (Fall 2016-Spring 2020)
+
+* M.Sc. in Statistics (Fall 2020-Fall 2022)
+
+* PhD in Statistics (Spring 2023-present)
+
+### Anticipated Completion
+
+Summer 2026
+
+### Career Aspirations
+
+Industry or research institution
+
+
+
 # Spatiotemporal Transportation Data
 
 ## Vehicle Trajectory Data
