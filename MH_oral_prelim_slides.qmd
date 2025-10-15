@@ -1,7 +1,7 @@
 ---
 title: "Statistical Tools for Large-Scale Spatiotemporal Transportation Data"
 author: "Marie Hardt"
-date: "2025-10-09"
+date: "2025-10-20"
 institute: "Iowa State University"
 bibliography: "`r rbbt::bbt_write_bib('slidereferences.bib', keys=rbbt::bbt_detect_citations(here::here('problem_overview.qmd')),
    ignore = stringr::str_subset(rbbt::bbt_detect_citations(here::here('problem_overview.qmd')), '(^fig-|^tbl-|^eq-|^sec-|^lst-|^thm-|^lem-|^cor-|^prp-|^cnj-|^def-|^exm-|^exr-)'), overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
@@ -81,7 +81,7 @@ return(ex_tmap)
 
 * M.Sc. in Statistics (Fall 2020-Fall 2022)
 
-* PhD in Statistics (Spring 2023-present)
+* Ph.D. in Statistics (Spring 2023-present)
 
 ### Anticipated Completion
 
@@ -89,7 +89,7 @@ Summer 2026
 
 ### Career Aspirations
 
-Industry or research institution
+Industry, government, or research institution
 
 # Spatiotemporal Transportation Data
 
@@ -531,15 +531,47 @@ mm_tmap_heading
 
 ## Develop a New Way to Solve the Position Determination Problem in Map-Matching
 
-* After using any MM algorithm to select the road, use the new method to determine the vehicle's position on the selected road.
+After using any MM algorithm to select the road, use the new method to determine the vehicle's position on the selected road.
 
-* Ideas for approaches:
+## Linkage Problem Approach
 
-  - Linkage problem [@taylorFastBayesianRecord2024].
+### Setup (based on @taylorFastBayesianRecord2024)
+
+* Link between:
+
+  - Recorded GPS vehicle locations.
   
-  - Oblique least squares [@mccartinObliqueLinearLeast2010]
+  - Corresponding road segments identified by a map-matching algorithm.
   
-  - Revisit Kalman filter.
+* Common fields:
+
+  - Location (latitude/longitude).
+  
+  - Heading/bearing.
+  
+* Other fields from vehicle trajectory:
+
+  - Observation time.
+  
+  - Speed.
+  
+  - Etc.
+  
+## Linkage Problem Approach
+
+### Proposed Methodology
+
+* Establish similarity metrics between common fields, e.g.,
+
+  - Distance between recorded GPS point and the road segment.
+  
+  - "Closeness" in heading between the vehicle and the road segments.
+  
+* Define a distance metric (e.g., Euclidean distance).
+
+* Minimize the distance metric while accounting for other covariates from the vehicle trajectory (e.g., speed).
+
+* Estimate the optimal position for the vehicle on the matched road segment.
   
 ## Create an Open-Source Tool for Visualizing Spatiotemporal Transportation Data
 
