@@ -504,14 +504,29 @@ mm_tmap_heading
 
 * Closest road may not be the correct road.
 
-
 ## More Advanced MM Algorithms
 
 * Vast array of more sophisticated MM algorithms for selecting the road.
 
 * Seminal work: algorithm by @newsonHiddenMarkovMap2009 using hidden Markov models to select the road.
 
-* Even advanced methods can still make errors like those shown in the examples.
+## Brief Overview of Newson and Krumm's HMM Algorithm
+
+* Input data:
+
+  - Latitude/longitude coordinates from the vehicle trajectory (no other covariates).
+  
+  - Representation of the road network as a graph of nodes (intersections, dead ends, and road name changes) and edges (road segments between nodes).
+  
+* HMM states: road segments
+
+* HMM state measurements: recorded GPS vehicle locations.
+
+* Measurement/emission probabilities (probabilities that GPS points came from a road segment) based on distance from GPS points to road segments.
+
+* Transition probabilities (probabilities of switching road segments between two observations) based on connectivity of the road system and distance between consecutive GPS points.
+
+* Used the Viterbi algorithm to find the best path through the HMM lattice.
 
 ## Position Determination Problem
 
