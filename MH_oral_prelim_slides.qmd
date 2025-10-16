@@ -538,7 +538,7 @@ mm_tmap_heading
 
 * Orthogonal projection: still very popular even though @greenfeldMatchingGPSObservations2002 noted that the projection onto the road system may not correspond to the vehicle's true location.
 
-* @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road (method also used in @quddusGeneralMapMatching2003 and @quddusHighAccuracyFuzzy2006).
+* @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road (method also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
 
 * @kimEfficientUseDigital2000: Kalman filter to update vehicle location predictions based on elapsed time and new observed locations.
 
