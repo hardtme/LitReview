@@ -93,11 +93,25 @@ Position in industry, government agency, or research institution
 
 ## Outline
 
+### Current Work
+
+* Creating an open-source tool for visualizing spatiotemporal transportation data.
+
+* Describing the relationship between older drivers' turning behavior and their cognitive status (aging normally or cognitively impaired) based on naturalistic driving data.
+
+### Proposed Work
+
+* Overview of the map-matching problem.
+
+* Proposed method to estimate a vehicle's position on the road system after map-matching.
+
 ## Open-Source Tool for Visualizing Spatiotemporal Transportation Data
 
 * R package `DrivePlotR`.
 
 * Interactive plot-maps relate vehicle location in time and space to other variables.
+
+* Accepted for presentation at the Transportation Research Board Annual Meeting in January 2026.
 
 ## `DrivePlotR` Example Visualization
 
