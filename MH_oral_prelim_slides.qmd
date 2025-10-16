@@ -89,7 +89,44 @@ Summer 2026
 
 ### Career Aspirations
 
-Industry, government, or research institution
+Position in industry, government agency, or research institution
+
+## Outline
+
+## Open-Source Tool for Visualizing Spatiotemporal Transportation Data
+
+* R package `DrivePlotR`.
+
+* Interactive plot-maps relate vehicle location in time and space to other variables.
+
+## `DrivePlotR` Example Visualization
+
+```{r}
+#| echo: false
+drive <- nds_data |> dplyr::filter(drive == 7)
+drive <- drive |> 
+  sf::st_as_sf(coords = c("gps_long", "gps_lat"), 
+               crs = "WGS84")
+drive <- drive |>
+  dplyr::mutate(time_cst = lubridate::ymd_hms(time_cst, tz = "US/Central"),
+                gps_minute = as.factor(lubridate::minute(time_cst)))
+
+shared_drive <- shared_drive <- 
+  crosstalk::SharedData$new(drive)
+
+driveplot(
+  shareddata = shared_drive, 
+  maplabel = time_cst, colorvar = gps_minute, 
+  colorpalette = "viridis", fillOpacity = 1, 
+  time = time_cst, y1 = speed_mph, 
+  y2 = gyro_heading_raw, 
+  y3 = gps_pdop, 
+  timelabel = "Time", y1label = "Speed (MPH)", 
+  y2label = "Gyro Heading", 
+  y3label = "GPS PDOP", showlegend = TRUE, 
+  legendtitle = "Minute", 
+  spacing = 0.05)
+```
 
 # Spatiotemporal Transportation Data
 
@@ -588,41 +625,6 @@ After using any MM algorithm to select the road, use the new method to determine
 
 * Estimate the optimal position for the vehicle on the matched road segment.
   
-## Create an Open-Source Tool for Visualizing Spatiotemporal Transportation Data
-
-* R package `DrivePlotR`.
-
-* Interactive plot-maps relate location in time and space to other variables.
-
-## `DrivePlotR` Example
-
-```{r}
-#| echo: false
-drive <- nds_data |> dplyr::filter(drive == 7)
-drive <- drive |> 
-  sf::st_as_sf(coords = c("gps_long", "gps_lat"), 
-               crs = "WGS84")
-drive <- drive |>
-  dplyr::mutate(time_cst = lubridate::ymd_hms(time_cst, tz = "US/Central"),
-                gps_minute = as.factor(lubridate::minute(time_cst)))
-
-shared_drive <- shared_drive <- 
-  crosstalk::SharedData$new(drive)
-
-driveplot(
-  shareddata = shared_drive, 
-  maplabel = time_cst, colorvar = gps_minute, 
-  colorpalette = "viridis", fillOpacity = 1, 
-  time = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading_raw, 
-  y3 = gps_pdop, 
-  timelabel = "Time", y1label = "Speed (MPH)", 
-  y2label = "Gyro Heading", 
-  y3label = "GPS PDOP", showlegend = TRUE, 
-  legendtitle = "Minute", 
-  spacing = 0.05)
-```
-
 
 ## Detect Driving Behavior from Large-Scale Spatiotemporal Transportation Data
 
