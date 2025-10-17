@@ -105,6 +105,12 @@ Position in industry, government agency, or research institution
 
 * Proposed method to estimate a vehicle's position on the road system after map-matching.
 
+## Vehicle Trajectory Data
+ 
+* Collected from vehicles as they are driven.
+
+* Points observed regularly (e.g., every 1-3 sec. for our data sources).
+
 ## Open-Source Tool for Visualizing Spatiotemporal Transportation Data
 
 * R package `DrivePlotR`.
@@ -333,43 +339,51 @@ Define cognitive prognosis classes based on participants' cognitive diagnosis at
 
 ## Use Cases
 
-* Studying driving behavior.
+Necessary level of GPS precision depends on the use case.
 
-* Driving maneuver detection.
+* Only need road information to
 
-* Work zone impact/performance.
+  - Calculate traffic volume for a road segment.
+  
+  - Assess the impact of a work zone on a road segment on vehicle speeds.
+  
+* Precise location estimates are needed to
 
-* Etc.
+  - Determine the time taken to turn (need to identify the approach, waiting period, actual turn, and when the turn is complete).
+  
+  - Compare a vehicle's stop location with the stop bar on the road.
 
 # GPS Data
 
-## Coordinate Reference Systems [@iliffeDatumsMapProjections2008]
+<!-- ## Coordinate Reference Systems [@iliffeDatumsMapProjections2008] -->
 
-* Describe how latitude/longitude coordinates relate to real places on the Earth's surface.
+<!-- * Describe how latitude/longitude coordinates relate to real places on the Earth's surface. -->
 
-* Ensure locations are properly located because they are related to the correct ellipsoidal approximation of the Earth.
+<!-- * Ensure locations are properly located because they are related to the correct ellipsoidal approximation of the Earth. -->
 
-* CRS for GPS data: WGS 84.
+<!-- * CRS for GPS data: WGS 84. -->
 
-## Projected Coordinate Systems
+<!-- ## Projected Coordinate Systems -->
 
-* Project coordinates from the Earth's surface (3-D) down to 2 dimensions.
+<!-- * Project coordinates from the Earth's surface (3-D) down to 2 dimensions. -->
 
-* 3-D surfaces can't be projected down to 2 dimensions without distortion (but that's okay).
+<!-- * 3-D surfaces can't be projected down to 2 dimensions without distortion (but that's okay). -->
 
-* Example: WGS 84 Web Mercator projection for coordinates using the WGS 84 CRS.
+<!-- * Example: WGS 84 Web Mercator projection for coordinates using the WGS 84 CRS. -->
 
 ## GPS Overview (Simplified)
 
-* Part of Global Navigation Satellite System (GNSS).
+<!-- * Part of Global Navigation Satellite System (GNSS). -->
+
+<!-- * Ground-based monitoring stations track satellites and transmit satellite locations back to the satellites. -->
+
+<!-- * Receivers determine the travel time of the signal from the satellite and thus the distance to the satellite.  -->
 
 * Satellite constellation orbits the Earth.
 
-* Ground-based monitoring stations track satellites and transmit satellite locations back to the satellites.
-
 * Satellites transmit their positions to receivers.
 
-* Receivers determine the travel time of the signal from the satellite and thus the distance to the satellite. 
+* Receivers determine their position based on the signals received from the satellite.
 
 * 4 satellites are needed to get a position fix.
 
@@ -429,7 +443,6 @@ good_sats
   
   - Vertical DOP (VDOP).
 
-  
 ## DOP Values and Data Quality
 
 | **DOP Value**                 | <1   | 1 - 2     | 2 - 5    | 5 - 10   | 10 - 20 | >20 |
@@ -440,7 +453,7 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 ## GPS Data Issues
 
-:::columns
+
 ::: {.column width="50%"}
 * Poor GPS signal → position errors.
 
@@ -504,7 +517,7 @@ gps_drift_tmap <- gps_drift_tmap +
 gps_drift_tmap
 ```
 :::
-:::
+
 
 # Map-Matching Problem
 
