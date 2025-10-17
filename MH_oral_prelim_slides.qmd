@@ -480,6 +480,8 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 * GPS headings are unreliable at low speeds.
 
 * Low DOP doesn't always mean good quality GPS data. 
+
+* Important to assess GPS error.
 :::
 
 ::: {.column width="50%"}
@@ -775,11 +777,27 @@ mm_tmap_heading
 
 * Important for applications.
 
-## Position Determination Methods in the Literature
+## Orthogonal Projection
 
-* Orthogonal projection: still very popular even though @greenfeldMatchingGPSObservations2002 noted that the projection onto the road system may not correspond to the vehicle's true location.
+* Very popular.
 
-* @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road (method also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
+* @greenfeldMatchingGPSObservations2002 noted that the projection onto the road system may not correspond to the vehicle's true location.
+
+## Weighted Average
+
+:::{.column width="50%"}
+* @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road.
+
+* Method also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
+
+:::
+
+:::{.column width="50%"}
+![Example of Quddus, Noland, and Ochieng's map-matching algorithm with position determination by the  weighted average method, as implemented by @gorteFuzzyMMMapMatching2015. Original points are blue and map-matched points are red.](weighted_average_ex.png)
+
+:::
+
+## Kalman Filter
 
 * @kimEfficientUseDigital2000: Kalman filter to update vehicle location predictions based on elapsed time and new observed locations.
 
