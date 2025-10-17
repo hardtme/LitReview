@@ -186,6 +186,7 @@ driveplot(
 
 ## Turns and Downturns in Aging Drivers
 
+:::{.column width="60%"}
 * Analysis of driving data from the UNMC NDS.
 
 * Motivation: 
@@ -194,7 +195,17 @@ driveplot(
   
   - @diDetectingMildCognitive2023 analyzed data from the LongROAD NDS and found that the ratio of right turns to left turns predicted cognitive impairment in older drivers.
   
-* Goal: quantify the relationship between the probability of an older driver's cognitive status (aging normally or cognitively impaired) and their odds of making a left turn.
+* Goal: quantify the association between an older driver's cognitive status (aging normally or cognitively impaired) and their odds of making a left turn.
+
+:::
+
+:::{.column width="40%"}
+![](turns_paper_screenshot.png)
+
+:::
+
+
+
 
 ## Simple Turn Detection Method
 
