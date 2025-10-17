@@ -105,6 +105,8 @@ Position in industry, government agency, or research institution
 
 * Proposed method to estimate a vehicle's position on the road system after map-matching.
 
+# Current Work
+
 ## Vehicle Trajectory Data
  
 * Collected from vehicles as they are driven.
@@ -518,12 +520,11 @@ gps_drift_tmap
 ```
 :::
 
+# Proposed Work
 
-# Map-Matching Problem
+## Map-Matching Problem
 
-## Goal
-
-Associate (erroneously) recorded locations of a moving vehicle to the road system.
+Goal: associate (erroneously) recorded locations of a moving vehicle to the road system.
 
 ## Main Problems to Solve
 
@@ -538,7 +539,6 @@ Associate (erroneously) recorded locations of a moving vehicle to the road syste
 * Hundreds of MM algorithms have been proposed.
 
 * Wide range of method complexity.
-
 
 ## Simple Geometric MM Algorithms
 
@@ -767,7 +767,7 @@ mm_tmap_heading
 
 * @kimEfficientUseDigital2000: Kalman filter to update vehicle location predictions based on elapsed time and new observed locations.
 
-# Proposed Work
+# Proposed Contribution
 
 ## Develop a New Way to Solve the Position Determination Problem in Map-Matching
 
@@ -813,17 +813,6 @@ After using any MM algorithm to select the road, use the new method to determine
 
 * Estimate the optimal position for the vehicle on the matched road segment.
   
-
-## Detect Driving Behavior from Large-Scale Spatiotemporal Transportation Data
-
-For example,
-
-* Develop driving biomarkers for age-related cognitive decline in senior citizens.
-
-* Derive the time to complete turning maneuvers at intersections.
-
-* Quantify the influence of work zones, crashes, etc. on traffic flow.
-
 ## References
 
 
