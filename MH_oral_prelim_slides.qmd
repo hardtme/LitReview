@@ -3,8 +3,8 @@ title: "Statistical Tools for Large-Scale Spatiotemporal Transportation Data"
 author: "Marie Hardt"
 date: "2025-10-20"
 institute: "Iowa State University"
-bibliography: "`r rbbt::bbt_write_bib('slidereferences.bib', keys=rbbt::bbt_detect_citations(here::here('problem_overview.qmd')),
-   ignore = stringr::str_subset(rbbt::bbt_detect_citations(here::here('problem_overview.qmd')), '(^fig-|^tbl-|^eq-|^sec-|^lst-|^thm-|^lem-|^cor-|^prp-|^cnj-|^def-|^exm-|^exr-)'), overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
+bibliography: "`r rbbt::bbt_write_bib('slidereferences.bib', keys=rbbt::bbt_detect_citations(here::here('MH_oral_prelim_slides.qmd')),
+   ignore = stringr::str_subset(rbbt::bbt_detect_citations(here::here('MH_oral_prelim_slides.qmd')), '(^fig-|^tbl-|^eq-|^sec-|^lst-|^thm-|^lem-|^cor-|^prp-|^cnj-|^def-|^exm-|^exr-)'), overwrite = TRUE, library_id='Graphics-Research', translator='bibtex')`"
 format: 
   revealjs:
     theme: simple
@@ -142,6 +142,137 @@ driveplot(
   spacing = 0.05)
 ```
 
+## Naturalistic Driving Studies (NDS)
+
+* Instrumentation installed in participants' vehicles monitors their driving.
+
+  - Video cameras.
+  
+  - GPS receiver.
+  
+  - Accelerometer.
+  
+  - Gyroscope.
+  
+## Notable NDS Examples
+
+* Second Strategic Highway Research Program (SHRP 2) [@campbellSHRP2Naturalistic2012].
+  
+    - Participants aged 16 and older from 6 sites across the US.
+    
+    - Goal: assess the role of driver behavior in traffic safety, particularly crashes.
+  
+* Longitudinal Research on Aging Drivers (LongROAD) [@liLongitudinalResearchAging2017].
+
+  - Participants aged 65-79 from 5 sites across the US.
+  
+  - Goal: understand unique factors affecting older drivers, including the age-related functional decline and self-regulatory driving behaviors.
+  
+## NDS Analyzed in this Research
+
+* Conducted by the University of Nebraska Medical Center (UNMC).
+
+* Supported by
+
+  - National Institutes of Health (NIH).
+  
+  - National Institute on Aging (NIA 5R01AG17177-18).
+  
+  - UNMC Mind \& Brain Health Labs.
+  
+* Participants aged 65-90 from the Omaha, Nebraska, area.
+  
+* Goal: use driving data from older drivers to develop biomarkers for early detection and monitoring of cognitive decline.
+
+## Turns and Downturns in Aging Drivers
+
+* Analysis of driving data from the UNMC NDS.
+
+* Motivation: 
+
+  - Turning across traffic is a challenging maneuver for older drivers, but avoidance is rarely self-reported [@molnarRelationshipSelfRegulationDrivingRelated2008; @molnarSelfregulationDrivingOlder2013; @beckExaminingPatternsDriving2022].
+  
+  - @diDetectingMildCognitive2023 analyzed data from the LongROAD NDS and found that the ratio of right turns to left turns predicted cognitive impairment in older drivers.
+  
+* Goal: quantify the relationship between the probability of an older driver's cognitive status (aging normally or cognitively impaired) and their odds of making a left turn.
+
+## Simple Turn Detection Method
+
+Gyroscopic heading changes of $\pm 10^{\circ}$ or more in 1 sec were classified as turns (developed based on `DrivePlotR` visualizations).
+
+::: {layout-ncol=2}
+
+```{r}
+#| fig.height: 6
+# remotes::install_github("heike/ggtransport")
+library(ggtransport)
+library(units)
+speed_cone <- data.frame(
+  speed = set_units(10*1:5, miles/hour),
+  time = set_units(rep(1,5), second)
+) |> mutate(
+  distance = (speed*time) |> set_units(feet) |> as.numeric(),
+  start=-10/180*pi + pi/2, # rotate to the right by 90 degrees
+  end=10/180*pi + pi/2,
+  offset_ft = set_units(distance, feet)*sin(10*pi/180), 
+  offset_m = set_units(offset_ft, m)) 
+
+carplot <- draw_multi_lane_road(road_length = 100, lanes_per_direction = 1, lane_width = 12) +
+  geom_segment(aes(x = -35+distance*cos(10/180*pi), 
+                   xend = -35+distance*cos(10/180*pi), 
+                   y = -as.numeric(offset_ft)-6, 
+                   yend = as.numeric(offset_ft)-6), 
+               data = speed_cone, linewidth = 0.5,
+               colour = "grey30",
+               arrow=grid::arrow(ends="both", type = "closed", length = unit(0.15, "cm"))) + 
+  ggforce::geom_arc_bar(
+    aes(x0 = -35, y0 = -6, r0 = 0, r = distance, 
+        start=start, end=end), data =speed_cone,
+        fill="black", alpha = 0.15, colour="grey40") + 
+    draw_car(x = -35, y = -6) + 
+  geom_text(aes(y = -6, x = -35+ distance-speed_cone$distance[1]/2, label=speed), 
+             colour = "white", size = 6,
+             data = speed_cone[-1,]) + 
+  geom_text(aes(y = -6, x = -35+6+ distance-speed_cone$distance[1]/2, label="mph"), 
+             colour = "white", size = 3,
+             data = speed_cone[-1,])
+carplot
+```
+
+```{r}
+library(kableExtra)
+speed_cone |>
+  select(speed, offset_ft, offset_m) |> 
+  mutate(
+    speed = as.numeric(speed),
+    across(2:3, function(x) sprintf("± %02.1f",as.numeric(x)))) |>
+  knitr::kable(align = "r", col.names = c("speed [mph]", "offset [ft]", "offset [m]")) 
+```
+
+:::
+
+## Create Ordinal Variable for Cognitive Status
+
+Define cognitive prognosis classes based on participants' cognitive diagnosis at baseline and the 1-year follow-up assessment.
+
+1. Normal → Normal (stable normal)
+
+2. Normal → MCI (incident MCI)
+
+3. MCI → MCI (stable MCI)
+
+4. MCI → AD (progression to dementia)
+
+## Modeling Approach
+
+* Use mixed-effects logistic regression to use cognitive prognosis class to predict whether a turn was a left or right turn (random effect for participant).
+
+* Confirmatory analysis with ordinal logistic regression using number of drives, left-to-right turn ratio, sex, and age to predict cognitive prognosis class.
+
+* Results: older drivers who are experiencing greater cognitive impairment have reduced odds of turning left.
+
+* Caution: noisy signal, low number of participants, simple turn detection method, and simple model.
+
 # Spatiotemporal Transportation Data
 
 ## Vehicle Trajectory Data
@@ -161,10 +292,6 @@ driveplot(
 * Etc.
 
 ## Sources
-
-* Naturalistic driving studies (NDS)
-
-  - Instrumentation installed in study participants' vehicles.
 
 * Connected vehicles
 
