@@ -99,6 +99,8 @@ Position in industry, government agency, or research institution
 
 * Describing the relationship between older drivers' turning behavior and their cognitive status (aging normally or cognitively impaired) based on naturalistic driving data.
 
+* Related research assistantship projects at InTrans.
+
 ### Proposed Work
 
 * Overview of the map-matching problem.
@@ -339,11 +341,25 @@ Define cognitive prognosis classes based on participants' cognitive diagnosis at
   
 ![](cv_example.png)
 
-## Use Cases
+## Relevant Research Assistantship Projects at InTrans
+
+* Developed an R Shiny app to calculate work zone performance metrics.
+
+  - Users upload work zone data in standard formats.
+  
+  - Place poorly defined work zone locations on the appropriate road.
+  
+  - Use crash and probe vehicle data (and optionally connected vehicle data) to calculate performance metrics (e.g., number of crashes, average delay, etc.).
+  
+  - Download reports for overall metrics and metrics for individual projects.
+  
+* Applying lessons learned from developing the Shiny app to the work zone performance reporting process for Iowa.
+
+## Example Use Cases for Vehicle Trajectory Data
 
 Necessary level of GPS precision depends on the use case.
 
-* Only need road information to
+* Only need road usage information to
 
   - Calculate traffic volume for a road segment.
   
