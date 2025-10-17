@@ -144,7 +144,7 @@ driveplot(
 
 ## Naturalistic Driving Studies (NDS)
 
-* Instrumentation installed in participants' vehicles monitors their driving.
+* Instrumentation installed in study participants' vehicles monitors their driving.
 
   - Video cameras.
   
@@ -153,6 +153,30 @@ driveplot(
   - Accelerometer.
   
   - Gyroscope.
+  
+  - Etc.
+  
+## Data Collected
+
+(Depending on instrumentation)
+
+* Video of driver.
+
+* Video of roadway.
+
+* Latitude/longitude.
+
+* Time.
+
+* Speed.
+
+* Heading.
+
+* Measure(s) of GPS data quality.
+
+* Engine RPMs.
+
+* Etc.
   
 ## Notable NDS Examples
 
@@ -191,7 +215,7 @@ driveplot(
 
 * Motivation: 
 
-  - Turning across traffic is a challenging maneuver for older drivers, but avoidance is rarely self-reported [@molnarRelationshipSelfRegulationDrivingRelated2008; @molnarSelfregulationDrivingOlder2013; @beckExaminingPatternsDriving2022].
+  - Turning across traffic is a challenging maneuver for older drivers, but intentional avoidance is rarely self-reported [@molnarRelationshipSelfRegulationDrivingRelated2008; @molnarSelfregulationDrivingOlder2013; @beckExaminingPatternsDriving2022].
   
   - @diDetectingMildCognitive2023 analyzed data from the LongROAD NDS and found that the ratio of right turns to left turns predicted cognitive impairment in older drivers.
   
@@ -204,12 +228,9 @@ driveplot(
 
 :::
 
-
-
-
 ## Simple Turn Detection Method
 
-Gyroscopic heading changes of $\pm 10^{\circ}$ or more in 1 sec were classified as turns (developed based on `DrivePlotR` visualizations).
+Gyroscopic heading changes of $\pm 10^{\circ}$ or more in 1 second were classified as turns (developed based on `DrivePlotR` visualizations).
 
 ::: {layout-ncol=2}
 
@@ -266,13 +287,13 @@ speed_cone |>
 
 Define cognitive prognosis classes based on participants' cognitive diagnosis at baseline and the 1-year follow-up assessment.
 
-1. Normal → Normal (stable normal)
+1. Normal → Normal (stable normal).
 
-2. Normal → MCI (incident MCI)
+2. Normal → MCI (incident MCI).
 
-3. MCI → MCI (stable MCI)
+3. MCI → MCI (stable MCI).
 
-4. MCI → AD (progression to dementia)
+4. MCI → AD (progression to dementia).
 
 ## Modeling Approach
 
@@ -282,31 +303,33 @@ Define cognitive prognosis classes based on participants' cognitive diagnosis at
 
 * Results: older drivers who are experiencing greater cognitive impairment have reduced odds of turning left.
 
-* Caution: noisy signal, low number of participants, simple turn detection method, and simple model.
+* Limitations
 
-# Spatiotemporal Transportation Data
-
-## Vehicle Trajectory Data
-
-* Collected from vehicles as they are driven.
-
-* Observations taken regularly (e.g., every 1-3 sec. for our data sources).
-
-## Typical Variables
-
-* Location (latitude/longitude).
+  - Noisy signal.
   
-* Speed.
+  - Low number of participants.
   
-* Heading.
+  - Simple turn detection method.
+  
+  - Simple model.
 
-* Etc.
+## Similar Data Source: Connected Vehicles
 
-## Sources
+* Instrumentation built into the vehicle by original manufacturer (no cameras).
 
-* Connected vehicles
+* Usually less frequent observations than NDS.
 
-  - Instrumentation built into the vehicle by original manufacturer.
+* Usually fewer variables collected than NDS:
+
+  - Latitude/longitude.
+  
+  - Time.
+  
+  - Speed.
+  
+  - Heading.
+  
+![](cv_example.png)
 
 ## Use Cases
 
