@@ -788,7 +788,7 @@ mm_tmap_heading
 :::{.column width="50%"}
 * @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road.
 
-* Method also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
+* This method was also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
 
 :::
 
@@ -799,7 +799,9 @@ mm_tmap_heading
 
 ## Kalman Filter
 
-* @kimEfficientUseDigital2000: Kalman filter to update vehicle location predictions based on elapsed time and new observed locations.
+* @kimEfficientUseDigital2000: Kalman filter corrects bias in initial orthogonal projection estimates of vehicle locations using time and measurement updates.
+
+![Example of the Kalman filter method from @kimEfficientUseDigital2000.](kim_kf_ex.png)
 
 # Proposed Contribution
 
