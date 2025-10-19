@@ -220,7 +220,7 @@ driveplot(
 
   - Participants aged 65-79 from 5 sites across the US.
   
-  - Goal: understand unique factors affecting older drivers, including the age-related functional decline and self-regulatory driving behaviors.
+  - Goal: understand unique factors affecting older drivers, including age-related functional decline and self-regulatory driving behaviors.
   
 ## NDS Analyzed in this Research
 
