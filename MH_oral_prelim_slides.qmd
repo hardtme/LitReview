@@ -759,7 +759,7 @@ mm_tmap_heading
 :::
 :::
 
-## Issues with Geometric MM Algorithms[@quddusCurrentMapmatchingAlgorithms2007]
+## Issues with Geometric MM Algorithms [@quddusCurrentMapmatchingAlgorithms2007]
 
 * Sensitivity to outliers.
 
@@ -808,7 +808,7 @@ mm_tmap_heading
 :::{.column width="50%"}
 * @quddusGeneralMapMatching2003: weighted average of the orthogonal projection point and another point derived from the vehicle speed and the bearing of the selected road.
 
-* This method was also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006).
+* This method was also used in @ochiengMapmatchingComplexUrban2003 and @quddusHighAccuracyFuzzy2006.
 
 :::
 
