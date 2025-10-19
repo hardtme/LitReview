@@ -868,6 +868,14 @@ After using any MM algorithm to select the road, use the new method to determine
 * Minimize the distance metric while accounting for other covariates from the vehicle trajectory (e.g., speed).
 
 * Estimate the optimal position for the vehicle on the matched road segment.
+
+## Key Contributions to Workflows with Large-Scale Spatiotemporal Transportation Data
+
+* **Visualize** and explore the data with `DrivePlotR`.
+
+* **Process** the data by improving estimates of vehicle locations on the road system.
+
+* **Analyze** the processed data to draw new insights.
   
 ## References
 
