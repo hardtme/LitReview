@@ -469,7 +469,7 @@ good_sats
 ```
 :::
 
-## Dilution of Precision (DOP) [@isikIntegrityAnalysisGPSBased2020]
+## Dilution of Precision (DOP)
 
 * Measure of GPS data quality.
 
