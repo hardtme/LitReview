@@ -10,8 +10,8 @@ format:
     theme: simple
     slide-number: true
     auto-stretch: false
-    width: 1470
-    height: 980
+    width: 1920
+    height: 1080
 ---
 
 ```{r setup}
