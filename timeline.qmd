@@ -30,17 +30,9 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Decide how to handle the changes made to the participant demographics data used in "Turns and Downturns in Aging Drivers."
 
-* If necessary, rerun the models for "Turns and Downturns in Aging Drivers" to account for the changes to the participant demographics data.
-
-* Make any other necessary revisions to "Turns and Downturns in Aging Drivers."
-
-* Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal, e.g., *DADM*, *Journal of the American Geriatrics Society*, or a transportation journal. (This paper will be incorporated into Chapter 2 of my thesis.)
-
-* Wait for or act on peer-review results for "Turns and Downturns in Aging Drivers."
-
 * Revise and submit the `DrivePlotR` paper for the TRB program. (This paper will be incorporated into Chapter 1 of my thesis.)
 
-* Make slides for my TRB presentation about `DrivePlotR`.
+* Start making slides for my TRB presentation about `DrivePlotR`.
 
 * Further develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
@@ -48,7 +40,7 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Finish slides and practice TRB presentation about `DrivePlotR` at Graphics Group.
 
-* Create a full draft of Chapter 0 of my thesis.
+* Update "Turns and Downturns in Aging Drivers" in preparation for submission.
 
 * Choose a target application for Chapter 3 of my thesis.
 
@@ -56,67 +48,69 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Continue to develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
-* Wait for or act on peer-review results for "Turns and Downturns in Aging Drivers."
-
 # January 2026
 
 * Present about `DrivePlotR` at the TRB Annual Meeting.
 
-* Incorporate any presentation feedback into `DrivePlotR` and the associated paper.
+* Account for any presentation feedback `DrivePlotR` and the associated paper, which will be included in Chapter 1 of my thesis.
 
-* Create a full draft of Chapter 1 for my thesis, incorporating the `DrivePlotR` paper.
+* Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal, e.g., *DADM*, *Journal of the American Geriatrics Society*, or a transportation journal. (This paper will be incorporated into Chapter 2 of my thesis.)
 
-* Continue to develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis. (The development timeline necessarily has some variability depending on setbacks and successes.)
-
-* Wait for or act on peer-review results for "Turns and Downturns in Aging Drivers."
+* Continue to develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
 # February 2026
 
-* Continue to refine my position-determination method for map-matching, which will be in Chapter 3 of my thesis. (The development timeline necessarily has some variability depending on setbacks and successes.)
+* Continue to refine my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
 * Evaluate preliminary results from using my position-determination method with the selected application.
 
-* Continue writing about my position-determination method, which will be incorporated into Chapter 3 of my thesis. 
+* Start writing about my position-determination method, which will be incorporated into Chapter 3 of my thesis. 
 
-* Based on peer-review results for "Turns and Downturns in Aging Drivers", update the paper and incorporate it into Chapter 2 of my thesis to create a full draft. (The timing of this to-do item is subject to change depending on when the paper is submitted and peer-review results arrive.)
+* Create a full draft of Chapter 0 of my thesis.
+
+* Continue writing Chapter 1 and Chapter 2 of my thesis.
 
 # March 2026
 
-* Test my position-determination method in the selected application to get further results. (The development timeline necessarily has some variability depending on setbacks and successes.)
-
-* Edit and improve drafts of Chapters 0, 1, and 2 of my thesis.
+* Test my position-determination method in the selected application to get further results. 
 
 * Continue writing about my position-determination method, which will be incorporated into Chapter 3 of my thesis. 
+
+* Create a full draft of Chapter 1 for my thesis, incorporating the `DrivePlotR` paper.
 
 # April 2026
 
 * Get results of utilizing my position-determination method for the selected application.
 
-* Write a full draft of a paper about my position-determination method, which will be incorporated into Chapter 3 of my thesis. (The development timeline necessarily has some variability depending on setbacks and successes.)
+* Continue writing Chapter 2 of my thesis.
 
-* Submit papers? 
+* Keep writing about my position-determination method, which will be included in Chapter 3 of my thesis.
+
+* Edit and improve Chapter 0 and Chapter 1 of my thesis.
 
 # May 2026
 
+* Create a full draft of Chapter 2 for my thesis.
+
 * Schedule my final oral exam for July.
 
-* Edit and improve all thesis chapters.
+* Continue writing Chapter 3 of my thesis.
 
-* Submit papers?
-
-* Act on peer-review results?
+* Edit and improve Chapters 0, 1, and 2 of my thesis.
 
 # June 2026
 
-* Finish writing all thesis chapters.
+* Create a full draft of a Chapter 3 of my thesis.
 
-* Create my slides and develop my presentation for my final oral exam.
+* Edit and improve all thesis chapters.
 
-* Act on peer-review results?
-
-* Send my thesis to committee? (or in July?)
+* Start creating my slides and developing my presentation for my final oral exam.
 
 # July 2026
+
+* Finish writing all thesis chapters.
+
+* Send thesis to committee.
 
 * Finish my slides and presentation for my final oral exam.
 
