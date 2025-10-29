@@ -28,9 +28,9 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Meet with Dr. Hallmark, Guillermo, and Heike to discuss our plans for "Turns and Downturns in Aging Drivers."
 
-* Decide how to handle the changes made to the participant demographics data used in "Turns and Downturns in Aging Drivers."
+* Decide how to handle the changes made to the participant demographics data used in "Turns and Downturns in Aging Drivers" and whether we want to update our models.
 
-* Revise and submit the `DrivePlotR` paper for the TRB program. (This paper will be incorporated into Chapter 1 of my thesis.)
+* Revise and submit the `DrivePlotR` paper for the TRB program by November 20. (This paper will be incorporated into Chapter 1 of my thesis.)
 
 * Start making slides for my TRB presentation about `DrivePlotR`.
 
