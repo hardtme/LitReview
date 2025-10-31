@@ -24,7 +24,7 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 # Timeline of Tasks to Complete
 
-## Rest of October/November 2025
+## November 2025
 
 * Meet with Dr. Hallmark, Guillermo, and Heike to discuss our plans for "Turns and Downturns in Aging Drivers."
 
@@ -32,13 +32,13 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Revise and submit the `DrivePlotR` paper for the TRB program by November 20. (This paper will be incorporated into Chapter 1 of my thesis.)
 
-* Start making slides for my TRB presentation about `DrivePlotR`.
+* Start making the poster for my TRB presentation about `DrivePlotR`.
 
 * Further develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
 # December 2025
 
-* Finish slides and practice TRB presentation about `DrivePlotR` at Graphics Group.
+* Finish my poster and practice TRB presentation about `DrivePlotR` at Graphics Group.
 
 * Update "Turns and Downturns in Aging Drivers" in preparation for submission.
 
@@ -50,9 +50,9 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 # January 2026
 
-* Present about `DrivePlotR` at the TRB Annual Meeting.
+* Present my poster about `DrivePlotR` at the TRB Annual Meeting.
 
-* Account for any presentation feedback `DrivePlotR` and the associated paper, which will be included in Chapter 1 of my thesis.
+* Account for any feedback about `DrivePlotR` from TRB into the R package and the associated paper, which will be included in Chapter 1 of my thesis.
 
 * Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal, e.g., *DADM*, *Journal of the American Geriatrics Society*, or a transportation journal. (This paper will be incorporated into Chapter 2 of my thesis.)
 
