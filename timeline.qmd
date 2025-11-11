@@ -1,122 +1,105 @@
 ---
 title: "Timeline to PhD Completion"
 author: "Marie Hardt"
-format: pdf
+format: 
+  pdf:
+    geometry:
+      - top=1in
+      - bottom=1in
+      - left=1in
+      - right=1in
 ---
 
-# Proposed Thesis Chapter Outlines
+# Proposed Thesis Chapter Outlines and Timelines
 
 ## Chapter 0: Literature Review & Problem Statement
 
 This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Spatiotemporal transportation data are discussed, and an overview of GPS and related quality measures are presented. Prior work on the map-matching problem is discussed. The new contributions of the work are explained.
 
+### Timeline
+
+* Submit full draft of Chapter 0 to major professors: March 2026.
+
+* Address comments as necessary.
+
 ## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
 
-This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data and explains how insights based on the visualizations led to subsequent work.
+This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data (including my R package `DrivePlotR`) and explains how insights based on the visualizations led to subsequent work.
+
+### Timeline
+
+* Submit a revised draft of the `DrivePlotR` paper to co-authors: November 2025.
+
+* Address comments from co-authors about the `DrivePlotR` paper: November 2025.
+
+* Submit a revised draft of the `DrivePlotR` paper to appear in the Transportation Research Board (TRB) Annual Meeting online program: November 2025.
+
+* Address any comments received after TRB presentation: January 2026.
+
+* Submit an improved draft of the `DrivePlotR` paper to co-authors: February 2026.
+
+* Submit a draft of the `DrivePlotR` paper to a peer-reviewed journal: March 2026.
+
+* Address reviewer comments as necessary.
 
 ## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
 
-This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented.
+This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented. (This chapter will include the paper "Turns and Downturns in Aging Drivers.")
+
+### Timeline
+
+* Submit an updated draft of "Turns and Downturns in Aging Drivers" to co-authors: November 2025.
+
+* Submit a draft of "Turns and Downturns in Aging Drivers" to a peer-reviewed journal (e.g., *DADM*, *Journal of the American Geriatrics Society*, or a transportation journal): December 2025.
+
+* Address reviewer comments as necessary.
 
 ## Chapter 3: Determining Precise Vehicle Locations on the Road System
 
 This chapter covers a new method for determining a vehicle's location on a road segment after a map-matching algorithm is used. An application using this method is discussed.
 
-# Timeline of Tasks to Complete
+### Timeline
 
-## November 2025
+* Submit a draft of the paper about my map-matching position determination method to co-authors: June 2026.
 
-* Meet with Dr. Hallmark, Guillermo, and Heike to discuss our plans for "Turns and Downturns in Aging Drivers."
+* Submit a draft of the paper about my map-matching position determination method to a peer-reviewed journal: June/July 2026.
 
-* Decide how to handle the changes made to the participant demographics data used in "Turns and Downturns in Aging Drivers."
+* Address reviewer comments as necessary.
 
-* Revise and submit the `DrivePlotR` paper for the TRB program by November 20. (This paper will be incorporated into Chapter 1 of my thesis.)
+## Related Presentation: `DrivePlotR` at the Transportation Research Board (TRB) Annual Meeting 2026
 
-* Start making the poster for my TRB presentation about `DrivePlotR`.
+### Timeline
 
-* Further develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
+* Submit a revised draft of the `DrivePlotR` paper to co-authors: November 2025.
 
-# December 2025
+* Address comments from co-authors about the `DrivePlotR` paper: November 2025.
 
-* Finish my poster and practice TRB presentation about `DrivePlotR` at Graphics Group.
+* Submit a revised draft of the `DrivePlotR` paper to appear in the TRB online program: November 2025.
 
-* Update "Turns and Downturns in Aging Drivers" in preparation for submission.
+* Submit my TRB poster for review by co-authors: December 2025.
 
-* Choose a target application for Chapter 3 of my thesis.
+* Submit my TRB poster to appear in the conference program: December 2025.
 
-* Start writing about the background of the application for the position-determination method in Chapter 3.
+* Present my poster at the TRB Annual Meeting: January 2026.
 
-* Continue to develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
+* Address any comments received after my TRB presentation: January 2026.
 
-# January 2026
 
-* Present my poster about `DrivePlotR` at the TRB Annual Meeting.
 
-* Account for any feedback about `DrivePlotR` from TRB into the R package and the associated paper, which will be included in Chapter 1 of my thesis.
 
-* Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal, e.g., *DADM*, *Journal of the American Geriatrics Society*, or a transportation journal. (This paper will be incorporated into Chapter 2 of my thesis.)
 
-* Continue to develop my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
-# February 2026
 
-* Continue to refine my position-determination method for map-matching, which will be in Chapter 3 of my thesis.
 
-* Evaluate preliminary results from using my position-determination method with the selected application.
 
-* Start writing about my position-determination method, which will be incorporated into Chapter 3 of my thesis. 
 
-* Create a full draft of Chapter 0 of my thesis.
 
-* Continue writing Chapter 1 and Chapter 2 of my thesis.
 
-# March 2026
 
-* Test my position-determination method in the selected application to get further results. 
 
-* Continue writing about my position-determination method, which will be incorporated into Chapter 3 of my thesis. 
 
-* Create a full draft of Chapter 1 for my thesis, incorporating the `DrivePlotR` paper.
 
-# April 2026
 
-* Get results of utilizing my position-determination method for the selected application.
 
-* Continue writing Chapter 2 of my thesis.
 
-* Keep writing about my position-determination method, which will be included in Chapter 3 of my thesis.
-
-* Edit and improve Chapter 0 and Chapter 1 of my thesis.
-
-# May 2026
-
-* Create a full draft of Chapter 2 for my thesis.
-
-* Schedule my final oral exam for July.
-
-* Continue writing Chapter 3 of my thesis.
-
-* Edit and improve Chapters 0, 1, and 2 of my thesis.
-
-# June 2026
-
-* Create a full draft of a Chapter 3 of my thesis.
-
-* Edit and improve all thesis chapters.
-
-* Start creating my slides and developing my presentation for my final oral exam.
-
-# July 2026
-
-* Finish writing all thesis chapters.
-
-* Send thesis to committee.
-
-* Finish my slides and presentation for my final oral exam.
-
-* Defend my thesis at final oral exam.
-
-* Complete any final edits to my thesis.
-
-* Submit thesis to the Graduate College for approval.
 
