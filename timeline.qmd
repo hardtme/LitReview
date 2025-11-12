@@ -18,7 +18,7 @@ This chapter presents an overview of the data sources used in this project and t
 
 ### Timeline
 
-* Submit full draft of Chapter 0 to major professors: March 2026.
+* Submit full draft of Chapter 0 to major professors: May 2026.
 
 * Address comments as necessary.
 
@@ -66,7 +66,7 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Address reviewer comments as necessary.
 
-## Related Presentation: `DrivePlotR` at the Transportation Research Board (TRB) Annual Meeting 2026
+## Related Presentation: `DrivePlotR` at the Annual Meeting of the Transportation Research Board (TRB) in January 2026
 
 ### Timeline
 
@@ -80,7 +80,7 @@ This chapter covers a new method for determining a vehicle's location on a road 
 
 * Submit my TRB poster to appear in the conference program: December 2025.
 
-* Present my poster at the TRB Annual Meeting: January 2026.
+* Present my poster at TRB: January 2026.
 
 * Address any comments received after my TRB presentation: January 2026.
 
