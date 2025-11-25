@@ -34,7 +34,7 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 
 ## November 2025
 
-* Submit a revision of the `DrivePlotR` paper to appear in the TRB Annual Meeting online program: November 20, 2025.
+* Submit a revision of the `DrivePlotR` paper to appear in the TRB Annual Meeting online program: November 20, 2025. (Done)
 
 * Update Chapter 0 (Literature Review & Problem Statement) of my dissertation: November 30, 2025.
 
