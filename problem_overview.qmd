@@ -1,5 +1,5 @@
 ---
-title: "Statistical Tools for Large-Scale Spatiotemporal Transportation Data"
+title: "Statistical Tools for Large-Scale Spatio-Temporal Transportation Data"
 subtitle: "Project Proposal"
 date: "2025-10-20"
 author: "Marie Hardt"
@@ -32,7 +32,7 @@ commands: [mh,bg,hh]
 execute: 
   echo: false
 abstract: |
-  Driving is a spatiotemporal process essential to modern life. Advancements in data collection technologies allow the capture of telematics data from vehicles as they are driven. Such data include the vehicle's location (latitude/longitude, often from GPS), speed, heading, etc. These driving data are used in a wide variety of applications, including traffic flow analysis and cognitive health monitoring for older drivers. However, the vehicle location data are usually recorded with errors that cause the reported locations of a vehicle to not fall on the road system. These errors increase the challenges of working with such telematics data. An overview of GPS data collection and how position errors can arise and affect recorded locations is presented. The types of telematics data used in this research are discussed. Then, the map-matching problem (a way to correct GPS data errors by matching points to the road system) is introduced. Lastly, ideas for new statistical tools in the realm of large-scale spatiotemporal transportation data are proposed.
+  Driving is a spatio-temporal process essential to modern life. Advancements in data collection technologies allow the capture of telematics data from vehicles as they are driven. Such data include the vehicle's location (latitude/longitude, often from GPS), speed, heading, etc. These driving data are used in a wide variety of applications, including traffic flow analysis and cognitive health monitoring for older drivers. However, the vehicle location data are usually recorded with errors that cause the reported locations of a vehicle to not fall on the road system. These errors increase the challenges of working with such telematics data. An overview of GPS data collection and how position errors can arise and affect recorded locations is presented. The types of telematics data used in this research are discussed. Then, the map-matching problem (a way to correct GPS data errors by matching points to the road system) is introduced. Lastly, ideas for new statistical tools in the realm of large-scale spatio-temporal transportation data are proposed.
 ---
 
 ```{r setup}
@@ -244,18 +244,18 @@ Scale relating the value of dilution of precision (DOP) coefficients to location
 
 We now present the physics of motion in the context of GPS points recorded from moving vehicles. For simplicity, the equations presented will use Cartesian coordinates instead of a projected coordinate system like those discussed in @sec-crs. Over small distances, such as those between consecutive GPS locations with a high sampling rate, the differences between the two types of coordinate systems become negligible.
 
-Suppose that for a given driving trip, we have recorded the vehicle's location (longitude and latitude) at a finite number of time points $t$, $t = 0, 1, ..., T$. In practice, the time difference between consecutive observations is not necessarily one second, nor is the time interval between consecutive observations necessarily consistent throughout the drive. Consider two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. Then the average velocity of the vehicle between the two positions is given by @eq-avgvelocity:
+Suppose that for a given driving trip, we have recorded the vehicle's location (longitude and latitude) at a finite number of time points $t$, $t = 0, 1, ..., T$. In practice, the time difference between consecutive observations is not necessarily one second, nor is the time interval between consecutive observations necessarily consistent throughout the drive. Consider two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. Then the average velocity of the vehicle between the two positions is given in @eq-avgvelocity:
 $$
 \symbfit{v}_{\text{avg}} = \frac{\symbfit{r}_{t+\Delta t} - \symbfit{r}_t}{(t + \Delta t) - t} = \frac{\Delta \symbfit{r}}{\Delta t}.
 $$ {#eq-avgvelocity}
 That is, average velocity is the change in position divided by the change in time.
 
-As the difference in time, $\Delta t$, between consecutive location observations goes to 0, we can use the limit of the average velocity to find the instantaneous velocity of the vehicle. In other words, instantaneous velocity is the first derivative of position with respect to time. Instantaneous position is given by @eq-instvelocity:
+As the difference in time, $\Delta t$, between consecutive location observations goes to 0, we can use the limit of the average velocity to find the instantaneous velocity of the vehicle. In other words, instantaneous velocity is the first derivative of position with respect to time. Instantaneous position is given in @eq-instvelocity:
 $$
 \symbfit{v}_{\text{inst}} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \symbfit{r}}{\Delta t}  = \frac{d\symbfit{r}}{dt}.
 $$ {#eq-instvelocity}
 
-Now consider the average acceleration (rate of change for velocity) of the vehicle between two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. This is given by @eq-avgaccel:
+Now consider the average acceleration (rate of change for velocity) of the vehicle between two consecutive observed vehicle positions $\symbfit{r}_t$ and $\symbfit{r}_{t+\Delta t}$. This is given in @eq-avgaccel:
 $$
 \symbfit{a}_{\text{avg}} = \frac{\symbfit{v}_{t + \delta t} - \symbfit{v}_t}{(t + \Delta t) - t} = \frac{\Delta \symbfit{v}}{\Delta t}.
 $$ {#eq-avgaccel}
@@ -264,7 +264,7 @@ Instantaneous acceleration is defined in a very similar way to instantaneous vel
 $$
 \symbfit{a}_{\text{inst}} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \symbfit{v}}{\Delta t} = \frac{d\symbfit{v}}{dt} = \frac{d^2 \symbfit{r}}{dt^2}.
 $$ {#eq-instaccel}
-Hence, we can see that instaneous acceleration is the first derivative of velocity with respect to time and the second derivative of position with respect to time.
+Hence, we can see that instantaneous acceleration is the first derivative of velocity with respect to time and the second derivative of position with respect to time.
 
 Acceleration depends on velocity, which in turn depends on position. Thus, errors in GPS position fixes propagate through to negatively impact GPS-derived velocity and acceleration measures as well. A common issue with GPS locations for vehicles is that position and heading fixes are highly prone to error when the vehicle is stationary or moving slowly [@kubickaDatasetTestingTraining2015]. Position fix issues can still occur even when the vehicle is moving at speed. Recall from @sec-dop that such issues may be due to satellite errors, transmission errors, environmental errors, or receiver errors. Thus, it is important to become familiar with the sources of GPS vehicle trajectory data and the expected magnitude of the position errors within the data.
 
@@ -272,7 +272,7 @@ Acceleration depends on velocity, which in turn depends on position. Thus, error
 
 ## Naturalistic Driving Study Data {#sec-nds}
 
-Naturalistic driving studies are a source of multivariate high resolution spatiotemporal driving data. Participants in a naturalistic driving study (NDS) consent to have a data acquisition system (DAS) installed in their vehicles during the study period so their driving behaviors can be monitored and recorded. A notable example of an NDS is the one administered by the Transportation
+Naturalistic driving studies are a source of multivariate high resolution spatio-temporal driving data. Participants in a naturalistic driving study (NDS) consent to have a data acquisition system (DAS) installed in their vehicles during the study period so their driving behaviors can be monitored and recorded. A notable example of an NDS is the one administered by the Transportation
 Research Board of the National Academies as part of the
 Second Strategic Highway Research Program (SHRP 2), which aimed to understand how driver performance and behavior impact traffic safety. For the SHRP 2 NDS, study participants from
 six different US states consented to have their driving monitored by an in-vehicle DAS equipped with various data collection channels, including video cameras, a global positioning system (GPS) unit, and accelerometers, among others [@campbellSHRP2Naturalistic2012]. The Longitudinal Research on Aging Drivers (LongROAD) study was a more recent NDS that focused on collecting data from participants aged 65 to 79 to better understand how medical, behavioral, environmental, and technological factors influence road safety as drivers age [@liLongitudinalResearchAging2017].
@@ -1019,7 +1019,7 @@ Orthogonal projection is a common way to solve the position determination proble
 
 Despite its widespread use and continued popularity, orthogonal projection is not the optimal way to solve the position determination problem in all cases. @greenfeldMatchingGPSObservations2002 observed that position errors and errors in the representation of the road system subsequently lead to errors in vehicle locations projected onto road segments. Thus, the actual location of the vehicle and its projected location on the road system may disagree. \mh{Orthogonal projection may also lead to a loss or misspecification of the temporal relationship between the recorded points. }Alternative strategies to orthogonal projection have been proposed.
 
-In a map-matching method using the topology of the road network, @quddusGeneralMapMatching2003 used a weighted average of two points to estimate the vehicle's position on the chosen road segment. One point was obtained from the orthogonal projection of the observed vehicle location onto the road selected by the map-matching method. The location of the other point was calculated based on the previous location of the vehicle, the speed of the vehicle at the current time, and the bearing of the selected road segment. A weighted average of the two points, with weights based on the error variances for the road network and the position sensor for the vehicle, provided the estimate of the vehicle's position on the selected road segment. Quddus and colleagues used similar approaches to solve the position determination problem in subsequent works [@ochiengMapmatchingComplexUrban2003; @quddusHighAccuracyFuzzy2006].
+In a map-matching method using the topology of the road network, @quddusGeneralMapMatching2003 used a weighted average of two points to estimate the vehicle's position on the chosen road segment. One of these points was obtained from the orthogonal projection of the observed vehicle location onto the road selected by the map-matching method. The location of the other point was calculated based on the previous location of the vehicle, the speed of the vehicle at the current time, and the bearing of the selected road segment for matching. A weighted average of the two points, with weights based on the error variances for the road network and the position sensor for the vehicle, provided the estimate of the vehicle's position on the selected road segment. Quddus and colleagues used similar approaches to solve the position determination problem in subsequent works [@ochiengMapmatchingComplexUrban2003; @quddusHighAccuracyFuzzy2006].
 
 @quddusCurrentMapmatchingAlgorithms2007 described an approach used by @kimEfficientUseDigital2000 to solve the position determination problem. After selecting the correct road segment using a point-to-curve map-matching technique, Kim et al. used orthogonal projection onto the road segment as an initial estimate of the vehicle's location. Kim et al. then used an extended Kalman filter with inputs from the GPS position fixes to estimate the vehicle's position again, with the goal of minimizing the error in position along the road. Quddus et al. noted that the method of Kim et al. could be improved by using a better technique to select the correct road segment. Kalman filters remain an important component for data pre-processing in many map-matching algorithms and algorithms for vehicle trajectory prediction, e.g., works by @barriosImprovingEstimationVehicles2011, @wangMultisensorFusionMethod2014, and @ersanMapMatchingKalman2020. However, orthogonal projection still remains incredibly popular for vehicle position determination.
 
@@ -1031,7 +1031,7 @@ For the proposed method for vehicle position determination after map matching, w
 
 Two comparison methods for position determination will be used. The first will be the standard orthogonal projection of the recorded GPS point onto the selected road. The second comparison method will be the weighted average method introduced by @quddusGeneralMapMatching2003. Recall from @sec-roadselection that Quddus et al.'s method uses the weighted average of the orthogonal projection point and a second point calculated based on the previous location of the vehicle, the speed of the vehicle at the current time, and the bearing of the selected road segment.
 
-\mh{We propose to treat the position determination problem as a linkage problem. The inspiration came from patterns noticed in interactive, linked visualizations from our developmental R package DrivePlotR. The visualizations display a map of the vehicle trajectory alongside other variables, such as speed, heading, and GPS PDOP. Interactivity allows users to select and zoom in on points of interest. DrivePlotR visualizations make the spatiotemporal patterns in the data more apparent. Our linkage framework is based on the work of @taylorFastBayesianRecord2024.}
+\mh{We propose to treat the position determination problem as a linkage problem. The inspiration came from patterns noticed in interactive, linked visualizations from our developmental R package DrivePlotR. The visualizations display a map of the vehicle trajectory alongside other variables, such as speed, heading, and GPS PDOP. Interactivity allows users to select and zoom in on points of interest. DrivePlotR visualizations make the spatio-temporal patterns in the data more apparent. Our linkage framework is based on the work of @taylorFastBayesianRecord2024.}
 
 \mh{@taylorFastBayesianRecord2024 were interested in the task of record linkage in a streaming data context. Record linkage involves determining which observations in overlapping files of records came from the same entity. This task is made more challenging by noisy data sources and the frequent lack of a unique identifier for the entities. For example, a name may be spelled correctly as "John Smith" in one file, but spelled incorrectly as "Jon Smith" in another file. Record linkage identifies John Smith and Jon Smith as the same person. In a streaming data context, data files come in over time without a predetermined final number of data files.}
 
@@ -1063,7 +1063,7 @@ $${#eq-jvalue}
 
 <!-- There are several potential directions to be pursued to create our new method (or methods). First, we could follow the lead of @kimEfficientUseDigital2000 in exploring the use of a Kalman filter for position determination, but also follow the recommendation of @quddusCurrentMapmatchingAlgorithms2007 by using a more accurate algorithm (or ground truth) for road selection. We are also interested in treating the map-matching process as a two-level linkage problem, with the road selection problem being the first level and the position determination problem being the second level. (See, for example, @taylorFastBayesianRecord2024.) Third, note that any projection that is not an orthogonal projection is called an oblique projection. Since we want to provide an alternative to orthogonal projection for vehicle position determination, it is natural to think of using an oblique projection instead. We could find vehicle positions using an oblique least squares approximation [@mccartinObliqueLinearLeast2010]. Our case differs from the typical case for oblique least squares in that we know the line onto which the GPS points should be projected (i.e., the selected road segment), but do not know the direction (or slope) of the projection. Other methods of interest may be identified as the research progresses. -->
 
-Thus, we can utilize highly accurate estimates for the road on which a vehicle is driving and combine them with a more precise position determination method than is achievable from simple orthogonal projection onto the selected road segment. The separation from the map-matching algorithm for road selection will allow our position determination algorithm to be used with any existing or yet-to-be-proposed map-matching algorithm for road selection. Our work will also include novel ways to visualize large-scale spatiotemporal transportation data \mh{with DrivePlotR} and unlock new insights from applications. These new insights will not be possible without new ways to visualize large-scale spatiotemporal transportation data and an improved method to determine the positions of vehicles on the road system after matching.
+Thus, we can utilize highly accurate estimates for the road on which a vehicle is driving and combine them with a more precise position determination method than is achievable from simple orthogonal projection onto the selected road segment. The separation from the map-matching algorithm for road selection will allow our position determination algorithm to be used with any existing or yet-to-be-proposed map-matching algorithm for road selection. Our work will also include novel ways to visualize large-scale spatio-temporal transportation data \mh{with DrivePlotR} and unlock new insights from applications. These new insights will not be possible without new ways to visualize large-scale spatio-temporal transportation data and an improved method to determine the positions of vehicles on the road system after matching.
 
 # Proposed Chapter Overviews
 
@@ -1071,11 +1071,11 @@ Thus, we can utilize highly accurate estimates for the road on which a vehicle i
 
 This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Telematics data are discussed, and an overview of GPS and related quality measures are presented. Prior work on the map-matching problem is discussed. The new contributions of the work are explained.
 
-## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
+## Chapter 1: Software Tools for Large-Scale Spatio-Temporal Transportation Data
 
-This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data and explains how insights based on the visualizations led to subsequent work.
+This chapter discusses software tools developed for visualizing large-scale spatio-temporal transportation data and explains how insights based on the visualizations led to subsequent work.
 
-## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
+## Chapter 2: Detecting Driving Behavior from Large-Scale Spatio-Temporal Transportation Data
 
 This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented.
 
