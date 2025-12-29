@@ -12,13 +12,15 @@ format:
 
 # Proposed Dissertation Chapter Outlines
 
+## Title: Statistical Tools for Large-Scale Spatio-Temporal Transportation Data
+
 ## Chapter 0: Literature Review & Problem Statement
 
-This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Spatiotemporal transportation data are discussed, and an overview of GPS and related quality measures are presented. Prior work on the map-matching problem is discussed. The new contributions of the work are explained.
+This chapter presents an overview of the data sources used in this project and the challenges uncovered in their use. Spatio-temporal transportation data are discussed, and an overview of GPS and related quality measures are presented. Prior work on the map-matching problem is discussed. The new contributions of the work are explained.
 
 ## Chapter 1: Software Tools for Large-Scale Spatiotemporal Transportation Data
 
-This chapter discusses software tools developed for visualizing large-scale spatiotemporal transportation data (including my R package `DrivePlotR`) and explains how insights based on the visualizations led to subsequent work.
+This chapter discusses software tools developed for visualizing large-scale spatio-temporal transportation data (including my R package `DrivePlotR`) and explains how insights based on the visualizations led to subsequent work.
 
 ## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
 
@@ -54,9 +56,9 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 
 * Present my poster about `DrivePlotR` at the TRB Annual Meeting: January 13, 2026.
 
-* Submit an updated draft of "Turns and Downturns in Aging Drivers" to co-authors: January 30, 2026.
+* Submit an updated draft of "Turns and Downturns in Aging Drivers" to co-authors: January 31, 2026.
 
-* Finish the initial implementation of my map-matching position determination method and test it: January 31, 2026.
+* Continue the initial implementation of my map-matching position determination method and start testing it: January 31, 2026.
 
 * Update Chapter 0 of my dissertation: January 31, 2026.
 
