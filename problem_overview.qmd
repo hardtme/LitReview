@@ -478,94 +478,6 @@ exdrive_plot <- exdrive |>
 exdrive_plot <- exdrive_plot |>
   mutate(pt_label = c("Start", rep("", 8), "End"))
 
-# leaflet() |>
-#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
-#   addCircleMarkers(data = exdrive_plot, label = ~glue("{round(speed_mph, 2)} mph"))
-
-# offset_pt1 <- st_as_sfc("POINT(0.00018 -0.000075)", crs = "WGS84")
-# pt1 <- exdrive_plot[1,]
-# shifted_pt1 <- pt1 |>
-#   mutate(geometry = geometry + offset_pt1)
-
-# Use the same offset as point 1 for point 2
-# pt2 <- exdrive_plot[2,]
-# shifted_pt2 <- pt2 |>
-#   mutate(geometry = geometry + offset_pt1)
-
-# offset_pt3 <- st_as_sfc("POINT(0.00018 -0.000073)", crs = "WGS84")
-# pt3 <- exdrive_plot[3,]
-# shifted_pt3 <- pt3 |>
-#   mutate(geometry = geometry + offset_pt3)
-
-# offset_pt4 <- st_as_sfc("POINT(0.00018 -0.00007)", crs = "WGS84")
-# pt4 <- exdrive_plot[4,]
-# shifted_pt4 <- pt4 |>
-#   mutate(geometry = geometry + offset_pt4)
-
-# offset_pt5 <- st_as_sfc("POINT(0.00016 -0.00003)", crs = "WGS84")
-# pt5 <- exdrive_plot[5,]
-# shifted_pt5 <- pt5 |>
-#   mutate(geometry = geometry + offset_pt5)
-
-# offset_pt6 <- st_as_sfc("POINT(0.00015 0.00005)", crs = "WGS84")
-# pt6 <- exdrive_plot[6,]
-# shifted_pt6 <- pt6 |>
-#   mutate(geometry = geometry + offset_pt6)
-
-# Use the same shift for point 7
-# pt7 <- exdrive_plot[7,]
-# shifted_pt7 <- pt7 |>
-#   mutate(geometry = geometry + offset_pt6)
-
-# offset_pt8 <- st_as_sfc("POINT(0.000145 0.00005)", crs = "WGS84")
-# pt8 <- exdrive_plot[8,]
-# shifted_pt8 <- pt8 |>
-#   mutate(geometry = geometry + offset_pt8)
-
-# Use the same shift for point 9
-# pt9 <- exdrive_plot[9,]
-# shifted_pt9 <- pt9 |>
-#   mutate(geometry = geometry + offset_pt8)
-
-# offset_pt10 <- st_as_sfc("POINT(0.00014 0.00005)", crs = "WGS84")
-# pt10 <- exdrive_plot[10,]
-# shifted_pt10 <- pt10 |>
-#   mutate(geometry = geometry + offset_pt10)
-
-# leaflet() |>
-#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
-#   addCircleMarkers(data = exdrive_plot, label = ~glue("{round(speed_mph, 2)} mph")) |>
-#   addCircleMarkers(data = shifted_pt1, color = "brown") |>
-#   addCircleMarkers(data = shifted_pt2, color = "black") |>
-#   addCircleMarkers(data = shifted_pt3, color = "darkgray") |>
-#   addCircleMarkers(data = shifted_pt4, color = "darkorchid") |>
-#   addCircleMarkers(data = shifted_pt5, color = "magenta") |>
-#   addCircleMarkers(data = shifted_pt6, color = "red") |>
-#   addCircleMarkers(data = shifted_pt7, color = "orange") |>
-#   addCircleMarkers(data = shifted_pt8, color = "gold") |>
-#   addCircleMarkers(data = shifted_pt9, color = "green") |>
-#   addCircleMarkers(data = shifted_pt10, color = "turquoise")
-
-# manual_shift_points <- bind_rows(shifted_pt1, shifted_pt2,
-#                                  shifted_pt3, shifted_pt4,
-#                                  shifted_pt5, shifted_pt6,
-#                                  shifted_pt7, shifted_pt8,
-#                                  shifted_pt9, shifted_pt10)
-# 
-# manual_shift_points <- manual_shift_points |>
-#   st_set_crs("WGS84")
-
-# leaflet() |>
-#   addProviderTiles("CartoDB.VoyagerNoLabels") |>
-#   addCircleMarkers(data = exdrive_plot, color = "blue") |>
-#   addCircleMarkers(data = manual_shift_points, color = "red")
-
-# all_shifted_points <- bind_rows(exdrive_plot, manual_shift_points)
-# all_shifted_points_ls <- all_shifted_points |>
-#   group_by(time_utc) |>
-#   summarize() |>
-#   st_cast("LINESTRING")
-
 exdrive_bbox <- st_bbox(exdrive_plot)
 
 exdrive_bbox_adj <- exdrive_bbox
@@ -584,26 +496,6 @@ exdrive_bbox_sf <- exdrive_bbox |>
 # Find road candidates within the bounding box for the exdrive example above
 poss_matches <- oma_roads |>
   st_filter(exdrive_bbox_sf, .predicate = st_intersects)
-
-# gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "tan", lwd = 10)+
-#   tm_shape(all_shifted_points_ls, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "black")+
-#   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-#   tm_labels(text = "pt_label", xmod = 1.5, options = opt_tm_labels(point.label = FALSE))+
-#   tm_shape(manual_shift_points, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "red", group = "shifted", group.control = "none", fill_alpha = 0.9)
-# 
-# gps_drift_tmap
-
-# gps_drift_tmap <- example_tmap(road_system = poss_matches,
-#                                bbox = exdrive_bbox_adj,
-#                                og_points = exdrive_plot,
-#                                new_points = manual_shift_points,
-#                                match_lines = all_shifted_points_ls,
-#                                point_fill_alpha = 0.9)
 
 gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels") +
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
@@ -633,21 +525,10 @@ Despite the known issues with geometric map-matching methods and the later appea
 
 @fig-naive-map-matching shows an example of a case where the closest road identified by a geometric map-matching method is not the correct road. The example uses the same data as @fig-gps-drift. Once again, the original points are blue. The matched points are red. The orthogonal projections onto the road system looks good for six of the ten points, but the four points west of the intersection (near the yellow warning symbol) are problematic. The original points may be closer to the east-west road segment instead of the north-south road segment, but the matches do not fit with the rest of the vehicle trajectory. A more sophisticated map-matching method is needed.
 
-<!-- Another matching method used by several authors (including @krakiwskyKalmanFilterIntegrating1988 and @scottIncreasedAccuracyMotor1994) and discussed by @sakiPracticalGuideOpenSource2022 is to fit a curve through a sequence of GPS points and find the road segments that best match the curve. Saki et al. observed that this curve-fitting approach worked well in some special cases, but performed poorly in most real-world applications. If heading information is available for the vehicle and the road system, it can be used to check the quality of matches, as Saki et al. noted was done by @bernsteinIntroductionMapMatching1996 and @whiteMapMatchingAlgorithms2000. -->
-
-<!-- Saki et al. observed that @yangImprovedMapmatchingAlgorithm2003 and @quddusGeneralMapMatching2003 used Kalman filters to drop unreasonable GPS points and achieve better map-matching results. -->
-
 :::{#fig-naive-map-matching}
 
 ```{r}
 #| echo: false
-
-# leaflet() |>
-#   addProviderTiles(provider = "CartoDB.Positron") |>
-#   addCircleMarkers(data = exdrive_plot, color = "black") |>
-#   addPolygons(data = exdrive_bbox_sf) |>
-#   addPolylines(data = poss_matches, color = "red")
-# The road candidates are what we would expect.
 
 # For each GPS point, find the nearest point on each of the road segments
 nearest_pts_ls <- st_nearest_points(exdrive_plot, poss_matches)
@@ -680,45 +561,12 @@ nearest_pts_ls_match <- nearest_pts_ls_sf |>
   group_by(id) |>
   filter(dist == min(dist))
 
-# leaflet() |>
-#   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
-#   addPolylines(data = nearest_pts_ls_sf, color = "blue") |>
-#   addCircleMarkers(data = nearest_pts_ls_sf_start, color = "green") |>
-#   addCircleMarkers(data = nearest_pts_ls_sf_end, color = "orange")
-
-# mm_process_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-#      tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-#      tm_lines(col = "tan", lwd = 10)+
-#      tm_shape(nearest_pts_ls_sf, bbox = exdrive_bbox_adj) +
-#      tm_lines(col = "black")+
-#      tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
-#      tm_dots(size = 1, fill = "blue", group = "original", group.control = "none")
-     
-# leaflet() |>
-#   addProviderTiles(provider = "CartoDB.VoyagerNoLabels") |>
-#   addCircleMarkers(data = nearest_pts_start, color = "blue") |>
-#   addCircleMarkers(data = nearest_pts_end_match, color = "red")
-
-# mm_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "tan", lwd = 10) +
-#   tm_shape(nearest_pts_ls_match, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "black")+
-#   tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-#   tm_shape(nearest_pts_end_match, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
-# 
-# mm_tmap 
-
-#fa_by_name("triangle-exclamation", fill = "gold", stroke = "black")
 fa_by_name("circle-exclamation", fill = "gold", stroke = "black", stroke_width = "5px")
 
 warn_pt <- st_sfc(st_point(x = c(-95.99816, 41.25787)), crs = 4326) |>
   st_as_sf() |>
   st_cast("POINT")
 
-#warn_pt_icon <- tmap_icons("triangle-exclamation.png")
 warn_pt_icon <- tmap_icons("circle-exclamation.png")
 
 mm_tmap <- example_tmap(road_system = poss_matches,
@@ -740,7 +588,6 @@ mm_tmap
 Example of the shortcomings of a geometric map-matching method where the closest road is not the correct road. The original GPS points (blue) were orthogonally projected onto the nearest road segment (red points). The yellow warning symbol west of the intersection draws attention to four nonsensically matched red points.
 :::
 
-<!-- :::{#fig-mmcircarrows} -->
 
 ```{r}
 #| warning: false
@@ -781,8 +628,7 @@ mm_tmap_circle_arrows <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
 
 mm_tmap_circle_arrows 
 ```
-<!-- Example of the shortcomings of naively orthogonally projecting GPS points (blue with white arrows indicating vehicle heading) onto the nearest road segment (red). Note the four nonsensically matched red points west of the intersection. -->
-<!-- ::: -->
+
 
 ```{r}
 #| include: false
@@ -887,18 +733,6 @@ exdrive_plot_matched_alt7654_ls <-
 exdrive_plot_matched_alt7654_ls <- exdrive_plot_matched_alt7654_ls |>
   rename(geometry = "x")
 
-# mm_tmap_alt7654 <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "tan", lwd = 10) +
-#   tm_shape(alt_points_ls, bbox = exdrive_bbox_adj) +
-#   tm_lines(col = "black")+
-#   tm_shape(nearest_pts_ls_sf_start, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-#   tm_shape(exdrive_plot_matched_alt7654, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
-# 
-# mm_tmap_alt7654
-
 mm_tmap_alt7654 <- example_tmap(road_system = poss_matches,
                                bbox = exdrive_bbox_adj,
                                og_points = exdrive_plot,
@@ -959,23 +793,7 @@ It is reasonable to assume that the heading of a vehicle traveling on a road sho
 :::{#fig-map-matching-heading}
 
 ```{r}
-# mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
-#   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "tan", lwd = 10) +
-#   tm_shape(nearest_pts_heading_filter_dist, bbox = exdrive_bbox_adj)+
-#   tm_lines(col = "black")+
-#   tm_shape(nearest_pts_heading_filter_dist_start, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "blue", group = "original", group.control = "none", fill_alpha = 0.9)+
-#   tm_shape(nearest_pts_heading_filter_dist_end, bbox = exdrive_bbox_adj)+
-#   tm_dots(size = 1, fill = "red", group = "matched", group.control = "none", fill_alpha = 0.9)
-# 
-# mm_tmap_heading 
-
-# mm_tmap_heading <- example_tmap(road_system = poss_matches,
-#                                 bbox = exdrive_bbox_adj,
-#                                 og_points = nearest_pts_heading_filter_dist_start,
-#                                 new_points = nearest_pts_heading_filter_dist_end,
-#                                 match_lines = nearest_pts_heading_filter_dist)
+#| echo: false
 
 mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
@@ -1060,8 +878,6 @@ Recall that a record for an entity can appear at most once in each data file. Th
 
 We will use a multivariate approach for the position-determination problem. We will incorporate variables such as time, vehicle location (latitude/longitude), speed, heading, etc. The goal is to establish the linkage between the vehicle's recorded GPS and the road segment selected by the map-matching algorithm, while accounting for time. As new vehicle locations arrive, we will be able to update our previous estimates of the vehicle's position on the selected road segment. It is of particular interest to identify the points where the road segment changes (e.g., turns) and adjust the other points accordingly. Visuals from DrivePlotR will be a key component in determining the conditions under which the points should be adjusted and how the adjustments should be made.
 
-<!-- There are several potential directions to be pursued to create our new method (or methods). First, we could follow the lead of @kimEfficientUseDigital2000 in exploring the use of a Kalman filter for position determination, but also follow the recommendation of @quddusCurrentMapmatchingAlgorithms2007 by using a more accurate algorithm (or ground truth) for road selection. We are also interested in treating the map-matching process as a two-level linkage problem, with the road selection problem being the first level and the position determination problem being the second level. (See, for example, @taylorFastBayesianRecord2024.) Third, note that any projection that is not an orthogonal projection is called an oblique projection. Since we want to provide an alternative to orthogonal projection for vehicle position determination, it is natural to think of using an oblique projection instead. We could find vehicle positions using an oblique least squares approximation [@mccartinObliqueLinearLeast2010]. Our case differs from the typical case for oblique least squares in that we know the line onto which the GPS points should be projected (i.e., the selected road segment), but do not know the direction (or slope) of the projection. Other methods of interest may be identified as the research progresses. -->
-
 Thus, we can utilize highly accurate estimates for the road on which a vehicle is driving and combine them with a more precise position determination method than is achievable from simple orthogonal projection onto the selected road segment. The separation from the map-matching algorithm for road selection will allow our position determination algorithm to be used with any existing or yet-to-be-proposed map-matching algorithm for road selection. Our work will also include novel ways to visualize large-scale spatio-temporal transportation data with DrivePlotR and unlock new insights from applications. These new insights will not be possible without new ways to visualize large-scale spatio-temporal transportation data and an improved method to determine the positions of vehicles on the road system after matching.
 
 # Proposed Chapter Overviews
@@ -1081,13 +897,6 @@ This chapter explains how driving behavior may be detected from telematics data.
 ## Chapter 3: Determining Precise Vehicle Locations on the Road System
 
 This chapter covers a new method for determining a vehicle's location on a road segment after a map-matching algorithm is used. An application using this method is discussed.
-
-<!-- \mh{Both the reported locations in a vehicle's trajectory and the road system used in the map-matching process are subject to error, which leads to uncertainty in the revised locations produced by the map-matching process. @quddusIntegrityMapmatchingAlgorithms2006 developed a metric for the integrity of map-matching algorithms. The results indicated that both the capability of the map-matching algorithm and the resolution of the digital map of the road system affect affect the integrity of the method.} -->
-
-
-<!-- @newsonHiddenMarkovMap2009 provide one example vehicle trajectory from a route in Seattle, Washington, USA, along with the ground truth route traveled by the vehicle. @kubickaDatasetTestingTraining2015 provide one hundred example vehicle trajectories from various locations around the world along with a map-matched route for each trajectory. However, the true sequence of road segments traveled in each of these trajectories are unknown, and thus the matched routes represent experts' best ideas for the correct sequence of road segments. The sets of example trajectories from Newson and Krumm and Kubička et al. focus more on the determination of the road segment on which the vehicle was traveling at each time point as opposed to the location of the vehicle on the selected link. -->
-
-
 
 
 # References
