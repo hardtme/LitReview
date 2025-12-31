@@ -24,13 +24,11 @@ This chapter discusses software tools developed for visualizing large-scale spat
 
 ## Chapter 2: Detecting Driving Behavior from Large-Scale Spatiotemporal Transportation Data
 
-This chapter explains how driving behavior may be detected from telematics data. An application to cognitive health in older drivers is presented. (This chapter will include the paper "Turns and Downturns in Aging Drivers.")
+This chapter explains how driving behavior may be detected from vehicle telematics data. An application to cognitive health in older drivers is presented. (This chapter will include the paper "Turns and Downturns in Aging Drivers.")
 
 ## Chapter 3: Determining Precise Vehicle Locations on the Road System
 
-This chapter covers a new linkage-based method for determining a vehicle's location on a road segment after a map-matching algorithm is used. An application using this linkage method is discussed.
-
-<!-- ## Related Presentation: `DrivePlotR` at the Transportation Research Board (TRB) Annual Meeting in January 2026 -->
+This chapter covers a new linkage-based method for determining a vehicle's location on a road segment after a map-matching algorithm is used. An application using this position determination method is discussed.
 
 # Timeline
 
@@ -48,33 +46,33 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 
 * Submit my TRB poster to appear in the conference program: December 19, 2025. (Done on December 13, 2025)
 
-* Synthesize ideas for my map-matching position determination method and begin programming an implementation of the method: December 31, 2025.
+* Meet with collaborators to discuss the next steps for "Turns and Downturns in Aging Drivers": December 31, 2025. (Done)
 
-* Update Chapter 0 of my dissertation: December 31, 2025.
+* Synthesize ideas for my map-matching position determination method and begin programming an implementation of the method: December 31, 2025. (Done)
+
+* Update Chapter 0 of my dissertation: December 31, 2025. (Done)
 
 ## January 2026
 
 * Present my poster about `DrivePlotR` at the TRB Annual Meeting: January 13, 2026.
 
-* Submit an updated draft of "Turns and Downturns in Aging Drivers" to co-authors: January 31, 2026.
-
 * Continue the initial implementation of my map-matching position determination method and start testing it: January 31, 2026.
+
+* Submit an improved draft of the `DrivePlotR` paper to co-authors after addressing any comments/feedback received after my TRB presentation: January 31, 2026.
 
 * Update Chapter 0 of my dissertation: January 31, 2026.
 
 ## February 2026
 
-* Address co-author comments about "Turns and Downturns in Aging Drivers" as necessary.
-
-* Submit an improved draft of the `DrivePlotR` paper to co-authors after addressing any comments/feedback received after my TRB presentation: February 3, 2026.
+* Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal: February 1, 2026.
 
 * Choose an application for my map-matching position determination method and start writing a paper about it: February 13, 2026.
-
-* Submit "Turns and Downturns in Aging Drivers" to a peer-reviewed journal: February 27, 2026.
 
 * Update Chapter 0 of my dissertation: February 28, 2026.
 
 * Continue testing and updating my map-matching position determination method in the context of the application: February 28, 2026.
+
+* Address peer-review and collaborator comments as necessary.
 
 ## March 2026
 
