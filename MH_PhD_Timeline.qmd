@@ -54,13 +54,13 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 
 ## January 2026
 
-* Present my poster about `DrivePlotR` at the TRB Annual Meeting: January 13, 2026.
+* Present my poster about `DrivePlotR` at the TRB Annual Meeting: January 13, 2026. (Done)
 
 * Continue the initial implementation of my map-matching position determination method and start testing it: January 31, 2026.
 
-* Submit an improved draft of the `DrivePlotR` paper to co-authors after addressing any comments/feedback received after my TRB presentation: January 31, 2026.
+* Start preparing `DrivePlotR` for submission to CRAN: January 31, 2026. (Done)
 
-* Update Chapter 0 of my dissertation: January 31, 2026.
+* Update Chapter 0 of my dissertation: January 31, 2026. (Done)
 
 ## February 2026
 
