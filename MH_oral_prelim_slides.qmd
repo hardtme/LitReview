@@ -12,6 +12,7 @@ format:
     auto-stretch: false
     width: 1920
     height: 1080
+    embed-resources: true
 ---
 
 ```{r setup}
