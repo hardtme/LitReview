@@ -163,12 +163,10 @@ driveplot(
   shareddata = shared_drive, 
   maplabel = time_cst, colorvar = gps_minute, 
   colorpalette = "viridis", fillOpacity = 1, 
-  x = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading_raw, 
-  y3 = gps_pdop, 
-  xlabel = "Time", y1label = "Speed (MPH)", 
-  y2label = "Gyro Heading", 
-  y3label = "GPS PDOP", showlegend = TRUE, 
+  x = time_cst, 
+  ys = c(speed_mph, gyro_heading_raw, gps_pdop), 
+  xlabel = "Time", 
+  ylabels = c("Speed (MPH)", "Gyro Heading", "GPS PDOP"), showlegend = TRUE, 
   legendtitle = "Minute", 
   spacing = 0.05)
 ```
