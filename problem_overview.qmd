@@ -13,7 +13,8 @@ header-includes:
    - \newcommand{\mh}[1]{{\textcolor{teal}{#1}}}
    - \newcommand{\gb}[1]{{\textcolor{RedOrange}{#1}}}
    - \newcommand{\hh}[1]{{\textcolor{Green}{#1}}}
-
+   - \renewcommand{\arraystretch}{1}
+   - \usepackage{setspace}
 format:
   pdf:
     keep-tex: true
@@ -109,6 +110,7 @@ return(ex_tmap)
 
 <!-- \mh{5. Try to quantify the error in GPS data more - not necessarily for the overview, but to document the need for an algorithm. This might be best done by a general discussion of how GPS quality is determined and a specific summary of how ‘good’ the GPS is in the NDS study and the connected vehicles} -->
 
+\doublespacing
 
 # Introduction {#sec-introduction}
 
