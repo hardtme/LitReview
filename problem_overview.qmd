@@ -902,7 +902,7 @@ This chapter presents an overview of the data sources used in this project and t
 
 ## Chapter 1: Software Tools for Large-Scale Spatio-Temporal Transportation Data
 
-This chapter discusses software tools developed for visualizing large-scale spatio-temporal transportation data and explains how insights based on the visualizations led to subsequent work.
+This chapter discusses software tools developed for visualizing large-scale spatio-temporal transportation data and explains how insights based on the visualizations led to subsequent work. \mh{This chapter also discusses a method to match work zone locations in Iowa to the road system.}
 
 ## Chapter 2: Detecting Driving Behavior from Large-Scale Spatio-Temporal Transportation Data
 
