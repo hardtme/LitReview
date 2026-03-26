@@ -78,7 +78,7 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 
 * Address co-author comments on the `DrivePlotR` paper as necessary: March 13, 2026.
 
-* Address peer-review comments on "Turns and Downturns in Aging Drivers" as necessary.
+* Address peer-review comments on "Turns and Downturns in Aging Drivers" as necessary. Notified about revision opportunity on March 24, 2026.
 
 * Use my map-matching position determination method in the context of the application and continue writing the paper about it: March 31, 2026.
 
@@ -99,6 +99,8 @@ This chapter covers a new linkage-based method for determining a vehicle's locat
 * Further refine my map-matching position determination method and continue writing the paper about it: May 31, 2026.
 
 * Address peer-review comments about submitted papers as necessary.
+
+* Submit revisions of "Turns and Downturns in Aging Drivers" to *TRIP*: May 23, 2026.
 
 * Update Chapter 0 of my dissertation: May 31, 2026.
 
