@@ -67,7 +67,7 @@ fa_by_name <- function(name, fill = "blue", stroke = "white", stroke_width = "1p
   )
 }
 
-example_tmap <- function(basemap = "CartoDB.VoyagerNoLabels",
+example_tmap <- function(basemap = "Esri.WorldImagery",
                          road_system,
                          bbox,
                          road_system_color = "tan",
@@ -511,7 +511,7 @@ exdrive_bbox_sf <- exdrive_bbox |>
 poss_matches <- oma_roads |>
   st_filter(exdrive_bbox_sf, .predicate = st_intersects)
 
-gps_drift_tmap <- tm_basemap(server = "CartoDB.VoyagerNoLabels") +
+gps_drift_tmap <- tm_basemap(server = "Esri.WorldImagery") +
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
   tm_lines(col = "tan", lwd = 10)+
   tm_shape(exdrive_plot, bbox = exdrive_bbox_adj)+
@@ -809,7 +809,7 @@ It is reasonable to assume that the heading of a vehicle traveling on a road sho
 ```{r}
 #| echo: false
 
-mm_tmap_heading <- tm_basemap(server = "CartoDB.VoyagerNoLabels")+
+mm_tmap_heading <- tm_basemap(server = "Esri.WorldImagery")+
   tm_shape(poss_matches, bbox = exdrive_bbox_adj)+
   tm_lines(col = "tan", lwd = 10) +
   tm_shape(nearest_pts_heading_filter_dist, bbox = exdrive_bbox_adj)+
